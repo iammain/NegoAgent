@@ -1,0 +1,2 @@
+jar uf negosimulator.jar agents/Nego.class
+jar uf negosimulator.jar negotiator/boaframework/acceptanceconditions/other/AStrategy.class
