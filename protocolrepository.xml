@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<repository fileName="protocolrepository.xml">
+    <items>
+        <agentRepItems/>
+        <domainRepItem/>
+        <protocolRepItem>
+            <protocolRepItem description="Alternating Offers" classPath="negotiator.protocol.AlternatingOffersMetaProtocol" protocolName="Alternating Offers"/>
+            <protocolRepItem description="Auction" classPath="negotiator.protocol.AuctionMetaProtocol" protocolName="Auction"/>
+        </protocolRepItem>
+    </items>
+    <filename>protocolrepository.xml</filename>
+</repository>

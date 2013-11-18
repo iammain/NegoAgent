@@ -15,7 +15,7 @@ import negotiator.boaframework.OpponentModel;
  * @author Mark Hendrikx
  */
 public class BidStrategy extends OMStrategy {
-
+ 
 	/**  when to stop updating the opponentmodel. Note that this value
 	 * 	 is not exactly one as a match sometimes lasts slightly longer. */
 	double updateThreshold = 1.1;

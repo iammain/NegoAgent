@@ -47,7 +47,6 @@ public class AStrategy extends AcceptanceStrategy {
 			b = 0;
 		}
 	}
-	
 	@Override
 	public String printParameters() {
 		String str = "[a: " + a + " b: " + b + "]";
