@@ -4,8 +4,7 @@
         <agentRepItems/>
         <domainRepItem/>
         <protocolRepItem>
-            <protocolRepItem description="Alternating Offers" classPath="negotiator.protocol.AlternatingOffersMetaProtocol" protocolName="Alternating Offers"/>
-            <protocolRepItem description="Auction" classPath="negotiator.protocol.AuctionMetaProtocol" protocolName="Auction"/>
+            <protocolRepItem description="Alternating Offers" classPath="negotiator.protocol.alternatingoffers.AlternatingOffersProtocol" protocolName="Alternating Offers"/>
         </protocolRepItem>
     </items>
     <filename>protocolrepository.xml</filename>
