@@ -53,6 +53,7 @@
 
 	</biddingstrategies>
 	<acceptanceconditions>
+    <acceptancecondition description="NegoAgent AStrategy" classPath="negotiator.boaframework.acceptanceconditions.other.AStrategy"/>
 		<acceptancecondition description="Other - False" classPath="negotiator.boaframework.acceptanceconditions.other.AC_False"/>
 		<acceptancecondition description="Other - True" classPath="negotiator.boaframework.acceptanceconditions.other.AC_True"/>
 		<acceptancecondition description="Other - Previous" classPath="negotiator.boaframework.acceptanceconditions.other.AC_Previous">
@@ -140,7 +141,7 @@
 	<opponentmodels>
 		<opponentmodel description="Perfect IAMhaggler Bay. Model" classPath="negotiator.boaframework.opponentmodel.PerfectIAMhagglerBayesianModel"/>
 		<opponentmodel description="No Model" classPath="negotiator.boaframework.opponentmodel.NoModel"/>
-		<opponentmodel description="No Model" classPath="negotiator.boaframework.opponentmodel.OpponentsModel"/>
+		<opponentmodel description="NegoAgent OpponentsModel" classPath="negotiator.boaframework.opponentmodel.OpponentsModel"/>
 		<opponentmodel description="HardHeaded Frequency Model" classPath="negotiator.boaframework.opponentmodel.HardHeadedFrequencyModel">
 			<parameter name="l" default="0.2" description="The learning coefficient determines how quickly the issue weights are learned"/>
 		</opponentmodel>
