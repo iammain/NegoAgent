@@ -31,11 +31,11 @@ public class BidStrategy extends OMStrategy {
 	 * @param model used by the opponent model strategy.
 	 */
 	public BidStrategy(NegotiationSession negotiationSession, OpponentModel model) {
-		/*try {
+		try {
 			super.init(negotiationSession, model);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 	
 	/**
@@ -47,12 +47,12 @@ public class BidStrategy extends OMStrategy {
 	 * @param parameters set of parameters for this opponent model strategy.
 	 */
 	public void init(NegotiationSession negotiationSession, OpponentModel model, HashMap<String, Double> parameters) throws Exception {
-		/*super.init(negotiationSession, model);
+		super.init(negotiationSession, model);
 		if (parameters.get("t") != null) {
 			updateThreshold = parameters.get("t").doubleValue();
 		} else {
 			System.out.println("OMStrategy assumed t = 1.1");
-		}*/
+		}
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class BidStrategy extends OMStrategy {
 	@Override
 	public BidDetails getBid(List<BidDetails> allBids) {
             BidDetails bestBid = allBids.get(0);
-		/*
+		
 		// 1. If there is only a single bid, return this bid
 		if (allBids.size() == 1) {
 			return allBids.get(0);
@@ -90,7 +90,7 @@ public class BidStrategy extends OMStrategy {
 		if (allWereZero) {
 			Random r = new Random();
 			return allBids.get(r.nextInt(allBids.size()));
-		}*/
+		}
 		return bestBid;
 	}
 
