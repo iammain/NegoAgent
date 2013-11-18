@@ -182,6 +182,9 @@
 		<omstrategy description="Best bid" classPath="negotiator.boaframework.omstrategy.BestBid">
 			<parameter name="t" default="1.1" description="Time after which the OM should not be updated"/>	
 		</omstrategy>
+		<omstrategy description="NegoAgent BidStrategy" classPath="negotiator.boaframework.omstrategy.BidStrategy">
+			<parameter name="t" default="1.1" description="NegoAgent Bidstrategy"/>	
+		</omstrategy>
 		<omstrategy description="NTFT" classPath="negotiator.boaframework.omstrategy.NTFTstrategy"/>
 		<omstrategy description="Offer best n" classPath="negotiator.boaframework.omstrategy.OfferBestN">
 			<parameter name="n" default="3.0" description="A random bid is selected from the best n bids"/>
