@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <repository fileName="boarepository.xml">
     <biddingstrategies>
+     <biddingstrategy description="NegoAgent TDStrategy" classPath="negotiator.boaframework.offeringstrategy.other.NegoAgent_TDStrategy"/>
 		<biddingstrategy description="Other - Offer decreasing utility" classPath="negotiator.boaframework.offeringstrategy.other.ChoosingAllBids"/>
 		<biddingstrategy description="Other - Time dependent" classPath="negotiator.boaframework.offeringstrategy.other.TimeDependent_Offering">
 			<parameter name="e" default="1.0" description="Concession rate"/>

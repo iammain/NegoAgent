@@ -1,2 +1,3 @@
 javac -cp negosimulator.jar Nego.java
 javac -cp negosimulator.jar AStrategy.java
+javac -cp negosimulator.jar NegoAgent_TDOffering.java
