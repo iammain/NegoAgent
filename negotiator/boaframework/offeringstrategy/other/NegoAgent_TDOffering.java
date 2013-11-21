@@ -1,6 +1,9 @@
 package negotiator.boaframework.offeringstrategy.other;
 
 import java.util.HashMap;
+import java.lang.Math;
+import java.util.List;
+import java.util.ArrayList;
 
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
@@ -34,6 +37,10 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	private double Pmin;
 	/** Concession factor */
 	private double e;
+	/** Sum of opponent's bids */
+	private double bidsum;
+	/** Number of unique opponent bids */
+	public List<Double> uniquebids = new ArrayList<Double>();
 	/** Outcome space */
 	SortedOutcomeSpace outcomespace;
 	
@@ -121,6 +128,35 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	}
 	
 	/**
+	 * Method which calculates a number of unique opponent bids
+	 * 
+	 */
+	public void countUniqueBids()
+	{
+//		System.out.println("Size: " + negotiationSession.getOpponentBidHistory().getHistory().size());
+		
+		int count = 0;
+				
+		if (negotiationSession.getOpponentBidHistory().getHistory().size() == 1)
+		{
+			uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+			bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+		}
+		else if (negotiationSession.getOpponentBidHistory().getHistory().size() != 0)
+		{
+			for (int j = 0; j < uniquebids.size(); j ++)
+				if (uniquebids.get(j) != negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil())
+					count ++;		
+			
+			if (count == uniquebids.size())
+			{
+				uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+				bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+			}
+		}
+	}
+	
+	/**
 	 * From [1]:
 	 * 
 	 * A wide range of time dependent functions can be defined by varying the way in
@@ -135,9 +171,28 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	 */
 	public double f(double t)
 	{
+		countUniqueBids();
+		
 		if (e == 0)
 			return k;
-		double ft = k + (1 - k) * Math.pow(t, 1.0/e);
+//		double ft = k + (1 - k) * Math.pow(t, 1.0/e);
+		double ft = 0;
+		
+		if (uniquebids.size() > 1)
+		{
+//			System.out.println(uniquebids.get(uniquebids.size() - 1));
+			
+			// Function which bids more active when opponent is tough
+//			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1) * (1 - t)/uniquebids.size() * (1 + uniquebids.get(uniquebids.size() - 1));
+			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1) * bidsum/uniquebids.size() *  t;
+			
+		}
+		else
+			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1);
+
+//		System.out.println(uniquebids.size());
+//		System.out.println("k: " + k + " e: " + e);
+//		System.out.println("Ft: " + ft);
 		return ft;
 	}
 
