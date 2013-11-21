@@ -1,3 +1,4 @@
 javac -cp negosimulator.jar Nego.java
 javac -cp negosimulator.jar AStrategy.java
+javac -cp negosimulator.jar negotiator/boaframework/acceptanceconditions/other/AStrategy.java
 javac -cp negosimulator.jar negotiator/boaframework/offeringstrategy/other/NegoAgent_TDOffering.java

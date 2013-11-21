@@ -5,6 +5,8 @@ import java.lang.Math;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.sun.media.sound.ModelAbstractChannelMixer;
+
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
 import negotiator.boaframework.OMStrategy;
@@ -37,6 +39,8 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	private double Pmin;
 	/** Concession factor */
 	private double e;
+	/** Sum calculated to find a Nash */
+	private double nashsum;
 	/** Sum of opponent's bids */
 	private double bidsum;
 	/** Number of unique opponent bids */
@@ -128,6 +132,24 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	}
 	
 	/**
+	 * Method which returns true if the Nash is reached
+	 * 
+	 */
+	public boolean isNash()
+	{
+		double temp = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
+				+ opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid());
+		
+		if (temp < nashsum && opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()) < negotiationSession.getOpponentBidHistory().getBestBidDetails().getMyUndiscountedUtil()
+				)
+			return true;
+		else
+			nashsum = temp;
+		
+		return false;
+	}
+	
+	/**
 	 * Method which calculates a number of unique opponent bids
 	 * 
 	 */
@@ -136,7 +158,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 //		System.out.println("Size: " + negotiationSession.getOpponentBidHistory().getHistory().size());
 		
 		int count = 0;
-				
+		
 		if (negotiationSession.getOpponentBidHistory().getHistory().size() == 1)
 		{
 			uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
@@ -151,7 +173,14 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 			if (count == uniquebids.size())
 			{
 				uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+				System.out.println();
+				System.out.println("My utility: " + negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+				System.out.println("Opponent utility: " + opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()));
+				
 				bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+				
+				if (isNash())
+					System.out.println("There is a Nash - stop it!!!!!!!!!!!!!!!!!!!!!!!!!");
 			}
 		}
 	}
@@ -178,9 +207,11 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 //		double ft = k + (1 - k) * Math.pow(t, 1.0/e);
 		double ft = 0;
 		
+//		System.out.println(uniquebids.size());
+				
 		if (uniquebids.size() > 1)
 		{
-//			System.out.println(uniquebids.get(uniquebids.size() - 1));
+//			System.out.println("Average opponent's bid utility: " + bidsum/uniquebids.size());
 			
 			// Function which bids more active when opponent is tough
 //			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1) * (1 - t)/uniquebids.size() * (1 + uniquebids.get(uniquebids.size() - 1));
