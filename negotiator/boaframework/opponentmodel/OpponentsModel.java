@@ -153,7 +153,7 @@ public class OpponentsModel extends OpponentModel {
 			ex.printStackTrace();
 		}
 	}
-
+ 
 	@Override
 	public double getBidEvaluation(Bid bid) {
 		double result = 0;
