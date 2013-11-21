@@ -10,6 +10,10 @@ import negotiator.boaframework.Actions;
 import negotiator.boaframework.NegotiationSession;
 import negotiator.boaframework.OfferingStrategy;
 import negotiator.boaframework.OpponentModel;
+import negotiator.boaframework.offeringstrategy.other.NegoAgent_TDOffering;
+import negotiator.boaframework.omstrategy.BidStrategy;
+import negotiator.boaframework.opponentmodel.OpponentsModel;
+import negotiator.issue.Issue;
 import negotiator.utility.UtilitySpace;
 
 /**
@@ -30,6 +34,8 @@ public class AStrategy extends AcceptanceStrategy {
 	private double b;
         private double c;
         private double preassureThreshold;
+        public NegoAgent_TDOffering nATDO;
+        public BidStrategy  omBidStrat;
 
 	/**
 	 * Empty constructor for the BOA framework.
@@ -48,6 +54,8 @@ public class AStrategy extends AcceptanceStrategy {
 	public void init(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, HashMap<String, Double> parameters) throws Exception {
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
+                this.omBidStrat= new BidStrategy(negotiationSession, opponentModel);
+                this.nATDO = new NegoAgent_TDOffering(negoSession, opponentModel, omBidStrat, 1, 0, 0.99, 0);
 
 		if (parameters.get("a") != null || parameters.get("b") != null) {
 			a = parameters.get("a");
@@ -56,8 +64,9 @@ public class AStrategy extends AcceptanceStrategy {
 			a = .7;
 			b = .2;
                         c = .2;
-                        lamda =.1 + .9* Math.pow(negotiationSession.getDiscountFactor(), b);
-                        preassureThreshold = .1;
+                        lamda =.1 + .9* Math.pow(negotiationSession.getDiscountFactor()==1?.90:negotiationSession.getDiscountFactor(), b);
+                        
+                        preassureThreshold = .05;
 		}
 	}
 	@Override
@@ -73,39 +82,41 @@ public class AStrategy extends AcceptanceStrategy {
             try {
                 double negTime    = negotiationSession.getTime();
                 double prediction =negotiationSession.getOpponentBidHistory().filterBetweenTime(negTime-.001,  negTime).size();
-                if(negotiationSession.getTime()!=0){
-                    if(prediction!=1){
+                double discountFactor = negotiationSession.getDiscountFactor()!=1?negotiationSession.getDiscountFactor():.95;
+                System.out.println(prediction);
+                double randValue = Math.random()*.2-.1;
+                System.out.println(randValue);
+                if(negotiationSession.getTime()>0 && negotiationSession.getTime() <.80+randValue ){
+                    if(prediction>1 ){
                         c = 1/prediction;
                         lamda = lamda+(1-lamda)*Math.pow(prediction, c );
-                        lamda = lamda*negTime*2;
+                        lamda = lamda*negTime;
                     }
                 }
-                
-                
-                UtilitySpace bH = negotiationSession.getUtilitySpace();                
-                if(negotiationSession.getTime()>lamda){
-                    double maxUtility = bH.getUtility(bH.getMaxUtilityBid());
-                    if(ACCEPTANCE_THRESHOLD== Integer.MIN_VALUE)
-                        ACCEPTANCE_THRESHOLD = maxUtility*negotiationSession.getDiscountFactor();
-                    else
-                        ACCEPTANCE_THRESHOLD = ACCEPTANCE_THRESHOLD*negotiationSession.getDiscountFactor();
+                UtilitySpace bH = negotiationSession.getUtilitySpace();
+                if(ACCEPTANCE_THRESHOLD== Integer.MIN_VALUE){
+                        double maxUtility = bH.getUtility(bH.getMaxUtilityBid());
+                        ACCEPTANCE_THRESHOLD = maxUtility*discountFactor;
+                }
+                if(negotiationSession.getTime()>lamda){                    
+                        ACCEPTANCE_THRESHOLD = ACCEPTANCE_THRESHOLD;
                 }else{
-                    double maxUtility = bH.getUtility(bH.getMaxUtilityBid());                    
-                    double tempAcceptance = maxUtility-(maxUtility-maxUtility*negotiationSession.getDiscountFactor())*
-                            Math.pow(negotiationSession.getTime()/lamda ,a);
+                    double maxUtility = bH.getUtility(bH.getMaxUtilityBid());
+                    double tempAcceptance = maxUtility-(maxUtility-maxUtility*discountFactor)
+                            *Math.pow(negotiationSession.getTime()/lamda ,a);
                     ACCEPTANCE_THRESHOLD = tempAcceptance;
                 }
-                System.out.println("Acceptance threshold " +ACCEPTANCE_THRESHOLD);
+                System.out.println("negotiatino Session and lamda " +negotiationSession.getTime() + " " + lamda);
+                System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
             } catch (Exception ex) {
                 Logger.getLogger(AStrategy.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
             double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+            negotiationSession.getOwnBidHistory().getBestBidDetails().getMyUndiscountedUtil();
             double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
-            System.out.println("Last oponents bid util " +lastOpponentBidUtil);
-            System.out.println("Next bid util  " + nextMyBidUtil);
-            System.out.println("Current time " + negotiationSession.getTime());
+            
+            System.out.println("is nash " + nATDO.isNash());
             double nextThres  = nextMyBidUtil + nextMyBidUtil*preassureThreshold; 
             System.out.println("Next Threshold " + nextThres);
             if(lastOpponentBidUtil > ACCEPTANCE_THRESHOLD ||lastOpponentBidUtil > nextThres)
