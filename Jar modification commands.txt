@@ -1,3 +1,4 @@
 jar uf negosimulator.jar agents/Nego.class
 jar uf negosimulator.jar negotiator/boaframework/acceptanceconditions/other/AStrategy.class
+jar uf negosimulator.jar negotiator/boaframework/omstrategy/BidStrategy.class
 jar uf negosimulator.jar negotiator/boaframework/offeringstrategy/other/NegoAgent_TDOffering.class
