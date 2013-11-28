@@ -5,8 +5,6 @@ import java.lang.Math;
 import java.util.List;
 import java.util.ArrayList;
 
-import com.sun.media.sound.ModelAbstractChannelMixer;
-
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
 import negotiator.boaframework.OMStrategy;
@@ -16,18 +14,10 @@ import negotiator.boaframework.SortedOutcomeSpace;
 import negotiator.boaframework.opponentmodel.NoModel;
 
 /**
- * This is an abstract class used to implement a TimeDependentAgent Strategy adapted from [1]
- * 	[1]	S. Shaheen Fatima  Michael Wooldridge  Nicholas R. Jennings
- * 		Optimal Negotiation Strategies for Agents with Incomplete Information
- * 		http://eprints.ecs.soton.ac.uk/6151/1/atal01.pdf
- * 
+ * This is an abstract class used to implement a TimeDependentAgent Strategy.
  * The default strategy was extended to enable the usage of opponent models.
  * 
- * Note that this agent is not fully equivalent to the theoretical model, loading the domain
- * may take some time, which may lead to the agent skipping the first bid. A better implementation
- * is GeniusNegoAgent_TDOffering. 
- * 
- * @author Alex Dirkzwager, Mark Hendrikx
+ * @author Kirill Tumanov
  */
 public class NegoAgent_TDOffering extends OfferingStrategy {
 
@@ -49,8 +39,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	SortedOutcomeSpace outcomespace;
 	
 	/**
-	 * Empty constructor used for reflexion. Note this constructor assumes that init
-	 * is called next.
+	 * Empty constructor used for reflexion. Note this constructor assumes that init is called next.
 	 */
 	public NegoAgent_TDOffering(){}
 	
@@ -109,10 +98,8 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	}
 
 	/**
-	 * Simple offering strategy which retrieves the target utility
-	 * and looks for the nearest bid if no opponent model is specified.
-	 * If an opponent model is specified, then the agent return a bid according
-	 * to the opponent model strategy.
+	 * Simple offering strategy which retrieves the target utility and looks for the nearest bid if no opponent model is specified.
+	 * If an opponent model is specified, then the agent return a bid according to the opponent model strategy.
 	 */
 	@Override
 	public BidDetails determineNextBid() {
@@ -133,7 +120,6 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	
 	/**
 	 * Method which returns true if the Nash is reached
-	 * 
 	 */
 	public boolean isNash()
 	{
@@ -150,8 +136,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	}
 	
 	/**
-	 * Method which calculates a number of unique opponent bids
-	 * 
+	 * Method which calculates a number of unique opponent bids 
 	 */
 	public void countUniqueBids()
 	{
@@ -173,30 +158,20 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 			if (count == uniquebids.size())
 			{
 				uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
-				System.out.println();
-				System.out.println("My utility: " + negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
-				System.out.println("Opponent utility: " + opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()));
+//				System.out.println();
+//				System.out.println("My utility: " + negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+//				System.out.println("Opponent utility: " + opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()));
 				
 				bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
 				
-				if (isNash())
-					System.out.println("There is a Nash - stop it!!!!!!!!!!!!!!!!!!!!!!!!!");
+//				if (isNash())
+//					System.out.println("There is a Nash - stop it!!!!!!!!!!!!!!!!!!!!!!!!!");
 			}
 		}
 	}
 	
 	/**
-	 * From [1]:
-	 * 
-	 * A wide range of time dependent functions can be defined by varying the way in
-	 * which f(t) is computed. However, functions must ensure that 0 <= f(t) <= 1,
-	 * f(0) = k, and f(1) = 1.
-	 * 
-	 * That is, the offer will always be between the value range, 
-	 * at the beginning it will give the initial constant and when the deadline is reached, it
-	 * will offer the reservation value.
-	 * 
-	 * For e = 0 (special case), it will behave as a Hardliner.
+	 * Time-dependent function for bid-offering
 	 */
 	public double f(double t)
 	{
@@ -204,40 +179,37 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 		
 		if (e == 0)
 			return k;
-//		double ft = k + (1 - k) * Math.pow(t, 1.0/e);
-		double ft = 0;
 		
-//		System.out.println(uniquebids.size());
+		double ft = 0;
+		int num = negotiationSession.getDomain().getIssues().size();
+		double df = 0.1; // Division factor
 				
-		if (uniquebids.size() > 1)
+		if (uniquebids.size() > 1 && !isNash())
 		{
 //			System.out.println("Average opponent's bid utility: " + bidsum/uniquebids.size());
 			
 			// Function which bids more active when opponent is tough
 //			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1) * (1 - t)/uniquebids.size() * (1 + uniquebids.get(uniquebids.size() - 1));
-			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1) * bidsum/uniquebids.size() *  t;
-			
+			ft = (df * Math.sin(-num * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1) * bidsum/uniquebids.size() *  t;			
 		}
+		else if (uniquebids.size() > 1) // Should be something less agressive
+			ft = (2 * df *Math.sin(-num * Math.exp(t * 2 * df)) + (1 - 2 * df)) * Math.log(t * 2 * df + 1) * bidsum/uniquebids.size() *  t;
 		else
-			ft = (0.1*Math.sin(-1000 * Math.exp(t/10)) + 0.9) * Math.log(t/10 + 1);
-
-//		System.out.println(uniquebids.size());
-//		System.out.println("k: " + k + " e: " + e);
-//		System.out.println("Ft: " + ft);
+			ft = (df * Math.sin(-1000 * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
+		
+		if (negotiationSession.getDomain().getNumberOfPossibleBids() < 10)
+			if (negotiationSession.getTime() > 0.8)
+				ft += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil()/(1 - negotiationSession.getTime());
+		
 		return ft;
 	}
 
 	/**
-	 * Makes sure the target utility with in the acceptable range according to the domain
-	 * Goes from Pmax to Pmin!
-	 * @param t
+	 * Adjusts a time-dependent offering function the acceptable range according to the domain (from Pmax to Pmin).
+	 * @param t - time
 	 * @return double
 	 */
-	public double p(double t) {
-		return Pmin + (Pmax - Pmin) * (1 - f(t));
-	}
+	public double p(double t) {	return Pmin + (Pmax - Pmin) * (1 - f(t)); }
 
-	public NegotiationSession getNegotiationSession() {
-		return negotiationSession;
-	}
+	public NegotiationSession getNegotiationSession() {	return negotiationSession; }
 }
