@@ -1,172 +1,217 @@
 package negotiator.boaframework.opponentmodel;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
+
 import negotiator.Bid;
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
 import negotiator.boaframework.OpponentModel;
 import negotiator.issue.Issue;
+import negotiator.issue.IssueDiscrete;
 import negotiator.issue.Objective;
 import negotiator.issue.ValueDiscrete;
-import negotiator.issue.IssueDiscrete;
 import negotiator.utility.Evaluator;
 import negotiator.utility.EvaluatorDiscrete;
 import negotiator.utility.UtilitySpace;
 
-/**
- * BOA framework implementation of the HardHeaded Frequecy Model.
- * My main contribution to this model is that I fixed a bug in the mainbranch
- * which resulted in an equal preference of each bid in the ANAC 2011 competition.
- * Effectively, the corrupt model resulted in the offering of a random bid in the ANAC 2011.
- * 
- * Default: learning coef l = 0.2; learnValueAddition v = 1.0
- * 
- * Adapted by Mark Hendrikx to be compatible with the BOA framework.
- *
- * Tim Baarslag, Koen Hindriks, Mark Hendrikx, Alex Dirkzwager and Catholijn M. Jonker.
- * Decoupling Negotiating Agents to Explore the Space of Negotiation Strategies
- * 
- * @author Mark Hendrikx
- */
-public class OpponentsModel extends OpponentModel {
+public class OpponentsModel
+  extends OpponentModel
+{
+  private double weightCoef = 0.4D;
+  private double weightDecr = 0.2D;
+  private double initCoef = 0.4D;
+  private int learnValueAddition = 1;
+  private int amountOfIssues;
+  private ArrayList<Bid> smallHistory;
+  private double lastTime = 0.0D;
+  private ArrayList<Double> timeList = new ArrayList<Double>();
+  private int roundsEst = 15000;
+  
+  public OpponentsModel() {}
+  
+  public OpponentsModel(NegotiationSession negotiationSession)
+  {
+    this.negotiationSession = negotiationSession;
+    this.smallHistory = new ArrayList<Bid>();
+    initializeModel();
+  }
+  
+  public void init(NegotiationSession negotiationSession, HashMap<String, Double> parameters)
+    throws Exception
+  {
+    this.negotiationSession = negotiationSession;
+    this.smallHistory = new ArrayList<Bid>();
+    initializeModel();
+  }
+  
+  private void initializeModel()
+  {
+    this.opponentUtilitySpace = new UtilitySpace(this.negotiationSession.getUtilitySpace());
+    this.amountOfIssues = this.opponentUtilitySpace.getDomain().getIssues().size();
+    double commonWeight = 1.0D / this.amountOfIssues;
+    for (Map.Entry<Objective, Evaluator> e : this.opponentUtilitySpace.getEvaluators())
+    {
+      this.opponentUtilitySpace.unlock((Objective)e.getKey());
+      ((Evaluator)e.getValue()).setWeight(commonWeight);
+      try
+      {
+        for (ValueDiscrete vd : ((IssueDiscrete)e.getKey()).getValues()) {
+          ((EvaluatorDiscrete)e.getValue()).setEvaluation(vd, 1);
+        }
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+  }
+  
+  private HashMap<Integer, Integer> determineDifference(BidDetails first, BidDetails second)
+  {
+    HashMap<Integer, Integer> diff = new HashMap<Integer, Integer>();
+    try
+    {
+      for (Issue i : this.opponentUtilitySpace.getDomain().getIssues()) {
+        diff.put(Integer.valueOf(i.getNumber()), Integer.valueOf(
+          ((ValueDiscrete)first.getBid().getValue(i.getNumber())).equals((ValueDiscrete)second.getBid().getValue(i.getNumber())) ? 0 : 1));
+      }
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+    return diff;
+  }
+  
+  public void updateModel(Bid opponentBid, double time)
+  {
+    if (this.negotiationSession.getOpponentBidHistory().size() < 2)
+    {
+      this.smallHistory.add(opponentBid);
+      return;
+    }
+    updateRoundEst(time);
+    
 
-	// the learning coefficient is the weight that is added each turn to the issue weights
-	// which changed. It's a trade-off between concession speed and accuracy.
-	private double learnCoef;
-	// value which is added to a value if it is found. Determines how fast
-	// the value weights converge.
-	private int learnValueAddition;
-	private int amountOfIssues;
-	
-	/**
-	 * Initializes the utility space of the opponent such that all value
-	 * issue weights are equal.
-	 */
-	@Override
-	public void init(NegotiationSession negotiationSession, HashMap<String, Double> parameters) throws Exception {
-		this.negotiationSession = negotiationSession;
-		if (parameters != null && parameters.get("l") != null) {
-			learnCoef = parameters.get("l");
-		} else {
-			learnCoef = 0.2;
-		}
-		learnValueAddition = 1;
-		initializeModel();
-	}
-	
-	private void initializeModel(){
-		opponentUtilitySpace = new UtilitySpace(negotiationSession.getUtilitySpace());
-		amountOfIssues = opponentUtilitySpace.getDomain().getIssues().size();
-		double commonWeight = 1D / (double)amountOfIssues;    
-		
-		// initialize the weights
-		for(Entry<Objective, Evaluator> e: opponentUtilitySpace.getEvaluators()){
-			// set the issue weights
-			opponentUtilitySpace.unlock(e.getKey());
-			e.getValue().setWeight(commonWeight);
-			try {
-				// set all value weights to one (they are normalized when calculating the utility)
-				for(ValueDiscrete vd : ((IssueDiscrete)e.getKey()).getValues())
-					((EvaluatorDiscrete)e.getValue()).setEvaluation(vd,1);  
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-	}
-	
-	/**
-	 * Determines the difference between bids. For each issue, it is determined if the
-	 * value changed. If this is the case, a 1 is stored in a hashmap for that issue, else a 0.
-	 * 
-	 * @param a bid of the opponent
-	 * @param another bid
-	 * @return
-	 */
-	private HashMap<Integer, Integer> determineDifference(BidDetails first, BidDetails second){
-		
-		HashMap<Integer, Integer> diff = new HashMap<Integer, Integer>();
-		try{
-			for(Issue i : opponentUtilitySpace.getDomain().getIssues()){
-				diff.put(i.getNumber(), (
-						((ValueDiscrete)first.getBid().getValue(i.getNumber())).equals((ValueDiscrete)second.getBid().getValue(i.getNumber()))
-						 				)?0:1);
-			}
-		} catch (Exception ex){
-			ex.printStackTrace();
-		}
-		
-		return diff;
-	}
-	
-	/**
-	 * Updates the opponent model given a bid.
-	 */
-	@Override
-	public void updateModel(Bid opponentBid, double time) {		
-		if(negotiationSession.getOpponentBidHistory().size() < 2) {
-			return;
-		}
-		int numberOfUnchanged = 0;
-		BidDetails oppBid = negotiationSession.getOpponentBidHistory().getHistory().get(negotiationSession.getOpponentBidHistory().size() - 1);
-		BidDetails prevOppBid = negotiationSession.getOpponentBidHistory().getHistory().get(negotiationSession.getOpponentBidHistory().size() - 2);
-		HashMap<Integer, Integer> lastDiffSet = determineDifference(prevOppBid, oppBid);
-		
-		// count the number of changes in value
-		for(Integer i: lastDiffSet.keySet()){
-			if(lastDiffSet.get(i) == 0)
-				numberOfUnchanged ++;
-		}
-		
-		// This is the value to be added to weights of unchanged issues before normalization. 
-		// Also the value that is taken as the minimum possible weight, (therefore defining the maximum possible also). 
-		double goldenValue = learnCoef / (double)amountOfIssues;
-		// The total sum of weights before normalization.
-		double totalSum = 1D + goldenValue * (double)numberOfUnchanged;
-		// The maximum possible weight
-		double maximumWeight = 1D - ((double)amountOfIssues) * goldenValue / totalSum; 
-		
-		
-		
-		// re-weighing issues while making sure that the sum remains 1 
-		for(Integer i: lastDiffSet.keySet()){
-			if (lastDiffSet.get(i) == 0 && opponentUtilitySpace.getWeight(i)< maximumWeight)
-				opponentUtilitySpace.setWeight(opponentUtilitySpace.getDomain().getObjective(i), (opponentUtilitySpace.getWeight(i) + goldenValue)/totalSum);
-			else
-				opponentUtilitySpace.setWeight(opponentUtilitySpace.getDomain().getObjective(i), opponentUtilitySpace.getWeight(i)/totalSum);
-		}
-		
-		// Then for each issue value that has been offered last time, a constant value is added to its corresponding ValueDiscrete.
-		try{
-			for(Entry<Objective, Evaluator> e: opponentUtilitySpace.getEvaluators()){
-				// cast issue to discrete and retrieve value. Next, add constant learnValueAddition to the current preference of the value to make
-				// it more important
-				( (EvaluatorDiscrete)e.getValue() ).setEvaluation(oppBid.getBid().getValue(((IssueDiscrete)e.getKey()).getNumber()), 
-					( learnValueAddition + 
-						((EvaluatorDiscrete)e.getValue()).getEvaluationNotNormalized( 
-							( (ValueDiscrete)oppBid.getBid().getValue(((IssueDiscrete)e.getKey()).getNumber()) ) 
-						)
-					)
-				);
-			}
-		} catch(Exception ex){
-			ex.printStackTrace();
-		}
-	}
- 
-	@Override
-	public double getBidEvaluation(Bid bid) {
-		double result = 0;
-		try {
-			result = opponentUtilitySpace.getUtility(bid);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	
-	@Override
-	public String getName() {
-		return "HardHeaded Frequency Model";
-	}
+    int numberOfUnchanged = 0;
+    BidDetails oppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().getHistory().get(this.negotiationSession.getOpponentBidHistory().size() - 1);
+    BidDetails prevOppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().getHistory().get(this.negotiationSession.getOpponentBidHistory().size() - 2);
+    HashMap<Integer, Integer> lastDiffSet = determineDifference(prevOppBid, oppBid);
+    for (Integer i : lastDiffSet.keySet()) {
+      if (((Integer)lastDiffSet.get(i)).intValue() == 0) {
+        numberOfUnchanged++;
+      }
+    }
+    if (numberOfUnchanged == this.amountOfIssues)
+    {
+      this.weightCoef -= this.weightDecr;
+      if (this.weightCoef < 0.0D) {
+        this.weightCoef = 0.0D;
+      }
+    }
+    else
+    {
+      this.weightCoef = this.initCoef;
+      if (!this.smallHistory.contains(opponentBid)) {
+        this.smallHistory.add(opponentBid);
+      }
+    }
+    double goldenValue = this.weightCoef / this.amountOfIssues;
+    
+    double totalSum = 1.0D + goldenValue * numberOfUnchanged;
+    
+    double maximumWeight = 1.0D - this.amountOfIssues * goldenValue / totalSum;
+    for (Integer i : lastDiffSet.keySet()) {
+      if ((((Integer)lastDiffSet.get(i)).intValue() == 0) && (this.opponentUtilitySpace.getWeight(i.intValue()) < maximumWeight)) {
+        this.opponentUtilitySpace.setWeight(this.opponentUtilitySpace.getDomain().getObjective(i.intValue()), (this.opponentUtilitySpace.getWeight(i.intValue()) + goldenValue) / totalSum);
+      } else {
+        this.opponentUtilitySpace.setWeight(this.opponentUtilitySpace.getDomain().getObjective(i.intValue()), this.opponentUtilitySpace.getWeight(i.intValue()) / totalSum);
+      }
+    }
+    try
+    {
+      for (Iterator<Map.Entry<Objective, Evaluator>> localIterator = this.opponentUtilitySpace.getEvaluators().iterator(); localIterator.hasNext();)
+      {
+        Map.Entry<Objective, Evaluator> e = (Entry<Objective, Evaluator>)localIterator.next();
+        ((EvaluatorDiscrete)e.getValue()).setEvaluation(oppBid.getBid().getValue(((IssueDiscrete)e.getKey()).getNumber()), 
+          this.learnValueAddition + 
+          ((EvaluatorDiscrete)e.getValue()).getEvaluationNotNormalized(
+          (ValueDiscrete)oppBid.getBid().getValue(((IssueDiscrete)e.getKey()).getNumber())).intValue());
+      }
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+  }
+  
+  public double getBidEvaluation(Bid bid)
+  {
+    double result = 0.0D;
+    try
+    {
+      if (this.smallHistory.size() > 0.2D * this.negotiationSession.getOpponentBidHistory().size())
+      {
+        result = this.opponentUtilitySpace.getUtility(bid);
+      }
+      else
+      {
+        Objective root = this.opponentUtilitySpace.getDomain().getObjectivesRoot();
+        Enumeration<Objective> issueEnum = root.getPreorderIssueEnumeration();
+        while (issueEnum.hasMoreElements())
+        {
+          Objective is = (Objective)issueEnum.nextElement();
+          Evaluator eval = this.opponentUtilitySpace.getEvaluator(is.getNumber());
+          result += eval.getWeight() * valueEval(is, bid);
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+    return result;
+  }
+  
+  private double mapToEval(int freq)
+  {
+    return 70.0D - 1.0D / (10000.0D / this.roundsEst * freq / 15000.0D + 0.01428571428571429D);
+  }
+  
+  public double valueEval(Objective obj, Bid bid)
+    throws Exception
+  {
+    EvaluatorDiscrete lEval = (EvaluatorDiscrete)this.opponentUtilitySpace.getEvaluator(obj.getNumber());
+    int variable = 0;
+    for (ValueDiscrete vd : lEval.getValues()) {
+      if (variable < lEval.getEvaluationNotNormalized(vd).intValue()) {
+        variable = lEval.getEvaluationNotNormalized(vd).intValue();
+      }
+    }
+    int idc = lEval.getEvaluationNotNormalized(bid, obj.getNumber()).intValue();
+    
+    return mapToEval(idc) / mapToEval(variable);
+  }
+  
+  private void updateRoundEst(double t)
+  {
+    this.timeList.add(Double.valueOf(t - this.lastTime));
+    this.lastTime = t;
+    if (this.timeList.size() >= 10)
+    {
+      if (this.timeList.size() > 10) {
+        this.timeList.remove(0);
+      }
+      double sum = 0.0D;
+      for (int i = 0; i < this.timeList.size(); i++) {
+        sum += ((Double)this.timeList.get(i)).doubleValue();
+      }
+      this.roundsEst = ((int)(this.timeList.size() / sum));
+    }
+  }
 }
