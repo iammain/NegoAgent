@@ -3,8 +3,6 @@ package negotiator.boaframework.acceptanceconditions.other;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import negotiator.Bid;
-import negotiator.BidHistory;
 import negotiator.boaframework.AcceptanceStrategy;
 import negotiator.boaframework.Actions;
 import negotiator.boaframework.NegotiationSession;
@@ -12,17 +10,13 @@ import negotiator.boaframework.OfferingStrategy;
 import negotiator.boaframework.OpponentModel;
 import negotiator.boaframework.offeringstrategy.other.NegoAgent_TDOffering;
 import negotiator.boaframework.omstrategy.BidStrategy;
-import negotiator.boaframework.opponentmodel.OpponentsModel;
-import negotiator.issue.Issue;
 import negotiator.utility.UtilitySpace;
 
 /**
  * This Acceptance Condition will accept an opponent bid if the utility is higher than the 
  * bid the agent is ready to present
- * 
  * Decoupling Negotiating Agents to Explore the Space of Negotiation Strategies
  * T. Baarslag, K. Hindriks, M. Hendrikx, A. Dirkzwager, C.M. Jonker
- * 
  * @author Alex Dirkzwager, Mark Hendrikx
  * @version 18/12/11
  */
@@ -54,8 +48,6 @@ public class AStrategy extends AcceptanceStrategy {
 	public void init(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, HashMap<String, Double> parameters) throws Exception {
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
-                this.omBidStrat= new BidStrategy(negotiationSession, opponentModel);
-                this.nATDO = new NegoAgent_TDOffering(negoSession, opponentModel, omBidStrat, 1, 0, 0.99, 0);
 
 		if (parameters.get("a") != null || parameters.get("b") != null) {
 			a = parameters.get("a");
@@ -77,20 +69,21 @@ public class AStrategy extends AcceptanceStrategy {
         
 	@Override
 	public Actions determineAcceptability() {
-            System.out.println("New Debug");
+            System.out.println("-------------------------- ");
             
             try {
                 double negTime    = negotiationSession.getTime();
-                double prediction =negotiationSession.getOpponentBidHistory().filterBetweenTime(negTime-.001,  negTime).size();
+                double prediction = negotiationSession.getOpponentBidHistory().filterBetweenTime(negTime-.001,  negTime).size();
                 double discountFactor = negotiationSession.getDiscountFactor()!=1?negotiationSession.getDiscountFactor():.95;
-                System.out.println(prediction);
                 double randValue = Math.random()*.2-.1;
-                System.out.println(randValue);
                 if(negotiationSession.getTime()>0 && negotiationSession.getTime() <.80+randValue ){
                     if(prediction>1 ){
                         c = 1/prediction;
+                        System.out.println(Math.pow(prediction,c));
+                        
                         lamda = lamda+(1-lamda)*Math.pow(prediction, c );
                         lamda = lamda*negTime;
+                        System.out.println("lamda modified " + lamda);
                     }
                 }
                 UtilitySpace bH = negotiationSession.getUtilitySpace();
@@ -106,8 +99,8 @@ public class AStrategy extends AcceptanceStrategy {
                             *Math.pow(negotiationSession.getTime()/lamda ,a);
                     ACCEPTANCE_THRESHOLD = tempAcceptance;
                 }
-                System.out.println("negotiatino Session and lamda " +negotiationSession.getTime() + " " + lamda);
-                System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
+                //System.out.println("negotiation Session and lamda " +negotiationSession.getTime() + " " + lamda);
+                //System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
             } catch (Exception ex) {
                 Logger.getLogger(AStrategy.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,9 +109,10 @@ public class AStrategy extends AcceptanceStrategy {
             negotiationSession.getOwnBidHistory().getBestBidDetails().getMyUndiscountedUtil();
             double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
             
-            System.out.println("is nash " + nATDO.isNash());
+            //System.out.println("is nash " + nATDO.isNash());
             double nextThres  = nextMyBidUtil + nextMyBidUtil*preassureThreshold; 
             System.out.println("Next Threshold " + nextThres);
+            System.out.println("preassureThreshold " + preassureThreshold);
             if(lastOpponentBidUtil > ACCEPTANCE_THRESHOLD ||lastOpponentBidUtil > nextThres)
                     return Actions.Accept;
             return Actions.Reject;
