@@ -34,7 +34,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	/** Sum of opponent's bids */
 	private double bidsum;
 	/** Number of unique opponent bids */
-	public List<Double> uniquebids = new ArrayList<Double>();
+	private List<Double> uniquebids = new ArrayList<Double>();
 	/** Outcome space */
 	SortedOutcomeSpace outcomespace;
 	
@@ -193,7 +193,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 		else if (uniquebids.size() > 1) // Should be something less agressive
 			ft = (2 * df * Math.sin(-num * Math.exp(t * 2 * df)) + (1 - 2 * df)) * Math.log(t * 2 * df + 1) * bidsum/uniquebids.size() *  t;
 		else
-			ft = (df * Math.sin(-1000 * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
+			ft = (df * Math.sin(-num * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
 		
 		if (negotiationSession.getDomain().getNumberOfPossibleBids() < 10)
 			if (negotiationSession.getTime() > 0.8)

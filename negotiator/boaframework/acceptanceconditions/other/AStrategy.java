@@ -1,7 +1,10 @@
 package negotiator.boaframework.acceptanceconditions.other;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,23 +18,22 @@ import negotiator.boaframework.omstrategy.BidStrategy;
 import negotiator.utility.UtilitySpace;
 
 /**
- * This Acceptance Condition will accept an opponent bid if the utility is higher than the 
- * bid the agent is ready to present
- * Decoupling Negotiating Agents to Explore the Space of Negotiation Strategies
- * T. Baarslag, K. Hindriks, M. Hendrikx, A. Dirkzwager, C.M. Jonker
- * @author Alex Dirkzwager, Mark Hendrikx
- * @version 18/12/11
+ * Opponent Model
+ * 
+ * @author Kirill Tumanov, Panagiotis Chatzichristodoulou
  */
 public class AStrategy extends AcceptanceStrategy {
     
     private double ACCEPTANCE_THRESHOLD = 1;
-    private double lamda;
+    private double lambda;
+    private double initlambda;
 	private double a;
 	private double b;
     private double c;
     private double preassureThreshold;
     public NegoAgent_TDOffering nATDO;
     public BidStrategy  omBidStrat;
+	
 
 	/**
 	 * Empty constructor for the BOA framework.
@@ -60,10 +62,11 @@ public class AStrategy extends AcceptanceStrategy {
 		} 
 		else 
 		{
-			a = .7;
-			b = .2;
-            c = .2;
-            lamda = .1 + .9* Math.pow(negotiationSession.getDiscountFactor()==1?.90:negotiationSession.getDiscountFactor(), b);
+			a = .2;
+			b = 15;
+            c = 10;
+            lambda = 0;
+            initlambda = 0.000001;
             
             preassureThreshold = .05;
 		}
@@ -71,6 +74,29 @@ public class AStrategy extends AcceptanceStrategy {
 	
 	@Override
 	public String printParameters() { return new String("[a: " + a + " b: " + b + "]"); }
+	
+	/**
+	 * Method which calculates a number of unique opponent bids given time boundaries
+	 */
+	public int countUniqueBidsAtPeriod(double t1, double t2)
+	{
+		if (negotiationSession.getOpponentBidHistory().filterBetweenTime(t1, t2).size() != 0)
+		{
+			List<Double> ub = new ArrayList<Double>();
+			
+			for (int i = 0; i < negotiationSession.getOpponentBidHistory().filterBetweenTime(t1, t2).size(); i ++)
+				ub.add(negotiationSession.getOpponentBidHistory().filterBetweenTime(t1, t2).getHistory().get(i).getMyUndiscountedUtil());
+			
+			// Remove duplicate obstacles
+		  	Set<Double> s = new LinkedHashSet<Double>(ub);
+		  	ub.clear();
+		  	ub.addAll(s);
+		  	
+		  	return ub.size();
+		}
+		
+		return 0;
+	}
         
 	@Override
 	public Actions determineAcceptability() 
@@ -79,35 +105,32 @@ public class AStrategy extends AcceptanceStrategy {
             
             try {
                 double negTime = negotiationSession.getTime();
-                double prediction = negotiationSession.getOpponentBidHistory().filterBetweenTime(negTime,  negTime + 0.001).size();
-                double discountFactor = negotiationSession.getDiscountFactor();
-                Random r = new Random();
-                double randValue = r.nextDouble();
+                double dt = 0.1; // Time difference determining a window size
+                double numbidInTime = countUniqueBidsAtPeriod(negTime - dt,  negTime); // Number of unique bids in a window
+                double discountFactor = negotiationSession.getDiscountFactor();    
                 UtilitySpace bH = negotiationSession.getUtilitySpace();
                 
-                if(negotiationSession.getTime() < randValue)
-//                    if(prediction > 1)
-                    {
-                        c = 1/prediction;
-//                        System.out.println(Math.pow(prediction,c));
-                        
-                        // TODO nATDO.getUniqueBidsCount() is returning zero instead of positive int
-                        System.out.println("Unique bids size: " +  nATDO.getUniqueBidsCount() / negotiationSession.getOpponentBidHistory().size());
-                        
-                        lamda += (1 - lamda) * Math.pow(prediction, c); //1 / (nATDO.getUniqueBidsCount() / negotiationSession.getOpponentBidHistory().size()) * (1 - lamda) * Math.pow(prediction, c);
-//                        lamda *= negTime;
-                        System.out.println("lamda modified " + lamda);
-                    }                
+                if(lambda != 0)
+                {
+                    double n1 = nATDO.getUniqueBidsCount();
+                    double n2 = negotiationSession.getOpponentBidHistory().size();
+                    
+                    numbidInTime = numbidInTime * dt;
+                    
+                    lambda +=  (n1/n2) * (1 - lambda) * Math.pow(numbidInTime, c);
+                    System.out.println("lamda modified " + lambda);
+                }         
+                else
+                	lambda = initlambda + (1 - initlambda) * Math.pow(discountFactor, b);
                                             
-                if(negotiationSession.getTime() <= lamda)
+                if(negotiationSession.getTime() < lambda)
                 {
                     double maxUtility = bH.getUtility(bH.getMaxUtilityBid());
-                    ACCEPTANCE_THRESHOLD = maxUtility * (1 - (1 -  Math.pow(discountFactor, 1 - lamda)) * Math.pow(negotiationSession.getTime()/lamda, a));
+                    ACCEPTANCE_THRESHOLD = maxUtility * (1 - (1 -  Math.pow(discountFactor, 1 - lambda)) * Math.pow(negTime/lambda, a));
                 }
                 else
-                    ACCEPTANCE_THRESHOLD = bH.getUtility(bH.getMaxUtilityBid()) * Math.pow(discountFactor, 1 - lamda);
+                    ACCEPTANCE_THRESHOLD = bH.getUtility(bH.getMaxUtilityBid()) * Math.pow(discountFactor, 1 - negTime);
                 
-                //System.out.println("negotiation Session and lamda " +negotiationSession.getTime() + " " + lamda);
                 System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
             } catch (Exception ex) { Logger.getLogger(AStrategy.class.getName()).log(Level.SEVERE, null, ex); }
