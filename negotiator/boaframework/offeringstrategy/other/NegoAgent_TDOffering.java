@@ -143,7 +143,6 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 //		System.out.println("Size: " + negotiationSession.getOpponentBidHistory().getHistory().size());
 		
 		int count = 0;
-		
 		if (negotiationSession.getOpponentBidHistory().getHistory().size() == 1)
 		{
 			uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
@@ -151,23 +150,45 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 		}
 		else if (negotiationSession.getOpponentBidHistory().getHistory().size() != 0)
 		{
-			for (int j = 0; j < uniquebids.size(); j ++)
-				if (uniquebids.get(j) != negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil())
-					count ++;		
-			
+                        for (int j = 0; j < uniquebids.size(); j ++){
+                            if (uniquebids.get(j) != negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil())
+                                    count ++;
+                        }
+                        
 			if (count == uniquebids.size())
 			{
-				uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+                            uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
 //				System.out.println();
 //				System.out.println("My utility: " + negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
 //				System.out.println("Opponent utility: " + opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()));
-				
-				bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
-				
-//				if (isNash())
-//					System.out.println("There is a Nash - stop it!!!!!!!!!!!!!!!!!!!!!!!!!");
-			}
+
+                            bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+                        }
 		}
+	}
+        public int countUniqueBids(boolean adsf) throws InterruptedException
+	{
+            int count = 0;
+            if (negotiationSession.getOpponentBidHistory().getHistory().size() == 1)
+            {
+                uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+                bidsum += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+            }
+            else if (negotiationSession.getOpponentBidHistory().getHistory().size() != 0)
+            {
+                if(uniquebids.size()==0){
+                        uniquebids.add(negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil());
+                        count++;
+                }
+                else{
+                    for (int j = 0; j < uniquebids.size(); j ++){
+                            if (uniquebids.get(j) != negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil()){
+                                    count++;
+                            }
+                    }
+                }
+            }
+            return count;
 	}
 	
 	/**
