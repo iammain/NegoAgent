@@ -34,7 +34,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	/** Sum of opponent's bids */
 	private double bidsum;
 	/** Number of unique opponent bids */
-	public List<Double> uniquebids = new ArrayList<Double>();
+	private List<Double> uniquebids = new ArrayList<Double>();
 	/** Outcome space */
 	SortedOutcomeSpace outcomespace;
 	
@@ -93,9 +93,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	}
 
 	@Override
-	public BidDetails determineOpeningBid() {
-		return determineNextBid();
-	}
+	public BidDetails determineOpeningBid() { return determineNextBid(); }
 
 	/**
 	 * Simple offering strategy which retrieves the target utility and looks for the nearest bid if no opponent model is specified.
@@ -123,14 +121,16 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	 */
 	public boolean isNash()
 	{
-		double temp = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
-				+ opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid());
-		
-		if (temp < nashsum && opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()) < negotiationSession.getOpponentBidHistory().getBestBidDetails().getMyUndiscountedUtil()
-				)
-			return true;
-		else
-			nashsum = temp;
+		if (negotiationSession.getOpponentBidHistory().getLastBid() != null)
+		{
+			double temp = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
+					+ opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid());
+			
+			if (temp < nashsum && opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()) < negotiationSession.getOpponentBidHistory().getBestBidDetails().getMyUndiscountedUtil())
+				return true;
+			else
+				nashsum = temp;
+		}
 		
 		return false;
 	}
@@ -140,8 +140,6 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	 */
 	public void countUniqueBids()
 	{
-//		System.out.println("Size: " + negotiationSession.getOpponentBidHistory().getHistory().size());
-		
 		int count = 0;
 		if (negotiationSession.getOpponentBidHistory().getHistory().size() == 1)
 		{
@@ -214,9 +212,9 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 			ft = (df * Math.sin(-num * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1) * bidsum/uniquebids.size() *  t;			
 		}
 		else if (uniquebids.size() > 1) // Should be something less agressive
-			ft = (2 * df *Math.sin(-num * Math.exp(t * 2 * df)) + (1 - 2 * df)) * Math.log(t * 2 * df + 1) * bidsum/uniquebids.size() *  t;
+			ft = (2 * df * Math.sin(-num * Math.exp(t * 2 * df)) + (1 - 2 * df)) * Math.log(t * 2 * df + 1) * bidsum/uniquebids.size() *  t;
 		else
-			ft = (df * Math.sin(-1000 * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
+			ft = (df * Math.sin(-num * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
 		
 		if (negotiationSession.getDomain().getNumberOfPossibleBids() < 10)
 			if (negotiationSession.getTime() > 0.8)
@@ -233,4 +231,6 @@ public class NegoAgent_TDOffering extends OfferingStrategy {
 	public double p(double t) {	return Pmin + (Pmax - Pmin) * (1 - f(t)); }
 
 	public NegotiationSession getNegotiationSession() {	return negotiationSession; }
+	
+	public int getUniqueBidsCount() { countUniqueBids(); return uniquebids.size(); }
 }
