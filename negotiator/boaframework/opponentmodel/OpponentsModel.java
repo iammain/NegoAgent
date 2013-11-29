@@ -97,7 +97,7 @@ public class OpponentsModel
     
     //Simple frequency stuff
     if(consetionDegree<3){
-        System.out.println("returned due to frequency thingy oponent proposes less than 3  ");
+        //System.out.println("returned due to frequency thingy oponent proposes less than 3  ");
         return;
     }
     updateRoundEst(time);
@@ -215,13 +215,14 @@ public class OpponentsModel
     }
   }
   public double getOpponentThreshold(){
+    double NegotiatedTooLong = .45;
     double oponentFirstUtil = negotiationSession.getOpponentBidHistory().getFirstBidDetails().getMyUndiscountedUtil();
     double myUtility        = negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil();
     
     double dous = myUtility - oponentFirstUtil;
     
     double threshold=1;
-    System.out.println("dous " + dous);
+    
     BidHistory bH = negotiationSession.getOpponentBidHistory();
     bH.getLastBidDetails().getMyUndiscountedUtil();
     int horizon = 20;
@@ -243,17 +244,22 @@ public class OpponentsModel
             variance += (prevOppBid.getMyUndiscountedUtil() - mean)*(prevOppBid.getMyUndiscountedUtil() - mean);
         }
         variance /= horizon;
-        double asdfasd = mean + dous/2;
+        double asdfasd = (mean + dous)/2;
         double time = negotiationSession.getTime();
         
-        
-        
-        threshold = asdfasd+10*variance;
-        
-        
-        if(time>.90){
-            double lowertime = .9;
-            for(int i=0;i<10;i++){
+        if(time>.80 && time<=.90){
+            double lowertime = .80;
+            for(int i=1;i<11;i++){
+                double uppertime = lowertime +.01;
+                if(uppertime>time && lowertime<time){
+                    threshold = asdfasd- (1-i)*variance;
+                    break;
+                }
+                lowertime +=.01;
+            }
+        }else if(time>.90){
+            double lowertime = .90;
+            for(int i=1;i<11;i++){
                 double uppertime = lowertime +.01;
                 if(uppertime>time && lowertime<time){
                     threshold = asdfasd+ (1-i)*variance;
@@ -262,11 +268,14 @@ public class OpponentsModel
                 lowertime +=.01;
             }
         }else 
-            threshold = asdfasd+ 10*variance;
+            threshold = asdfasd+ variance;
         
+        if(threshold>=1)
+            threshold = (mean + dous)/2;
         
-//        System.out.println("Threshold" +  threshold);
-    }
+        if(negotiationSession.getTime()>NegotiatedTooLong || threshold<0)
+            return 0;
+    }    
     return threshold;
   }
 }
