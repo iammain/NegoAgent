@@ -15,6 +15,7 @@ import negotiator.boaframework.OfferingStrategy;
 import negotiator.boaframework.OpponentModel;
 import negotiator.boaframework.offeringstrategy.other.NegoAgent_TDOffering;
 import negotiator.boaframework.omstrategy.BidStrategy;
+import negotiator.boaframework.opponentmodel.OpponentsModel;
 import negotiator.utility.UtilitySpace;
 
 /**
@@ -131,7 +132,7 @@ public class AStrategy extends AcceptanceStrategy {
                 else
                     ACCEPTANCE_THRESHOLD = bH.getUtility(bH.getMaxUtilityBid()) * Math.pow(discountFactor, 1 - negTime);
                 
-                System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
+                //System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
             } catch (Exception ex) { Logger.getLogger(AStrategy.class.getName()).log(Level.SEVERE, null, ex); }
             
@@ -139,8 +140,17 @@ public class AStrategy extends AcceptanceStrategy {
             double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
             double nextThres  = nextMyBidUtil * (1 - preassureThreshold) * Math.exp(1 - nextMyBidUtil); 
             
-            System.out.println("Next Threshold " + nextThres);
-            System.out.println("preassureThreshold " + preassureThreshold);            
+            //System.out.println("Next Threshold " + nextThres);
+            //System.out.println("preassureThreshold " + preassureThreshold);
+            
+            OpponentsModel oM = new OpponentsModel(negotiationSession);            
+            double weakThreshold = oM.getOpponentThreshold();
+            System.out.println("Weak discounted thresh "  +weakThreshold*negotiationSession.getDiscountFactor());
+            System.out.println("Last op bid " +lastOpponentBidUtil);
+            
+            if(lastOpponentBidUtil <= weakThreshold*negotiationSession.getDiscountFactor())
+                return Actions.Reject;
+            System.out.println("Passed weak threshold");
             
             if(lastOpponentBidUtil >= ACCEPTANCE_THRESHOLD || lastOpponentBidUtil >= nextThres)
                     return Actions.Accept;
