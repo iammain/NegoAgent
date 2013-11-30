@@ -225,7 +225,11 @@ public class OpponentsModel
   {
     BidHistory bH            = negotiationSession.getOpponentBidHistory();
     double oponentFirstUtil  = bH.getLastBidDetails().getMyUndiscountedUtil();
-    double myUtility         = negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil();
+    double myUtility         = 0;
+    
+    if (!negotiationSession.getOwnBidHistory().isEmpty())
+    	myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+    
     double dous              = myUtility - oponentFirstUtil; 
     double NegotiatedTooLong = .45;
     double threshold         = 1;    

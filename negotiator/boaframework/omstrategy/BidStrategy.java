@@ -41,7 +41,7 @@ public class BidStrategy extends OMStrategy
 		try
 		{
 			super.init(negotiationSession, model);
-			this.lastTen = new ArrayDeque<Double>(negotiationSession.getOpponentBidHistory().size()/10 + 1);
+			this.lastTen = new ArrayDeque<Double>(10 + 1);
 		}
 		catch (Exception e) { e.printStackTrace(); }
   	}
@@ -83,7 +83,7 @@ public class BidStrategy extends OMStrategy
 	    
 	    this.lastTen.addLast(Double.valueOf(opponentBestBid.getMyUndiscountedUtil()));
 	    
-	    if (this.lastTen.size() > negotiationSession.getOpponentBidHistory().size()/10)
+	    if (this.lastTen.size() > 10)
 	    	this.lastTen.removeFirst();
 	    
 	    return opponentBestBid;

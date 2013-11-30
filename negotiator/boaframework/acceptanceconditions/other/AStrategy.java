@@ -33,8 +33,8 @@ public class AStrategy extends AcceptanceStrategy {
 	private double b;
     private double c;
     private double preassureThreshold;
-    public NegoAgent_TDOffering nATDO;
-    public BidStrategy  omBidStrat;
+    public NegoAgent_TDOffering TDO;
+    public BidStrategy omBidStrat;
 	
 
 	/**
@@ -55,7 +55,7 @@ public class AStrategy extends AcceptanceStrategy {
 	{
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;
-		this.nATDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, 1, 0, .99, 0);
+		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, 1, 0, .99, 0);
 		
 		if (parameters.get("a") != null || parameters.get("b") != null) 
 		{
@@ -68,9 +68,11 @@ public class AStrategy extends AcceptanceStrategy {
 			b = 15;
             c = 10;
             lambda = 0;
-            initlambda = 0.000001;
-            
+            initlambda = 0.000001;            
             preassureThreshold = .05;
+         
+            b -= b * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
+            c -= c * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
 		}
 	}
 	
@@ -110,11 +112,11 @@ public class AStrategy extends AcceptanceStrategy {
                 double dt = 0.1; // Time difference determining a window size
                 double numbidInTime = countUniqueBidsAtPeriod(negTime - dt,  negTime); // Number of unique bids in a window
                 double discountFactor = negotiationSession.getDiscountFactor();    
-                UtilitySpace bH = negotiationSession.getUtilitySpace();
-                
+                UtilitySpace uS = negotiationSession.getUtilitySpace();
+                               
                 if(lambda != 0)
                 {
-                    double n1 = nATDO.getUniqueBidsCount();
+                    double n1 = TDO.getUniqueBidsCount();
                     double n2 = negotiationSession.getOpponentBidHistory().size();
                     
                     numbidInTime = numbidInTime * dt;
@@ -127,13 +129,13 @@ public class AStrategy extends AcceptanceStrategy {
                                             
                 if(negotiationSession.getTime() < lambda)
                 {
-                    double maxUtility = bH.getUtility(bH.getMaxUtilityBid());
+                    double maxUtility = uS.getUtility(uS.getMaxUtilityBid());
                     ACCEPTANCE_THRESHOLD = maxUtility * (1 - (1 -  Math.pow(discountFactor, 1 - lambda)) * Math.pow(negTime/lambda, a));
                 }
                 else
-                    ACCEPTANCE_THRESHOLD = bH.getUtility(bH.getMaxUtilityBid()) * Math.pow(discountFactor, 1 - negTime);
+                    ACCEPTANCE_THRESHOLD = uS.getUtility(uS.getMaxUtilityBid()) * Math.pow(discountFactor, 1 - negTime);
                 
-                //System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
+                System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
             } catch (Exception ex) { Logger.getLogger(AStrategy.class.getName()).log(Level.SEVERE, null, ex); }
             
@@ -141,16 +143,16 @@ public class AStrategy extends AcceptanceStrategy {
             double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
             double nextThres  = nextMyBidUtil * (1 - preassureThreshold) * Math.exp(1 - nextMyBidUtil); 
             
-            //System.out.println("Next Threshold " + nextThres);
+            System.out.println("Next Threshold " + nextThres);
             //System.out.println("preassureThreshold " + preassureThreshold);
             
             OpponentsModel oM = new OpponentsModel(negotiationSession);            
             double weakThreshold = oM.getOpponentThreshold();
-            System.out.println("Weak discounted thresh "  + weakThreshold * negotiationSession.getDiscountFactor());
+//            System.out.println("Weak discounted thresh "  + weakThreshold * negotiationSession.getDiscountFactor());
             
             if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
                 return Actions.Reject;
-            System.out.println("Passed weak threshold");
+//            System.out.println("Passed weak threshold");
             
             if(lastOpponentBidUtil >= ACCEPTANCE_THRESHOLD || lastOpponentBidUtil >= nextThres)
                     return Actions.Accept;

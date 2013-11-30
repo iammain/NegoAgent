@@ -5,6 +5,7 @@ import java.lang.Math;
 import java.util.List;
 import java.util.ArrayList;
 
+import negotiator.BidHistory;
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
 import negotiator.boaframework.OMStrategy;
@@ -118,16 +119,17 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 	
 	/**
 	 * Method which returns true if the Nash is reached
+	 * @throws Exception 
 	 */
 	public boolean isNash()
 	{
-		if (negotiationSession.getOpponentBidHistory().getLastBid() != null)
+		BidHistory bH = negotiationSession.getOpponentBidHistory();
+		
+		if (bH.getLastBid() != null)
 		{
-			double temp = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
-					+ opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid());
+			double temp = bH.getLastBidDetails().getMyUndiscountedUtil() + opponentModel.getBidEvaluation(bH.getLastBid());
 			
-			if (temp < nashsum && opponentModel.getBidEvaluation(negotiationSession.getOpponentBidHistory().getLastBid()) 
-					< negotiationSession.getOpponentBidHistory().getBestBidDetails().getMyUndiscountedUtil())
+			if (temp < nashsum && opponentModel.getBidEvaluation(bH.getLastBid()) < bH.getBestBidDetails().getMyUndiscountedUtil())
 				return true;
 			else
 				nashsum = temp;
