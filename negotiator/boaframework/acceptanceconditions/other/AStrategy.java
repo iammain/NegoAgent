@@ -127,7 +127,7 @@ public class AStrategy extends AcceptanceStrategy {
                 else
                 	lambda = initlambda + (1 - initlambda) * Math.pow(discountFactor, b);
                                             
-                if(negotiationSession.getTime() < lambda)
+                if(negTime < lambda)
                 {
                     double maxUtility = uS.getUtility(uS.getMaxUtilityBid());
                     ACCEPTANCE_THRESHOLD = maxUtility * (1 - (1 -  Math.pow(discountFactor, 1 - lambda)) * Math.pow(negTime/lambda, a));
