@@ -13,15 +13,14 @@ import negotiator.boaframework.NegotiationSession;
 import negotiator.boaframework.OMStrategy;
 import negotiator.boaframework.OpponentModel;
 
-
 /**
- * This class uses an opponent model to determine the next bid for the opponent, while taking
- * the opponent's preferences into account. The opponent model is used to select the best bid.
- *
+ * Opponent's Model Strategy
  * 
+ * @author Kirill Tumanov
+ * @version 30.11.2013
  */
-public class BidStrategy extends OMStrategy {
- 
+public class BidStrategy extends OMStrategy 
+{ 
 	/**  when to stop updating the opponentmodel. Note that this value
 	 * 	 is not exactly one as a match sometimes lasts slightly longer. */
 	double updateThreshold = 1.1;
@@ -33,15 +32,9 @@ public class BidStrategy extends OMStrategy {
 	 */	
 	public BidStrategy() {}
 	  
-	public BidStrategy(NegotiationSession negotiationSession, OpponentModel model)
-	{
-		initializeAgent(negotiationSession, model);
-	}
+	public BidStrategy(NegotiationSession negotiationSession, OpponentModel model) { initializeAgent(negotiationSession, model); }
 	  
-	public void init(NegotiationSession nSession, OpponentModel oppModel, HashMap<String, Double> parameters) throws Exception
-	{
-		initializeAgent(nSession, oppModel);
-	}
+	public void init(NegotiationSession nSession, OpponentModel oppModel, HashMap<String, Double> parameters) throws Exception { initializeAgent(nSession, oppModel); }
 	  
 	private void initializeAgent(NegotiationSession negotiationSession, OpponentModel model)
 	{
@@ -50,20 +43,14 @@ public class BidStrategy extends OMStrategy {
 			super.init(negotiationSession, model);
 			this.lastTen = new ArrayDeque<Double>(negotiationSession.getOpponentBidHistory().size()/10 + 1);
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+		catch (Exception e) { e.printStackTrace(); }
   	}
 			
 	private static final class BidComparator implements Comparator<BidDetails>
 	{
 		private final OpponentModel model;
 	  
-		protected BidComparator(OpponentModel paramOpponentModel)
-		{
-			this.model = paramOpponentModel;
-		}
+		protected BidComparator(OpponentModel paramOpponentModel) { this.model = paramOpponentModel; }
 	  
 		public int compare(BidDetails paramBidDetails1, BidDetails paramBidDetails2)
 		{

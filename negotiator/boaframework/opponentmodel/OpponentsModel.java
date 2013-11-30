@@ -19,6 +19,12 @@ import negotiator.utility.Evaluator;
 import negotiator.utility.EvaluatorDiscrete;
 import negotiator.utility.UtilitySpace;
 
+/**
+ * Opponent's Model
+ * 
+ * @author Panagiotis Chatzichristodoulou, Kirill Tumanov
+ * @version 30.11.2013
+ */
 public class OpponentsModel
   extends OpponentModel
 {
@@ -54,18 +60,18 @@ public class OpponentsModel
     this.opponentUtilitySpace = new UtilitySpace(this.negotiationSession.getUtilitySpace());
     this.issues = this.opponentUtilitySpace.getDomain().getIssues().size();
     double mosCommonWt = 1.0D / this.issues;
-    for (Map.Entry<Objective, Evaluator> e : this.opponentUtilitySpace.getEvaluators()){
+    
+    for (Map.Entry<Objective, Evaluator> e : this.opponentUtilitySpace.getEvaluators())
+    {
       this.opponentUtilitySpace.unlock((Objective)e.getKey());
       ((Evaluator)e.getValue()).setWeight(mosCommonWt);
-      try{
-        for (ValueDiscrete vd : ((IssueDiscrete)e.getKey()).getValues()) {
-          ((EvaluatorDiscrete)e.getValue()).setEvaluation(vd, 1);
-        }
-      }
-      catch (Exception ex)
+      
+      try
       {
-        ex.printStackTrace();
+        for (ValueDiscrete vd : ((IssueDiscrete)e.getKey()).getValues())
+          ((EvaluatorDiscrete)e.getValue()).setEvaluation(vd, 1);
       }
+      catch (Exception ex) { ex.printStackTrace(); }
     }
   }
   
@@ -96,42 +102,40 @@ public class OpponentsModel
     double consetionDegree = negotiationSession.getOpponentBidHistory().filterBetweenTime(negTime-.001,  negTime).size();
     
     //Simple frequency stuff
-    if(consetionDegree<3){
+    if(consetionDegree < 3){
         //System.out.println("returned due to frequency thingy oponent proposes less than 3  ");
         return;
     }
     updateRoundEst(time);
 
     int numberOfUnchanged = 0;
-    BidDetails oppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().
-            getHistory().get(this.negotiationSession.getOpponentBidHistory().size() - 1);
-    BidDetails prevOppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().
-            getHistory().get(this.negotiationSession.getOpponentBidHistory().size() - 2);
+    BidDetails oppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().getHistory().get(this.negotiationSession.getOpponentBidHistory().size() - 1);
+    BidDetails prevOppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().getHistory().get(this.negotiationSession.getOpponentBidHistory().size() - 2);
     HashMap<Integer, Integer> lastDiffSet = determineDifference(prevOppBid, oppBid);
-    for (Integer i : lastDiffSet.keySet()) {
-      if (((Integer)lastDiffSet.get(i)).intValue() == 0) {
+    
+    for (Integer i : lastDiffSet.keySet())
+      if (((Integer)lastDiffSet.get(i)).intValue() == 0)
         numberOfUnchanged++;
-      }
-    }
+    
     if (numberOfUnchanged == this.issues)
     {
       this.changeCoef -= this.decrFactor;
-      if (this.changeCoef < 0.0D) {
+      
+      if (this.changeCoef < 0.0D)
         this.changeCoef = 0.0D;
-      }
     }
     else
     {
       this.changeCoef = this.startCoef;
-      if (!this.latestHistory.contains(opponentBid)) {
+      
+      if (!this.latestHistory.contains(opponentBid)) 
         this.latestHistory.add(opponentBid);
-      }
     }
-    double goldenValue = this.changeCoef / this.issues;
     
-    double totalSum = 1.0D + goldenValue * numberOfUnchanged;
-    
+    double goldenValue = this.changeCoef / this.issues;    
+    double totalSum = 1.0D + goldenValue * numberOfUnchanged;    
     double maximumWeight = 1.0D - this.issues * goldenValue / totalSum;
+    
     for (Integer i : lastDiffSet.keySet()) {
       if ((((Integer)lastDiffSet.get(i)).intValue() == 0) && (this.opponentUtilitySpace.getWeight(i.intValue()) < maximumWeight)) {
         this.opponentUtilitySpace.setWeight(this.opponentUtilitySpace.getDomain().getObjective(i.intValue()), 
@@ -141,60 +145,60 @@ public class OpponentsModel
                 this.opponentUtilitySpace.getWeight(i.intValue()) / totalSum);
       }
     }
-    try{
+    
+    try
+    {
       for (Iterator<Map.Entry<Objective, Evaluator>> localIterator = this.opponentUtilitySpace.getEvaluators().iterator(); localIterator.hasNext();)
       {
         Map.Entry<Objective, Evaluator> e = (Entry<Objective, Evaluator>)localIterator.next();
         ((EvaluatorDiscrete)e.getValue()).setEvaluation(oppBid.getBid().getValue(((IssueDiscrete)e.getKey()).getNumber()), 
-          this.learnValueAddition + 
-          ((EvaluatorDiscrete)e.getValue()).getEvaluationNotNormalized(
+          this.learnValueAddition + ((EvaluatorDiscrete)e.getValue()).getEvaluationNotNormalized(
           (ValueDiscrete)oppBid.getBid().getValue(((IssueDiscrete)e.getKey()).getNumber())).intValue());
       }
     }
-    catch (Exception ex)
-    {
-      ex.printStackTrace();
-    }
+    catch (Exception ex) { ex.printStackTrace(); }
   }
   
-  public double getBidEvaluation(Bid bid){
-    double result = 0.0D;
-    try{
-      if (this.latestHistory.size() > 0.1D * this.negotiationSession.getOpponentBidHistory().size()){
+  public double getBidEvaluation(Bid bid)
+  {
+    double result = 0;
+    
+    try
+    {
+      if (this.latestHistory.size() > 0.1D * this.negotiationSession.getOpponentBidHistory().size())
         result = this.opponentUtilitySpace.getUtility(bid);
-      }else{
+      else
+      {
         Objective root = this.opponentUtilitySpace.getDomain().getObjectivesRoot();
         Enumeration<Objective> issueEnum = root.getPreorderIssueEnumeration();
-        while (issueEnum.hasMoreElements()){
+        
+        while (issueEnum.hasMoreElements())
+        {
           Objective is = (Objective)issueEnum.nextElement();
           Evaluator eval = this.opponentUtilitySpace.getEvaluator(is.getNumber());
           result += eval.getWeight() * valueEval(is, bid);
         }
       }
     }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
+    catch (Exception e) { e.printStackTrace(); }
+    
     return result;
   }
   
-  private double mapToEval(int freq)
-  {
-    return 70.0D - 1.0D / (10000.0D / this.roundsEst * freq / 15000.0D + 0.01428571428571429D);
-  }
+  private double mapToEval(int freq) { return 70.0D - 1.0D / (10000.0D / this.roundsEst * freq / 15000.0D + 0.01428571428571429D); }
   
   public double valueEval(Objective obj, Bid bid)
     throws Exception
   {
     EvaluatorDiscrete lEval = (EvaluatorDiscrete)this.opponentUtilitySpace.getEvaluator(obj.getNumber());
     int variable = 0;
-    for (ValueDiscrete vd : lEval.getValues()) {
-      if (variable < lEval.getEvaluationNotNormalized(vd).intValue()) {
+    
+    for (ValueDiscrete vd : lEval.getValues())
+      if (variable < lEval.getEvaluationNotNormalized(vd).intValue())
         variable = lEval.getEvaluationNotNormalized(vd).intValue();
-      }
-    }
+
     int idc = lEval.getEvaluationNotNormalized(bid, obj.getNumber()).intValue();
+    
     return mapToEval(idc) / mapToEval(variable);
   }
   
@@ -202,80 +206,65 @@ public class OpponentsModel
   {
     this.timeList.add(Double.valueOf(t - this.lastTime));
     this.lastTime = t;
+    
     if (this.timeList.size() >= 10)
     {
-      if (this.timeList.size() > 10) {
+      if (this.timeList.size() > 10)
         this.timeList.remove(0);
-      }
+      
       double sum = 0.0D;
-      for (int i = 0; i < this.timeList.size(); i++) {
+      
+      for (int i = 0; i < this.timeList.size(); i++)
         sum += ((Double)this.timeList.get(i)).doubleValue();
-      }
+
       this.roundsEst = ((int)(this.timeList.size() / sum));
     }
   }
-  public double getOpponentThreshold(){
+  
+  public double getOpponentThreshold()
+  {
+    BidHistory bH            = negotiationSession.getOpponentBidHistory();
+    double oponentFirstUtil  = bH.getLastBidDetails().getMyUndiscountedUtil();
+    double myUtility         = negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil();
+    double dous              = myUtility - oponentFirstUtil; 
     double NegotiatedTooLong = .45;
-    double oponentFirstUtil = negotiationSession.getOpponentBidHistory().getFirstBidDetails().getMyUndiscountedUtil();
-    double myUtility        = negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil();
-    
-    double dous = myUtility - oponentFirstUtil;
-    
-    double threshold=1;
-    
-    BidHistory bH = negotiationSession.getOpponentBidHistory();
+    double threshold         = 1;    
+    int horizon              = 20;    
+
     bH.getLastBidDetails().getMyUndiscountedUtil();
-    int horizon = 20;
-    if(bH.getHistory().size()>horizon){
+    
+    if(bH.size() > horizon)
+    {
         double mean = 0;
-        for(int i = bH.getHistory().size()-1;i>bH.getHistory().size()-horizon;i--){
-            BidDetails prevOppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().
-            getHistory().get(i);
-            
-            mean += prevOppBid.getMyUndiscountedUtil();
-            
-        }
-        mean = mean/horizon;
         double variance  = 0;
-        for(int i = bH.getHistory().size()-1;i>bH.getHistory().size()-horizon;i--){
-            BidDetails prevOppBid = (BidDetails)this.negotiationSession.getOpponentBidHistory().
-            getHistory().get(i);
-            
-            variance += (prevOppBid.getMyUndiscountedUtil() - mean)*(prevOppBid.getMyUndiscountedUtil() - mean);
-        }
+        
+        for(int i = bH.size() - 1; i > bH.size() - horizon; i--)
+            mean += bH.getHistory().get(i).getMyUndiscountedUtil();  
+        
+        mean /= horizon;
+        
+        for(int i = bH.size() - 1; i > bH.size() - horizon; i--)
+        	 variance += Math.pow((bH.getHistory().get(i).getMyUndiscountedUtil() - mean), 2);
+                
         variance /= horizon;
-        double asdfasd = (mean + dous)/2;
+        
+        threshold = (mean + dous) / 2;
         double time = negotiationSession.getTime();
         
-        if(time>.80 && time<=.90){
-            double lowertime = .80;
-            for(int i=1;i<11;i++){
-                double uppertime = lowertime +.01;
-                if(uppertime>time && lowertime<time){
-                    threshold = asdfasd- (1-i)*variance;
-                    break;
-                }
-                lowertime +=.01;
-            }
-        }else if(time>.90){
-            double lowertime = .90;
-            for(int i=1;i<11;i++){
-                double uppertime = lowertime +.01;
-                if(uppertime>time && lowertime<time){
-                    threshold = asdfasd+ (1-i)*variance;
-                    break;
-                }
-                lowertime +=.01;
-            }
-        }else 
-            threshold = asdfasd+ variance;
+        if(time > .8)
+        {
+        	if(time > .9)
+        		threshold += (1 - (time - 0.9)) * variance;
+        	else
+        		threshold -= (1 - (time - 0.8)) * variance;
+        }
+        else 
+            threshold += variance;
         
-        if(threshold>=1)
-            threshold = (mean + dous)/2;
-        
-        if(negotiationSession.getTime()>NegotiatedTooLong || threshold<0)
+        if(time > NegotiatedTooLong)
             return 0;
     }    
+    
     return threshold;
   }
 }

@@ -19,9 +19,10 @@ import negotiator.boaframework.opponentmodel.OpponentsModel;
 import negotiator.utility.UtilitySpace;
 
 /**
- * Opponent Model
+ * Acceptance Strategy
  * 
  * @author Kirill Tumanov, Panagiotis Chatzichristodoulou
+ * @version 30.11.2013
  */
 public class AStrategy extends AcceptanceStrategy {
     
@@ -145,10 +146,9 @@ public class AStrategy extends AcceptanceStrategy {
             
             OpponentsModel oM = new OpponentsModel(negotiationSession);            
             double weakThreshold = oM.getOpponentThreshold();
-            System.out.println("Weak discounted thresh "  +weakThreshold*negotiationSession.getDiscountFactor());
-            System.out.println("Last op bid " +lastOpponentBidUtil);
+            System.out.println("Weak discounted thresh "  + weakThreshold * negotiationSession.getDiscountFactor());
             
-            if(lastOpponentBidUtil <= weakThreshold*negotiationSession.getDiscountFactor())
+            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
                 return Actions.Reject;
             System.out.println("Passed weak threshold");
             
