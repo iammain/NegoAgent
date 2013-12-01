@@ -1,5 +1,6 @@
 \documentclass[html]{report}    % Specifies the document style.
 \usepackage{graphicx}
+\usepackage{verbatim}
                            % The preamble begins here. 
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
 \author{Chatzichristodoulou Panagiotis , Tumanov Kirill}    % Declares the author's nam
@@ -57,23 +58,19 @@ Agent's bid offering strategy was implemented as time-dependent. The NegoAgent\_
 Offering strategy introduces two methods used in the agent: \textit{isNash()} and \textit{countUniqueBids()}. First one is a simple implementation of the two-factor (due to the number of negotiating parties) maximization algorithm. An idea behind it is in finding a Nash equilibrium point, there none of the parties can obtain a higher utility at no cost to any other party. This particular implementation does not claim to be optimal, but it produced sufficiently good results for the agent at this stage of development. The pseudo-code of the  \textit{isNash()} method is given as follows:
 
 \begin{verbatim}
-	public boolean isNash()
-	{
-		BidHistory bH = negotiationSession.getOpponentBidHistory();
-		
-		if (bH.getLastBidDetails().getBid() != null)
-		{
-			double temp = bH.getLastBidDetails().getMyUndiscountedUtil() + opponentModel.getBidEvaluation(bH.getLastBidDetails().getBid());
-			
-			if (temp < nashsum && opponentModel.getBidEvaluation(bH.getLastBidDetails().getBid()) < bH.getBestBidDetails().getMyUndiscountedUtil())
-				return true;
-			else
-				nashsum = temp;
-		}
-		
-		return false;
-	}
+double nashsum;
+boolean isNash(){
+    bid = getOpponentLastBid();		
+    if (bid != null) {
+        temp = bid.getMyUtility() + bid.getOppenentUtility();
+        if (temp < nashsum && bid.getOppenentUtility() < bid.getMyUtility())
+            return true;			
+        nashsum = temp;
+    }		
+    return false;
+}
 \end{verbatim}
+Here \texttt{nashsum} stores a previously found maximum combined utility result to compare the last opponent bid against. When \texttt{nashsum} becomes less than the last bid combined utility, then Nash is found and true is returned. An additional limit in the opponent's and agent's utilities is set to ensure, that Nash bid was proposed by the opponent, and not by the agent itself.
 
 \subsection{Acceptance Model}
 
@@ -122,18 +119,14 @@ In order to bind all the modules together, we created a class that extended the 
 	NegoAgent extends BOAagent {
     
     @Override
-    public void agentSetup(){
+    agentSetup(){
         OpponentModel om = new OpponentsModel(negotiationSession);
         OMStrategy oms = new BidStrategy(negotiationSession , om);
         OfferingStrategy offering = new NegoAgent_TDOffering(nego
-        tiationSession, om, oms, 1D, 0D, .99D, 0D);
+        tiationSession, om, oms, .99D, 0D);
         AcceptanceStrategy ac =  new AStrategy(negotiationSession,
          offering, .2D , 15D);
         setDecoupledComponents (ac , offering , om , oms );
-    }
-    @Override
-    public String getName () {
-        return " SimpleBOAagent ";
     }
 }
 \end{verbatim}
