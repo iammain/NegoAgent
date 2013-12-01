@@ -4,9 +4,8 @@
 \usepackage{amsmath}  % allows to use some of math functions
                            % The preamble begins here. 
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
-\author{Chatzichristodoulou Panagiotis , Tumanov Kirill \\ \it{Examiners:} \\Dr. Weiss, Gerhard}    % Declares the author's nam
-\date{November 29,2013}   % Deleting this command produces today's date.
-
+\author{Panagiotis Chatzichristodoulou, Kirill Tumanov} 
+%\date{November 29,2013}   % Deleting this command produces today's date.
 
 \begin{document}           % End of preamble and beginning of text.
 
@@ -26,12 +25,13 @@ Each agent can consist of 4 different models:
   \item The Opponent model   
 \end{itemize}
 The agents in the genius platform can either be standalone agents , or agents that belong to the BOA framework. A standalone agent is usually a single java file having all the models there. Some helper classes can exist outside of the main agent class. A BOA agent implements the four needed models independently , and that makes a BOA agent more versatile and easier to implement, due to the modularity of its architecture. In our implementation we chose a BOA agent and used the genius platform to create our final agent that consists of those four parts. The figure below depicts how the four different models cooperate to output a bid or an acceptance decision.
-\begin{figure}[h!]
-	  \caption{Cooperation between four models,\newline \it{Picture taken from ANAC 2013 paper}}
+\begin{figure}[htbp]
+	  \caption{Cooperation between four models,\newline \it{BOA framework}}
 	  \centering
 	    \includegraphics[width=1\textwidth]{fourmodels}
-	\end{figure}
-\pagebreak
+	  \label{1}
+\end{figure}
+%\pagebreak
 
 
 \subsection{Agent type}
@@ -140,7 +140,7 @@ So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\
 	\caption{Change of $\ell$ over time}
 	\centering
 	\includegraphics[width=0.5\textwidth]{ell}
-	\label{1}
+	\label{2}
 \end{figure}
 
 \subsection{Acceptance Model}
@@ -178,7 +178,7 @@ The visualization of the DOUS distance would be:
   \caption{The distance between the initial utilities of the agents}
   \centering
     \includegraphics[width=0.5\textwidth]{dous}
-    \label{2}
+    \label{3}
 \end{figure}
 
 
