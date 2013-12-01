@@ -11,8 +11,6 @@
 \begin{document}           % End of preamble and beginning of text.
 
 \maketitle                 % Produces the title.
-
-
 \section{Introduction}
 \subsection{Abstract}
 In this paper, we will discuss our analysis and implementation of a negotiating agent, as part of our Multi-Agent systems course.
@@ -37,49 +35,11 @@ The agents in the genius platform can either be standalone agents , or agents th
 
 
 \subsection{Agent type}
-The agent that is implemented in this paper, is self interested . That is an agent that seeks to optimize its utility without taking into account the opponent's utility, or the social welfare. Furthermore, it takes into account the discount factor, and will not negotiate for too long. That way, it will receive as high utility as possible most of the time.
-
-\section{Acceptance Strategy}  % Produces section heading.  Lower-level 
-                         % sections are begun with similar 
-                         % \subsection and \subsubsection commands.
-\subsection{Basic Definitions}                        
-The acceptance strategy of the agent was based on the ABiNeS agent's ~\cite{abines} acceptance strategy.
-The Acceptance strategy module introduces the acceptance threshold $\ell$ . The value of $\ell$ corresponds to the agents concession degree and is modified during the negotiation.  This change is based on the previous results of the negotiation as well as to the negotiation environment.
 
 
-The agent is build as a self-interested agent and will be more concessive as the deadline approaches.
-The acceptance threshold should always be higher than the utility the agent can obtain on deadline. Therefore, the threshold should never be lower than the  \( Utility_{max} * discount_{time-1}  \) , where \( Utility_{max} \)  is the maximum utility the agent can receive without taking into account the discount factor. In contrast to this, if the agent takes too long to reach an agreement, it may receive very low utility due to the discount factor even if the agreed outcome proposes a high utility . For this, we introduce $\lambda$, a factor to balance of between exploring and exploiting the negotiating partner.
-More formally, when time is smaller than $\lambda$, it should be modified to gradually converge to \( Utility_{max} * discount_{time-1}  \). So the $\ell$ is defined as follows:
+This paper addresses implementation of an intelligent negotiation agent as well as  discussion and analysis of experiments performed are result obtained. Agent was develop based on the \textit{Genius} software platform in accordance with the \textit{ANAC'2013} guidelines and within the \textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework. This work was performed as a practical part of the Multiagent Systems course at Maastricht University. 
 
-
-\[
-  \ell = \left\{\def\arraystretch{1.2}% 
-  \begin{array}{@{}c@{\quad}l@{}}
-    u^m -(u^m-	u^md^t)(t/\lambda)^a  & \mbox{if } t \geq \lambda \\
-   	u^m d^t & \mbox{if } t < \lambda
-  \end{array}\right.
-\]
-
-\[
-  \lambda = \left\{\def\arraystretch{1.2}%
-  \begin{array}{@{}c@{\quad}l@{}}
-    \lambda = \lambda_0 + (1-\lambda_0)^b &  \mbox{if } t==0\\
-    \lambda = \lambda + w(1-\lambda_0)\sigma^t & \mbox{if } 0<t\leq1\\
-  \end{array}\right.
-\]
-
-So as time increases, $\ell$ will decrease slowly, and as time reaches $\lambda$ , $\ell$ will be set to\( Utility^{max} * discount^{time}  \).
-\\*Graphically, this can be presented as:
-
-
-	\begin{figure}[h!]
-	  \caption{Change of $\ell$ over time .}
-	  \centering
-	    \includegraphics[width=0.5\textwidth]{ell}
-	\end{figure}
-
-\section{Bids offering Strategy}
-
+\section{Bids Offering Strategy}
 Agent's bid offering strategy was implemented as time-dependent (TD). The NegoAgent\_TDOffering.class requires two user parameters: $P_{min}$ and $P_{max}$ which specify the lower and upper bounds for the bids agent is to propose. In the current version of the agent these values were kept equal to $0$ and $0.99$ respectfully. No experimentation was done on changing these values, it may be the case that some alterations in specific negotiation domains are beneficial, however this topic is left for an additional research.
 
 Offering strategy introduces two methods used in the agent: \texttt{isNash()} and \texttt{countUniqueBids()}. First one is a simple implementation of the two-factor (due to the number of negotiating parties) maximization algorithm. An idea behind it is in finding a Nash equilibrium point, there none of the parties can obtain a higher utility at no cost to any other party. This particular implementation does not claim to be optimal, but it produced sufficiently good results for the agent at this stage of development. The pseudo-code of the  \texttt{isNash()} method is given as follows:
@@ -147,32 +107,66 @@ Here \texttt{pt} is used only for adjustment of the ft result based on the $P_{m
 			df(\sin(-n\cdot e^{t\cdot df})+(\frac{1}{df}-1))\cdot\log(t\cdot df+1)\cdot\frac{sum}{ubs}t &\text{if ubs$>$1 and !isNash(),}\\
 			\frac{df}{2}(\sin(-n\cdot e^{t\cdot\frac{df}{2}})+(\frac{2}{df}-1))\cdot\log(t\cdot \frac{df}{2}+1)\cdot\frac{sum}{ubs}t &\text{if ubs$>$1,}\\
 			df(\sin(-n\cdot e^{t\cdot df})+(\frac{1}{df}-1))\cdot\log(t\cdot df+1) &\text{otherwise.}
-	\end{cases}
+			\end{cases}
 \end{equation}
 where $df$ - a division factor in a range $\{0\dots1\}$, $n$ - number of issues negotiation about, $t$ - representation of time in a range $\{0\dots1\}$, $sum$ - a total sum of all opponent's bids at the moment of $t$ (afore-referred as a \texttt{bidsum}), $ubs$ - number of unique opponent's bids at the moment of $t$ (a size of an afore-referred list of \texttt{uniquebids}).
 
 The function $f(t)$ was designed so that it allows modification of bid offering dependent on the negotiation status. If opponent proposes more non-equal bids of a decent utility for an agent, then agents offers new bids more cautious - simulation of waiting for the best opponent's offer. On contrary, when opponent proposes a few non-equal bids, agent tries to provoke an opponent for cooperation, by offering more new bids. In addition, a fact of Nash equilibrium reach by an opponent is treated as a trigger to loose agent's own offering, and to start biding more actively. It is done in order to prevent an opponent from unnecessary utility losses, whilst it is likely that agent's own score is not going to be lowered. Finally, increase of $t$ during the negotiation process unveils more new bids to offer, and $n$ ensures that the offering will be domain-dependent.
 
-Referring back to the pseudo-code of \texttt{p(t)}, in case of a very limited utility space (\texttt{getNumberOfPossibleBids() $<$ bidsThreshold}) and negotiation time running out (\texttt{time > timeThreshold}), agent begins to concede by increasing the $f(t)$ value proportionally to the remaining time $(1-t)$. This allows to reach an agreement, instead of loosing all the utility. However, note that when opponent follows a non-cooperative strategy, this approach will not be of help.
+Referring back to the pseudo-code of \texttt{p(t)}, in case of a very limited utility space (\texttt{getNumberOfPossibleBids() $<$ bidsThreshold}) and negotiation time running out (\texttt{time > timeThreshold}), agent begins to concede by increasing the $f(t)$ value proportionally to the remaining time $(1-t)$. This allows to reach an agreement, instead of loosing all the utility. However, note that when opponent follows a non-cooperative strategy, this approach will not be of help.                
 
-                
+\section{Acceptance Strategy}  
+\subsection{Summary}                        
+An acceptance strategy of the agent was based on the ABiNeS agent's ~\cite{abines} acceptance strategy. This module introduces an acceptance threshold $\ell$. The value of $\ell$ corresponds to the agents concession degree and is modified during the negotiation. This change is based on the previous results of the negotiation as well as on the domain.
+
+The agent is build as a self-interested agent and will be more concessive as the deadline of $t=1$ approaches. The acceptance threshold should always be higher than the utility agent can obtain at deadline. Therefore, the threshold should never be lower than the  \( Utility_{max} * discount_{time-1}  \) , where \( Utility_{max} \)  is the maximum utility the agent can receive without taking into account the discount factor. In contrast, if it takes the agent too long to reach an agreement, it may receive very low utility due to the influence of a discount factor even if the agreed outcome proposes a high utility. 
+
+To address the issue factor $\lambda$ is introduced. It is used to balance between exploring and exploiting the negotiating partner. More formally, when time is smaller than $\lambda$, it should be modified to gradually converge to \( Utility_{max} * discount_{time-1}  \). So the $\ell$ is defined as follows:
+
+\begin{equation} \label{2}
+	\ell =	\begin{cases}
+	    	u^m -(u^m-	u^md^t)(t/\lambda)^a  & \mbox{if } t \geq \lambda, \\
+	   		u^m d^t & \mbox{if } t < \lambda.
+			\end{cases}
+\end{equation}
+
+\begin{equation} \label{3}
+	\lambda =	\begin{cases}
+	   		  	\lambda = \lambda_0 + (1-\lambda_0)^b &  \mbox{if } t==0,\\
+	       		 \lambda = \lambda + w(1-\lambda_0)\sigma^t & \mbox{if } 0<t\leq1.\\
+				\end{cases}
+\end{equation}
+So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\ell$ is set to \( Utility^{max}\cdot discount^{time}  \). Graphical representation of the process is presented on Fig.~\ref{1}. Here notable is that values of $b$ and $c$ define the curvature of nonlinear piece, specifically they set a lower bound of an acceptance threshold. This fact is crucial for the strategy's implementation, as both $b$ and $c$ values should be domain-dependent in order to adequately reflect the setup features and prevent early acceptance of non-desirable offers from an opponent. Generally~$b>1$~and~$c>1$.
+
+\begin{figure}[htbp]
+	\caption{Change of $\ell$ over time}
+	\centering
+	\includegraphics[width=0.5\textwidth]{ell}
+	\label{1}
+\end{figure}
 
 \subsection{Acceptance Model}
 
-Now that we have defined the environment, the acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time t.
-\\*The agent will accept a proposal $\pi$ if he receives utility bigger than his current threshold, or his next-bid to propose utility.
+Now that we have defined the environment, the acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$.
 
+The agent will accept a proposal $\pi$ if he receives utility bigger than his current threshold, or his next-bid to propose utility.
 
 \section{Opponent Model}  
 
-The opponent model is based on the Hard Headed Opponent model of the genius-BOA framework.
-\\*Besides from the basic model, there are two extra components in the model.~\cite{anac2013}
+An opponent model is based on the Hard-Headed Opponent Model of the genius-BOA framework.
+
+Besides from the basic model, there are two extra components in the model.~\cite{anac2013}
+
 \subsection{Simple Frequency}
+
 The Simple frequency model only updates weights when the bid change often.
 That means that the weights of the model are only changed when the opponents bids pass a certain numerical threshold.
+
 \subsection{Distance of the opponent}
-The opponent model also calculates a threshold that is used in the Acceptance strategy and is based on the distance of the opponent.
-\\{\bf The basic algorithm of the distance of the opponent is: }
+
+The opponent model also calculates a threshold that is used in the Acceptance Strategy and is based on the distance of the opponent.
+
+{\bf The basic algorithm of the distance of the opponent is: }
 
 DOUS = u$^m - firstOppBid \newline
 calculate\ mean\ and\ variance\ foreach\ past\ bid\ where:\newline
@@ -181,44 +175,50 @@ use\ the\ (mean+dous)/2\ as\ a\ threshold\ value\ if\ time<.5 \newline
 if(time<.5)\space return \ threshold \ else \ return \ 0$
 
 The visualization of the DOUS distance would be:
-\begin{figure}[h!]
-  \caption{The distance between the initial utilities of the agents.}
+
+\begin{figure}[htbp]
+  \caption{The distance between the initial utilities of the agents}
   \centering
     \includegraphics[width=0.5\textwidth]{dous}
+    \label{2}
 \end{figure}
 
 
 The DOUS value is versatile, as it is not domain dependent.
 As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations.
-The thershold is outputed is weak threshold.
-That is, if the value is smaller than the threshold, the bid is rejected.If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.
-This threshold ensures that the agents will reject points that are far from the nash equilibrium.
+The threshold is outputted is weak threshold.
+That is, if the value is smaller than the threshold, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.
+This threshold ensures that the agents will reject points that are far from the Nash equilibrium.
 After some time in the negotiation, the threshold is set to zero, because the agent needs to be more concessive as the negotiation approaches the deadline. 
 
-\section{Binding the modules together}
+\section{Binding the Modules}
 
-In order to bind all the modules together, we created a class that extended the BOA agent and passed each all the modules, as parts of the agent with their parameters set. We then only have to override the agent setup method of the class.  The code of the overriden class is:
+It is useful to have a single-entity agent instead of several BOA components. In particular, \textit{Genius} allows single-entity agents run separate sessions against each other, and \textit{ANAC} competition uses this kind of agents in the tournament series. A single-entity agent may consist of numerous parts, however the one described in the paper is comprised of four main BOA components:
+\begin{itemize}
+	\item Bidding Strategy
+	\item Acceptance Strategy
+	\item Opponent Model
+	\item Opponent Model Strategy
+\end{itemize}
 
+In order to bind all the modules together, a class that extended the BOA agent and passes each of the modules with it's parameters as parts of the agent should be created. Then it is necessary to override an \texttt{agentSetup()} method of the class. The pseudo-code of the overriden class is:
 
 \begin{verbatim}
-	NegoAgent extends BOAagent {
-    
+NegoAgent extends BOAagent {    
     @Override
     agentSetup(){
         OpponentModel om = new OpponentsModel(negotiationSession);
         OMStrategy oms = new BidStrategy(negotiationSession , om);
-        OfferingStrategy offering = new NegoAgent_TDOffering(nego
-        tiationSession, om, oms, .99D, 0D);
+        OfferingStrategy offering = new NegoAgent_TDOffering(nego-
+        tiationSession, om, oms, Pmax, Pmin);
         AcceptanceStrategy ac =  new AStrategy(negotiationSession,
-         offering, .2D , 15D);
-        setDecoupledComponents (ac , offering , om , oms );
+        offering, a , b, c);
+        setDecoupledComponents (ac, offering, om, oms );
     }
 }
 \end{verbatim}
-Now, we can update the negosimulator jar to include the class, or just insert it from the gui.
 
 \section{Results}
-
 The agent implemented is a very-strong willed agent. It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to nash equilibrium, and as the time approaches 1, it accepts more resonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
 
@@ -226,13 +226,15 @@ The agent implemented is a very-strong willed agent. It will accept bids faster 
 Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done , until we reach a universal strategy, or a strategy that works very well in all of the domains.
 
 
-\begin{thebibliography}{5}
+\begin{thebibliography}{}
 
-\bibitem{abines} Jianye Haoand Ho-fung Leung,ABiNeS:
+\bibitem{abines} 
+Hao J., Leung H.:
+ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items
 
-\bibitem{anac2013} Jianye Haoand Ho-fung Leung,ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items
+\bibitem{anac2013} 
+Something
 
-\bibitem{genius} http://mmi.tudelft.nl/negotiation/index.php/Negotiation
 \end{thebibliography}
 
-\end{document}             % End of document. 
+\end{document}
