@@ -47,7 +47,7 @@ public class AStrategy extends AcceptanceStrategy {
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;		
 		this.omBidStrat = new BidStrategy(negoSession, opponentModel);
-		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, 1, 0, .99, 0);
+		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, .99, 0);
 		
 		this.a =  alpha;
 		this.b = beta;

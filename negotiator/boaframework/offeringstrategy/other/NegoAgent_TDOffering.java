@@ -13,6 +13,7 @@ import negotiator.boaframework.OMStrategy;
 import negotiator.boaframework.OfferingStrategy;
 import negotiator.boaframework.OpponentModel;
 import negotiator.boaframework.SortedOutcomeSpace;
+import negotiator.boaframework.opponentmodel.NoModel;
 
 /**
  * Time-dependent Offering Strategy
@@ -22,14 +23,10 @@ import negotiator.boaframework.SortedOutcomeSpace;
  */
 public class NegoAgent_TDOffering extends OfferingStrategy
 {
-	/** k \in [0, 1]. For k = 0 the agent starts with a bid of maximum utility */
-	private double k;
 	/** Maximum target utility */
 	private double Pmax;
 	/** Minimum target utility */
 	private double Pmin;
-	/** Concession factor */
-	private double e;
 	/** Sum calculated to find a Nash */
 	private double nashsum;
 	/** Sum of opponent's bids */
@@ -44,10 +41,8 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 	 */
 	public NegoAgent_TDOffering(){}
 	
-	public NegoAgent_TDOffering(NegotiationSession negoSession, OpponentModel model, OMStrategy oms, double e, double k, double max, double min)
+	public NegoAgent_TDOffering(NegotiationSession negoSession, OpponentModel model, OMStrategy oms, double max, double min)
 	{
-		this.e = e;
-		this.k = k;
 		this.Pmax = max;
 		this.Pmin = min;
 		this.negotiationSession = negoSession;
@@ -63,35 +58,23 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 	 */
 	public void init(NegotiationSession negoSession, OpponentModel model, OMStrategy oms, HashMap<String, Double> parameters) throws Exception
 	{
-		if (parameters.get("e") != null)
-		{
-			this.negotiationSession = negoSession;
-			
-			outcomespace = new SortedOutcomeSpace(negotiationSession.getUtilitySpace());
-			negotiationSession.setOutcomeSpace(outcomespace);
-			
-			this.e = parameters.get("e");
-			
-			if (parameters.get("k") != null)
-				this.k = parameters.get("k");
-			else
-				this.k = 0;
-			
-			if (parameters.get("min") != null)
-				this.Pmin = parameters.get("min");
-			else
-				this.Pmin = negoSession.getOutcomeSpace().getMinBidPossible().getMyUndiscountedUtil();
-                        
-			if (parameters.get("max") != null) 
-				Pmax= parameters.get("max");
-			else 
-				Pmax = negoSession.getMaxBidinDomain().getMyUndiscountedUtil();
-			
-			this.opponentModel = model;
-			this.omStrategy = oms;
-		} 
+		this.negotiationSession = negoSession;
+		
+		outcomespace = new SortedOutcomeSpace(negotiationSession.getUtilitySpace());
+		negotiationSession.setOutcomeSpace(outcomespace);
+		
+		if (parameters.get("min") != null)
+			this.Pmin = parameters.get("min");
 		else
-			throw new Exception("Constant \"e\" for the concession speed was not set.");		
+			this.Pmin = negoSession.getOutcomeSpace().getMinBidPossible().getMyUndiscountedUtil();
+                    
+		if (parameters.get("max") != null) 
+			Pmax= parameters.get("max");
+		else 
+			Pmax = negoSession.getMaxBidinDomain().getMyUndiscountedUtil();
+		
+		this.opponentModel = model;
+		this.omStrategy = oms;
 	}
 
 	@Override
@@ -109,18 +92,15 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 		utilityGoal = p(time);
 
 		// if there is no opponent model available
-//		if (opponentModel instanceof NoModel) 
-//			nextBid = negotiationSession.getOutcomeSpace().getBidNearUtility(utilityGoal);
-//		else
+		if (opponentModel instanceof NoModel) 
+			nextBid = negotiationSession.getOutcomeSpace().getBidNearUtility(utilityGoal);
+		else
 			nextBid = omStrategy.getBid(outcomespace, utilityGoal);
 		
 		return nextBid;
 	}
 	
-	/**
-	 * Method which returns true if the Nash is reached
-	 * @throws Exception 
-	 */
+	/** Method which returns true if the Nash is reached */
 	public boolean isNash()
 	{
 		BidHistory bH = negotiationSession.getOpponentBidHistory();
@@ -170,10 +150,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 	public double f(double t)
 	{
 		countUniqueBids();
-		
-		if (e == 0)
-			return k;
-		
+				
 		double ft = 0;
 		int num = negotiationSession.getIssues().size();
 		double df = 0.1; // Division factor
