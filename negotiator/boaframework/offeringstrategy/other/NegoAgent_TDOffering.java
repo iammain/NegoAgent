@@ -5,6 +5,7 @@ import java.lang.Math;
 import java.util.List;
 import java.util.ArrayList;
 
+import misc.Range;
 import negotiator.BidHistory;
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
@@ -12,7 +13,6 @@ import negotiator.boaframework.OMStrategy;
 import negotiator.boaframework.OfferingStrategy;
 import negotiator.boaframework.OpponentModel;
 import negotiator.boaframework.SortedOutcomeSpace;
-import negotiator.boaframework.opponentmodel.NoModel;
 
 /**
  * Time-dependent Offering Strategy
@@ -80,8 +80,8 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 			if (parameters.get("min") != null)
 				this.Pmin = parameters.get("min");
 			else
-				this.Pmin = negoSession.getMinBidinDomain().getMyUndiscountedUtil();
-		
+				this.Pmin = negoSession.getOutcomeSpace().getMinBidPossible().getMyUndiscountedUtil();
+                        
 			if (parameters.get("max") != null) 
 				Pmax= parameters.get("max");
 			else 
@@ -109,9 +109,9 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 		utilityGoal = p(time);
 
 		// if there is no opponent model available
-		if (opponentModel instanceof NoModel) 
-			nextBid = negotiationSession.getOutcomeSpace().getBidNearUtility(utilityGoal);
-		else
+//		if (opponentModel instanceof NoModel) 
+//			nextBid = negotiationSession.getOutcomeSpace().getBidNearUtility(utilityGoal);
+//		else
 			nextBid = omStrategy.getBid(outcomespace, utilityGoal);
 		
 		return nextBid;
@@ -125,11 +125,11 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 	{
 		BidHistory bH = negotiationSession.getOpponentBidHistory();
 		
-		if (bH.getLastBid() != null)
+		if (bH.getLastBidDetails().getBid() != null)
 		{
-			double temp = bH.getLastBidDetails().getMyUndiscountedUtil() + opponentModel.getBidEvaluation(bH.getLastBid());
+			double temp = bH.getLastBidDetails().getMyUndiscountedUtil() + opponentModel.getBidEvaluation(bH.getLastBidDetails().getBid());
 			
-			if (temp < nashsum && opponentModel.getBidEvaluation(bH.getLastBid()) < bH.getBestBidDetails().getMyUndiscountedUtil())
+			if (temp < nashsum && opponentModel.getBidEvaluation(bH.getLastBidDetails().getBid()) < bH.getBestBidDetails().getMyUndiscountedUtil())
 				return true;
 			else
 				nashsum = temp;
@@ -175,7 +175,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 			return k;
 		
 		double ft = 0;
-		int num = negotiationSession.getDomain().getIssues().size();
+		int num = negotiationSession.getIssues().size();
 		double df = 0.1; // Division factor
 				
 		if (uniquebids.size() > 1 && !isNash()) // Function which bids more active when opponent is tough
@@ -184,8 +184,9 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 			ft = (2 * df * Math.sin(-num * Math.exp(t * 2 * df)) + (1 - 2 * df)) * Math.log(t * 2 * df + 1) * bidsum/uniquebids.size() *  t;
 		else
 			ft = (df * Math.sin(-num * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
-		
-		if (negotiationSession.getDomain().getNumberOfPossibleBids() < 10)
+                Range r = new Range(0D, 1D);
+                
+		if (outcomespace.getBidsinRange(r).size() < 10)
 			if (negotiationSession.getTime() > 0.8)
 				ft += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil()/(1 - negotiationSession.getTime());
 		

@@ -42,21 +42,19 @@ public class AStrategy extends AcceptanceStrategy {
 	 */
 	public AStrategy() { }
 	
-	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, double alpha, double beta)
+	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, double alpha, double beta)
 	{
 		this.negotiationSession = negoSession;
-		this.offeringStrategy = strat;
+		this.offeringStrategy = strat;		
+		this.omBidStrat = new BidStrategy(negoSession, opponentModel);
+		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, 1, 0, .99, 0);
+		
 		this.a =  alpha;
 		this.b = beta;
 	}
 
-	@Override
-	public void init(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, HashMap<String, Double> parameters) throws Exception 
+        public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
 	{
-		this.negotiationSession = negoSession;
-		this.offeringStrategy = strat;
-		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, 1, 0, .99, 0);
-		
 		if (parameters.get("a") != null || parameters.get("b") != null) 
 		{
 			a = parameters.get("a");

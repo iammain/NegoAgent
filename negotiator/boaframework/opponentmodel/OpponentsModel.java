@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import negotiator.Bid;
 import negotiator.BidHistory;
 import negotiator.bidding.BidDetails;
@@ -25,6 +26,7 @@ import negotiator.utility.UtilitySpace;
  * @author Panagiotis Chatzichristodoulou, Kirill Tumanov
  * @version 30.11.2013
  */
+
 public class OpponentsModel
   extends OpponentModel
 {
@@ -89,7 +91,6 @@ public class OpponentsModel
     }
     return diff;
   }
-  
   public void updateModel(Bid opponentBid, double time)
   {
     if (this.negotiationSession.getOpponentBidHistory().size() < 2)
@@ -227,7 +228,7 @@ public class OpponentsModel
     double oponentFirstUtil  = bH.getLastBidDetails().getMyUndiscountedUtil();
     double myUtility         = 0;
     
-    if (!negotiationSession.getOwnBidHistory().isEmpty())
+    if (negotiationSession.getOwnBidHistory().size() != 0)
     	myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
     
     double dous              = myUtility - oponentFirstUtil; 
@@ -271,4 +272,7 @@ public class OpponentsModel
     
     return threshold;
   }
+
+    @Override
+    public void updateModel(Bid bid) { updateModel(bid, negotiationSession.getTime()); }
 }
