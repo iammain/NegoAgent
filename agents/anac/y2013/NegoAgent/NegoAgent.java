@@ -13,7 +13,7 @@ import negotiator.boaframework.OpponentModel;
 import negotiator.boaframework.agent.BOAagent;
 
 /**
- * An ordinary agent comprised from BOA components
+ * An ordinary agent comprised of BOA components
  * 
  * @author Kirill Tumanov, Panagiotis Chatzichristodoulou
  * @version 01.12.2013

@@ -13,9 +13,9 @@
 \maketitle                 % Produces the title.
 \section{Introduction}
 \subsection{Abstract}
-In this paper, we will discuss our analysis and implementation of a negotiating agent, as part of our Multi-Agent systems course.
+This paper addresses the implementation of an intelligent negotiation agent. Furthermore, it discusses and analyses the results obtained from the experiments that were performed. 
 \subsection{Project Analysis}
-The agents created are based on the negotiation platform genius. ~\cite{genius} . The genius platform released it's first demo edition from Delft University on May 14th 2009. It introduces an environment where agents can negotiate over different domains,  discrete or continuous. Genius is the standard in the agent negotiation domain platform.
+The agents created are based on the negotiation platform genius. ~\cite{genius} . The genius platform released it's first demo edition from Delft University on May 14th 2009. It introduces an environment where agents can negotiate over different domains,  discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multiagent Systems course at Maastricht University. 
 
 \subsection{Agent models}
 Each agent can consist of 4 different models:
@@ -35,9 +35,7 @@ The agents in the genius platform can either be standalone agents , or agents th
 
 
 \subsection{Agent type}
-
-
-This paper addresses implementation of an intelligent negotiation agent as well as  discussion and analysis of experiments performed are result obtained. Agent was develop based on the \textit{Genius} software platform in accordance with the \textit{ANAC'2013} guidelines and within the \textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework. This work was performed as a practical part of the Multiagent Systems course at Maastricht University. 
+The agent that is implemented in this paper, is self interested . That is an agent that seeks to optimize its utility without taking into account the opponent's utility, or the social welfare. Furthermore, it takes into account the discount factor, and will not negotiate for too long. That way, it will receive as high utility as possible most of the time.
 
 \section{Bids Offering Strategy}
 Agent's bid offering strategy was implemented as time-dependent (TD). The NegoAgent\_TDOffering.class requires two user parameters: $P_{min}$ and $P_{max}$ which specify the lower and upper bounds for the bids agent is to propose. In the current version of the agent these values were kept equal to $0$ and $0.99$ respectfully. No experimentation was done on changing these values, it may be the case that some alterations in specific negotiation domains are beneficial, however this topic is left for an additional research.
@@ -219,7 +217,8 @@ NegoAgent extends BOAagent {
 \end{verbatim}
 
 \section{Results}
-The agent implemented is a very-strong willed agent. It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to nash equilibrium, and as the time approaches 1, it accepts more resonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
+
+The agent implemented is a very-strong willed agent (Our agent beats them all!!). It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to nash equilibrium, and as time approaches 1, it accepts more reasonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
 
 \section{Conclusion and further work}

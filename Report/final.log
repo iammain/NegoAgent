@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  1 DEC 2013 23:18
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  1 DEC 2013 23:22
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\negorep\NegoAgent-master\Report\final.tex
@@ -167,10 +167,8 @@ LaTeX Font Info:    ... okay on input line 11.
 ) [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-
-LaTeX Warning: Citation `genius' on page 1 undefined on input line 18.
-
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 23.
+
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
@@ -193,7 +191,7 @@ Overfull \hbox (27.96356pt too wide) detected at line 111
 \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 ) = []
  []
 
-[3] [4] <ell.png, id=34, 303.38344pt x 234.1247pt>
+[3] [4] <ell.png, id=33, 303.38344pt x 234.1247pt>
 File: ell.png Graphic file (type png)
  <use ell.png>
 Package pdftex.def Info: ell.png used on input line 144.
@@ -204,7 +202,7 @@ Overfull \hbox (3.75055pt too wide) in paragraph at lines 158--159
 nts in the model. [[]] 
  []
 
-<dous.png, id=38, 261.97874pt x 199.49532pt>
+<dous.png, id=37, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
 Package pdftex.def Info: dous.png used on input line 182.
@@ -237,20 +235,17 @@ ssion,[]
 
 ] (C:\Users\Panos\Desktop\negorep\NegoAgent-master\Report\final.aux)
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
  1826 strings out of 493921
  23016 string characters out of 3147281
- 81517 words of memory out of 3000000
+ 81520 words of memory out of 3000000
  5132 multiletter control sequences out of 15000+200000
  10490 words of font info for 38 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,12n,21p,884b,251s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 27i,12n,20p,884b,251s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
@@ -266,7 +261,7 @@ s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX
 s/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmti12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmtt10.pfb>
-Output written on final.pdf (10 pages, 241741 bytes).
+Output written on final.pdf (10 pages, 241628 bytes).
 PDF statistics:
  102 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
