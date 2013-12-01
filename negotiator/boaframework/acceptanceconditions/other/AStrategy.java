@@ -42,7 +42,7 @@ public class AStrategy extends AcceptanceStrategy {
 	 */
 	public AStrategy() { }
 	
-	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, double alpha, double beta)
+	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, double alpha, double beta, double gamma)
 	{
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;		
@@ -51,14 +51,16 @@ public class AStrategy extends AcceptanceStrategy {
 		
 		this.a =  alpha;
 		this.b = beta;
+		this.c = gamma;
 	}
 
         public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
 	{
-		if (parameters.get("a") != null || parameters.get("b") != null) 
+		if (parameters.get("a") != null || parameters.get("b") != null || parameters.get("c") != null) 
 		{
 			a = parameters.get("a");
 			b = parameters.get("b");
+			c = parameters.get("c");
 		} 
 		else 
 		{
@@ -68,10 +70,10 @@ public class AStrategy extends AcceptanceStrategy {
             lambda = 0;
             initlambda = 0.000001;            
             preassureThreshold = .05;
-         
-            b -= b * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
-            c -= c * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
 		}
+		
+        b -= b * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
+        c -= c * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());		
 	}
 	
 	@Override

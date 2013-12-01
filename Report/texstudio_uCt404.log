@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  1 DEC 2013 19:49
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  1 DEC 2013 22:50
 entering extended mode
 **texstudio_uCt404.tex
 
@@ -135,19 +135,26 @@ LaTeX Warning: Unused global option(s):
 
 
 ("C:\Users\Кирилл\Documents\My Dropbox\Public\Courses\Multiagent Systems\
-Assignment\Report\texstudio_uCt404.aux")
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
+Assignment\Report\texstudio_uCt404.aux"
+
+LaTeX Warning: Label `1' multiply defined.
+
+
+LaTeX Warning: Label `2' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
 
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mki
 i
@@ -166,47 +173,62 @@ i
 ) [1
 
 {C:/Users/Кирилл/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<ell.png, id=7, 303.38344pt x 234.1247pt>
-File: ell.png Graphic file (type png)
- <use ell.png>
-Package pdftex.def Info: ell.png used on input line 52.
-(pdftex.def)             Requested size: 172.5pt x 133.12021pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[1]
-Overfull \hbox (53.99652pt too wide) in paragraph at lines 66--66
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 25--25
 []        \OT1/cmtt/m/n/10 if (temp < nashsum && bid.getOppenentUtility() < bid
 .getMyUtility())[] 
  []
 
-[2 <C:/Users/Кирилл/Documents/My Dropbox/Public/Courses/Multiagent System
-s/Assignment/Report/ell.png>]
-Overfull \hbox (27.96356pt too wide) detected at line 125
+[1]
+Overfull \hbox (27.96356pt too wide) detected at line 84
 \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 ) = []
  []
 
-[3] [4] <dous.png, id=31, 261.97874pt x 199.49532pt>
+[2] [3] <ell.png, id=28, 303.38344pt x 234.1247pt>
+File: ell.png Graphic file (type png)
+ <use ell.png>
+Package pdftex.def Info: ell.png used on input line 117.
+(pdftex.def)             Requested size: 172.5pt x 133.12021pt.
+ [4 <C:/Users/Кирилл/Documents/My Dropbox/Public/Courses/Multiagent Syste
+ms/Assignment/Report/ell.png>]
+Overfull \hbox (3.75055pt too wide) in paragraph at lines 131--132
+[]\OT1/cmr/m/n/10 Besides from the ba-sic model, there are two ex-tra com-po-ne
+nts in the model. [[]] 
+ []
+
+<dous.png, id=32, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
-Package pdftex.def Info: dous.png used on input line 161.
+Package pdftex.def Info: dous.png used on input line 155.
 (pdftex.def)             Requested size: 172.5pt x 131.35985pt.
  [5 <C:/Users/Кирилл/Documents/My Dropbox/Public/Courses/Multiagent Syste
 ms/Assignment/Report/dous.png>]
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 182--182
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 171.
+
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 171.
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 183--183
 []        \OT1/cmtt/m/n/10 OpponentModel om = new OpponentsModel(negotiationSes
 sion);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 183--183
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 184--184
 []        \OT1/cmtt/m/n/10 OMStrategy oms = new BidStrategy(negotiationSession 
 , om);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 186--186
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 185--185
+[]        \OT1/cmtt/m/n/10 OfferingStrategy offering = new NegoAgent_TDOffering
+(nego-[] 
+ []
+
+
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 187--187
 []        \OT1/cmtt/m/n/10 AcceptanceStrategy ac =  new AStrategy(negotiationSe
 ssion,[] 
  []
@@ -215,31 +237,36 @@ ssion,[]
 
 ]
 ("C:\Users\Кирилл\Documents\My Dropbox\Public\Courses\Multiagent Systems\
-Assignment\Report\texstudio_uCt404.aux") ) 
+Assignment\Report\texstudio_uCt404.aux")
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 1797 strings out of 493921
- 23036 string characters out of 3147260
- 81426 words of memory out of 3000000
- 5109 multiletter control sequences out of 15000+200000
- 9797 words of font info for 36 fonts, out of 3000000 for 9000
+ 1818 strings out of 493921
+ 23351 string characters out of 3147260
+ 81450 words of memory out of 3000000
+ 5126 multiletter control sequences out of 15000+200000
+ 10143 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,12n,20p,895b,255s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb
-><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
-y7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on texstudio_uCt404.pdf (8 pages, 195006 bytes).
+ 27i,12n,20p,895b,249s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmtt10.pfb>
+Output written on texstudio_uCt404.pdf (8 pages, 205849 bytes).
 PDF statistics:
- 87 PDF objects out of 1000 (max. 8388607)
+ 91 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
