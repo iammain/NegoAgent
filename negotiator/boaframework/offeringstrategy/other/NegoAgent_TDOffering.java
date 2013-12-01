@@ -5,7 +5,6 @@ import java.lang.Math;
 import java.util.List;
 import java.util.ArrayList;
 
-import misc.Range;
 import negotiator.BidHistory;
 import negotiator.bidding.BidDetails;
 import negotiator.boaframework.NegotiationSession;
@@ -88,8 +87,7 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 	public BidDetails determineNextBid()
 	{
 		double time = negotiationSession.getTime();
-		double utilityGoal;
-		utilityGoal = p(time);
+		double utilityGoal = p(time);
 
 		// if there is no opponent model available
 		if (opponentModel instanceof NoModel) 
@@ -161,9 +159,8 @@ public class NegoAgent_TDOffering extends OfferingStrategy
 			ft = (2 * df * Math.sin(-num * Math.exp(t * 2 * df)) + (1 - 2 * df)) * Math.log(t * 2 * df + 1) * bidsum/uniquebids.size() *  t;
 		else
 			ft = (df * Math.sin(-num * Math.exp(t * df)) + (1 - df)) * Math.log(t * df + 1);
-                Range r = new Range(0D, 1D);
                 
-		if (outcomespace.getBidsinRange(r).size() < 10)
+		if (negotiationSession.getDomain().getNumberOfPossibleBids() < 10)
 			if (negotiationSession.getTime() > 0.8)
 				ft += negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil()/(1 - negotiationSession.getTime());
 		

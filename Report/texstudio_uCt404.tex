@@ -1,6 +1,7 @@
 \documentclass[html]{report}    % Specifies the document style.
 \usepackage{graphicx}
 \usepackage{verbatim}
+\usepackage{amsmath}  % allows to use some of math functions
                            % The preamble begins here. 
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
 \author{Chatzichristodoulou Panagiotis , Tumanov Kirill}    % Declares the author's nam
@@ -53,10 +54,9 @@ So as time increases, $\ell$ will decrease slowly, and as time reaches $\lambda$
 
 \section{Bids offering Strategy}
 
-Agent's bid offering strategy was implemented as time-dependent. The NegoAgent\_TDOffering.class requires two user parameters: $P_{min}$ and $P_{max}$ which specify the lower and upper bounds for the bids agent is to propose. In the current version of the agent these values were kept equal to $0$ and $0.99$ respectfully. No experimentation was done on changing these values, it may be the case that some alterations in specific negotiation domains are beneficial, however this topic is left for an additional research.
+Agent's bid offering strategy was implemented as time-dependent (TD). The NegoAgent\_TDOffering.class requires two user parameters: $P_{min}$ and $P_{max}$ which specify the lower and upper bounds for the bids agent is to propose. In the current version of the agent these values were kept equal to $0$ and $0.99$ respectfully. No experimentation was done on changing these values, it may be the case that some alterations in specific negotiation domains are beneficial, however this topic is left for an additional research.
 
-Offering strategy introduces two methods used in the agent: \textit{isNash()} and \textit{countUniqueBids()}. First one is a simple implementation of the two-factor (due to the number of negotiating parties) maximization algorithm. An idea behind it is in finding a Nash equilibrium point, there none of the parties can obtain a higher utility at no cost to any other party. This particular implementation does not claim to be optimal, but it produced sufficiently good results for the agent at this stage of development. The pseudo-code of the  \textit{isNash()} method is given as follows:
-
+Offering strategy introduces two methods used in the agent: \texttt{isNash()} and \texttt{countUniqueBids()}. First one is a simple implementation of the two-factor (due to the number of negotiating parties) maximization algorithm. An idea behind it is in finding a Nash equilibrium point, there none of the parties can obtain a higher utility at no cost to any other party. This particular implementation does not claim to be optimal, but it produced sufficiently good results for the agent at this stage of development. The pseudo-code of the  \texttt{isNash()} method is given as follows:
 \begin{verbatim}
 double nashsum;
 boolean isNash(){
@@ -71,6 +71,65 @@ boolean isNash(){
 }
 \end{verbatim}
 Here \texttt{nashsum} stores a previously found maximum combined utility result to compare the last opponent bid against. When \texttt{nashsum} becomes less than the last bid combined utility, then Nash is found and true is returned. An additional limit in the opponent's and agent's utilities is set to ensure, that Nash bid was proposed by the opponent, and not by the agent itself.
+
+The second method \texttt{countUniqueBids()} is implemented to find and count all the opponent's non-equal bids as well as calculate a total sum of all proposed bids. A pseudo-code of the method is given below.
+\begin{verbatim}
+uniquebids;
+double bidsum;
+countUniqueBids() {
+    int count = 0;
+    bid = getOpponentLastBid();	
+    if (getOpponentBidHistory().size() == 1) {
+        uniquebids.add(bid.getMyUtility());
+        bidsum += bid.getMyUtility();
+    }
+    else {
+        for (uniquebid : uniquebids) {
+            if (uniquebid != bid.getMyUtility()) {
+                count ++;
+            }
+        }
+        if (count == uniquebids.size()) {
+            uniquebids.add(bid.getMyUtility());
+            bidsum += bid.getMyUtility();
+        }
+    }
+}  
+\end{verbatim}
+This method is supposed to be called every time an opponent proposes a new bid. As a result a list of \texttt{uniquebids} representing agent's utility values, \texttt{bidsum} value of all bids and \texttt{count} are stored and used for further calculations.
+
+The main procedure of the agent's bidding strategy is \texttt{determineNextBid()} which relies on a time-dependent function \texttt{p(t)}. For this work we introduce a novel TD function, results of which are determined by the values received from the methods described above. The following is a pseudo-code of the \texttt{p(t)} implementation.
+\begin{verbatim}
+int bidsThreshold ;
+double timeThreshold;
+double p(double t) {
+    countUniqueBids();
+    double ft = calculateF(t);
+    double time = getTime();
+    if (getNumberOfPossibleBids() < bidsThreshold) {
+        if (time > timeThreshold) {
+            ft += getOpponentLastBid.getMyUtil()/(1 - time);
+        }
+    }
+    pt = Pmin + (Pmax - Pmin) * (1 - ft);
+    return pt;
+}
+\end{verbatim}
+Here \texttt{pt} is used only for adjustment of the ft result based on the $P_{min}$ and $P_{max}$ bid bounds discussed at the beginning of the section. The most interesting part is a calculation of \texttt{ft}:
+\begin{equation} \label{1}
+	f(t) = \begin{cases}
+			df(\sin(-n\cdot e^{t\cdot df})+(\frac{1}{df}-1))\cdot\log(t\cdot df+1)\cdot\frac{sum}{ubs}t &\text{if ubs$>$1 and !isNash(),}\\
+			\frac{df}{2}(\sin(-n\cdot e^{t\cdot\frac{df}{2}})+(\frac{2}{df}-1))\cdot\log(t\cdot \frac{df}{2}+1)\cdot\frac{sum}{ubs}t &\text{if ubs$>$1,}\\
+			df(\sin(-n\cdot e^{t\cdot df})+(\frac{1}{df}-1))\cdot\log(t\cdot df+1) &\text{otherwise.}
+	\end{cases}
+\end{equation}
+where $df$ - a division factor in a range $\{0\dots1\}$, $n$ - number of issues negotiation about, $t$ - representation of time in a range $\{0\dots1\}$, $sum$ - a total sum of all opponent's bids at the moment of $t$ (afore-referred as a \texttt{bidsum}), $ubs$ - number of unique opponent's bids at the moment of $t$ (a size of an afore-referred list of \texttt{uniquebids}).
+
+The function $f(t)$ was designed so that it allows modification of bid offering dependent on the negotiation status. If opponent proposes more non-equal bids of a decent utility for an agent, then agents offers new bids more cautious - simulation of waiting for the best opponent's offer. On contrary, when opponent proposes a few non-equal bids, agent tries to provoke an opponent for cooperation, by offering more new bids. In addition, a fact of Nash equilibrium reach by an opponent is treated as a trigger to loose agent's own offering, and to start biding more actively. It is done in order to prevent an opponent from unnecessary utility losses, whilst it is likely that agent's own score is not going to be lowered. Finally, increase of $t$ during the negotiation process unveils more new bids to offer, and $n$ ensures that the offering will be domain-dependent.
+
+Referring back to the pseudo-code of \texttt{p(t)}, in case of a very limited utility space (\texttt{getNumberOfPossibleBids() $<$ bidsThreshold}) and negotiation time running out (\texttt{time > timeThreshold}), agent begins to concede by increasing the $f(t)$ value proportionally to the remaining time $(1-t)$. This allows to reach an agreement, instead of loosing all the utility. However, note that when opponent follows a non-cooperative strategy, this approach will not be of help.
+
+                
 
 \subsection{Acceptance Model}
 
