@@ -15,7 +15,7 @@
 
 \maketitle                 % Produces the title.
 \section{Introduction}
-\subsection{Abstract}
+\subsection{Abstract+++}
 This paper addresses the implementation of an intelligent negotiation agent. Furthermore, it discusses and analyses the results obtained from the experiments that were performed. 
 \subsection{Project Analysis}
 The agents created are based on the negotiation platform \textit{Genius}~\cite{genius}, released by Delft University in 2009. It introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
@@ -202,7 +202,7 @@ Here \texttt{weakThreshold} is provided by the Opponent Model, which is describe
 
 An opponent model is based on the Hard-Headed Opponent Model of the Genius-BOA framework.
 
-Besides from the basic model, there are two extra components in the model.~\cite{anac2013}
+Besides from the basic model, there are two extra components .~\cite{anac2013}
 
 \subsection{Simple Frequency}
 
@@ -243,7 +243,7 @@ The opponent model also calculates a threshold that is used in the Acceptance St
 
  A parameter \textbf{NegotiatedTooLong} is introduced, and is set equal to the discount factor. That means that whenever the discount is a small number, the threshold will be kept for a small amount of time, whereas if the discount is a big number, the threshold will be kept for a bigger amount of time.
 \\* The DOUS value is versatile, as it is not domain dependent.
-As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent.The threshold that is outputted is a weak threshold. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the weak threshold, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
+As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent.The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
 \\*The amount of time this threshold holds,is dependent on the discount factor of the negotiation. This restriction is set because the agent needs to be more concessive as the negotiation approaches the deadline. If the discount factor is 1, and no depreciation exists, this threshold stands for the whole negotiation. 
 The visualization of the DOUS distance would be:
 
@@ -253,13 +253,6 @@ The visualization of the DOUS distance would be:
     \includegraphics[width=0.5\textwidth]{dous}
     \label{3}
 \end{figure}
-
-The DOUS value is versatile, as it is not domain dependent.
-As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations.
-The threshold is outputted is weak threshold.
-That is, if the value is smaller than the threshold, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.
-This threshold ensures that the agents will reject points that are far from the Nash equilibrium.
-After some time in the negotiation, the threshold is set to zero, because the agent needs to be more concessive as the negotiation approaches the deadline. 
 
 \section{Opponent Model Strategy}  
 
