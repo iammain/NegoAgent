@@ -2,6 +2,7 @@
 \usepackage{graphicx}
 \usepackage{verbatim}
 \usepackage{amsmath}  % allows to use some of math functions
+\usepackage{breqn}    % breaks equations in parts when needed
                            % The preamble begins here. 
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
 \author{Panagiotis Chatzichristodoulou, Kirill Tumanov} 
@@ -129,10 +130,23 @@ To address the issue factor $\lambda$ is introduced. It is used to balance betwe
 \begin{equation} \label{3}
 	\lambda =	\begin{cases}
 	   		  	\lambda = \lambda_0 + (1-\lambda_0)^b &  \mbox{if } t==0,\\
-	       		 \lambda = \lambda + w(1-\lambda_0)\sigma^t & \mbox{if } 0<t\leq1.\\
+	       		 \lambda = \lambda + w(1-\lambda_0)\sigma^{tc} & \mbox{if } 0<t\leq1.\\
 				\end{cases}
 \end{equation}
-So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\ell$ is set to \( Utility^{max}\cdot discount^{time}  \). Graphical representation of the process is presented on Fig.~\ref{1}. Here notable is that values of $b$ and $c$ define the curvature of nonlinear piece, specifically they set a lower bound of an acceptance threshold. This fact is crucial for the strategy's implementation, as both $b$ and $c$ values should be domain-dependent in order to adequately reflect the setup features and prevent early acceptance of non-desirable offers from an opponent. Generally~$b>1$~and~$c>1$.
+So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\ell$ is set to \( Utility^{max}\cdot discount^{time}  \). Graphical representation of the process is presented on Fig.~\ref{1}. Here $a<1$ is a user specified constant value, and notable are values of $b$ and $c$ which define the curvature of nonlinear piece, specifically they set a lower bound of an acceptance threshold. This fact is crucial for the strategy's implementation, as both $b$ and $c$ values should be domain-dependent in order to adequately reflect the setup features and prevent early acceptance of non-desirable offers from an opponent. Generally~$b>1$~and~$c>1$. In this work they were defined as follows:
+\begin{dmath} \label{4}	
+	\begin{cases}
+		b = ol \cdot \theta_1\cdot (of - mf) \cdot (1 - t) \\
+		c = ol \cdot \theta_2\cdot (of - mf) \cdot (1 - t), \text{and}
+	\end{cases}
+\end{dmath}
+\begin{dmath} \label{5}	
+	\begin{cases}
+		b = b\cdot(1 - usmin) \\
+		c = c\cdot(1 - usmin),
+	\end{cases}
+\end{dmath}
+where $ol$ - an opponent's last bid utility, $of$ and $mf$ - opponent's and the agent's first bid utilities respectfully, and $\theta_{1,2}$ - coefficients with values $>1$. Formula~\ref{5} is used for $b$ and $c$ values normalization within a given domain. $usmin$ - is an agent's minimum possible utility in a given utility space.
 
 \begin{figure}[htbp]
 	\caption{Change of $\ell$ over time}
@@ -142,7 +156,6 @@ So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\
 \end{figure}
 
 An acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$. The agent will accept a proposal $\pi$ if it receives utility bigger than his current threshold, or his next-bid to propose utility. However this classic approach is not flexible enough when dealing with a strong opponent. An agent to be able to accept reasonable $\pi$ also need to be willing to concede more, then necessary. To do so agent needs to take into account it's opponent's behavior, namely, identify how actively is an opponent bidding in order to reach an agreement. For this purpose method \texttt{countUniqueBidsAtPeriod()} was introduced. It is to calculate a number of unique bids within a given time frame. The method's pseudo-code is shown below.
-
 \begin{verbatim}
 countUniqueBidsAtPeriod(double t1, double t2) {
     if (getOpponentBids().filterByTime(t1, t2).size() != 0) {
@@ -155,6 +168,32 @@ countUniqueBidsAtPeriod(double t1, double t2) {
     return 0;
 }
 \end{verbatim}
+A resulting number of bids is used as a definition of $\sigma^t$ in equation~\ref{3}.
+
+Finally define $\omega$ in equation~\ref{3}. It's purpose is in weighting the effect of $\sigma^t$ on $\lambda$, dependent on the behavior of the opponent. In this work $\omega$ was calculated as:
+\begin{dmath} \label{6}	
+	\omega = \frac{getUniqueBidsCount()}{getOpponentBidHistory().size()},
+\end{dmath}
+where divider is received from the Bidding Strategy class. Therefore $\omega$ controls a decrease of the $\lambda$ and of the acceptance threshold as a consequence.
+
+In addition to the described above threshold a \textit{"pressure"} threshold was defined. It was found as shown:
+\begin{dmath} \label{7}	
+	pressureThreshold = onbu\cdot(1 - p)\cdot e^{1 - onbu},
+\end{dmath}
+where $onbu$ - is an opponent next bid's utility received from the Opponent Model class, and $p$ - a user specified pressure constant in a range $(0\dots1)$.
+
+Lastly the agent's Acceptance Strategy is comprised of the following statement represented in pseudo-code below:
+\begin{verbatim}
+if(lastOpponentBidUtil <= weakThreshold * \delta) {
+    Reject();
+}
+if(lastOpponentBidUtil >= acceptanceThreshold
+    or lastOpponentBidUtil >= pressureThreshold) {
+    Accept();
+}
+Reject();
+\end{verbatim}
+Here \texttt{weakThreshold} is provided by the Opponent Model, which is described in the next section.
 
 \section{Opponent Model}  
 
@@ -228,7 +267,7 @@ The agent implemented is a very-strong willed agent. It will accept bids faster 
 
 
 \section{Conclusion and further work}
-Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done , until we reach a universal strategy, or a strategy that works very well in all of the domains.
+Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done, until we reach a universal strategy, or a strategy that works very well in all of the domains.
 
 
 \begin{thebibliography}{}
