@@ -240,7 +240,7 @@ The opponent model also calculates a threshold that is used in the Acceptance St
 	    return threshold;
 \end{verbatim}
 
-
+The \texttt{horizon} parameter, defines the number of past bids the agend takes into account when calculating the DOUS distance. The smaller the horizon, the more short-sighted the agent will be. Usually, a \texttt{horizon} set to 20 captures the fluctuations of the opponents bids efficiently.
  A parameter \textbf{NegotiatedTooLong} is introduced, and is set equal to the discount factor. That means that whenever the discount is a small number, the threshold will be kept for a small amount of time, whereas if the discount is a big number, the threshold will be kept for a bigger amount of time.
 \\* The DOUS value is versatile, as it is not domain dependent.
 As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent.The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
