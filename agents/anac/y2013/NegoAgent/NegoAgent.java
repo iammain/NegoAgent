@@ -26,7 +26,7 @@ public class NegoAgent extends BOAagent {
         OpponentModel om = new OpponentsModel(negotiationSession);
         OMStrategy oms = new BidStrategy(negotiationSession, om);
         OfferingStrategy offering = new NegoAgent_TDOffering(negotiationSession, om, oms, .99D, 0D);
-        AcceptanceStrategy ac =  new AStrategy(negotiationSession, offering, om, .2D , 15D, 10D);
+        AcceptanceStrategy ac =  new AStrategy(negotiationSession, offering, om, .2D, .05D);
         setDecoupledComponents (ac , offering , om , oms );
     }
     @Override

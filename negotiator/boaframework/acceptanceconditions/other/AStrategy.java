@@ -16,7 +16,7 @@ import negotiator.boaframework.OpponentModel;
 import negotiator.boaframework.offeringstrategy.other.NegoAgent_TDOffering;
 import negotiator.boaframework.omstrategy.BidStrategy;
 import negotiator.boaframework.opponentmodel.OpponentsModel;
-import negotiator.utility.UtilitySpace;
+//import negotiator.utility.UtilitySpace;
 
 /**
  * Acceptance Strategy
@@ -32,7 +32,7 @@ public class AStrategy extends AcceptanceStrategy
     private double c;
     private double lambda = 0;
     private double initlambda = 0.000001;       
-    private double preassureThreshold = 0.05;
+    private double pressure;
     public NegoAgent_TDOffering TDO;
     public BidStrategy omBidStrat;
     
@@ -41,7 +41,7 @@ public class AStrategy extends AcceptanceStrategy
 	 */
 	public AStrategy() { }
 	
-	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, double alpha, double beta, double gamma)
+	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, double alpha, double pressure)
 	{
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;		
@@ -49,28 +49,23 @@ public class AStrategy extends AcceptanceStrategy
 		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, .99, 0);
 		
 		this.a =  alpha;
-		this.b = beta;
-		this.c = gamma;
 	}
 
-        public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
+    public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
 	{
-		if (parameters.get("a") != null || parameters.get("b") != null || parameters.get("c") != null) 
-		{
+		if (parameters.get("a") != null)
 			a = parameters.get("a");
-			b = parameters.get("b");
-			c = parameters.get("c");
-		} 
 		else 
-		{
 			a = .2;
-			b = 15;
-            c = 10;
-		}
+		
+		if (parameters.get("pressure") != null)
+			pressure = parameters.get("pressure");
+		else 
+			pressure = .05;
 	}
 	
 	@Override
-	public String printParameters() { return new String("[a: " + a + " b: " + b + "]"); }
+	public String printParameters() { return new String("a: " + a); }
 	
 	/**
 	 * Method which calculates a number of unique opponent bids given time boundaries
@@ -110,8 +105,7 @@ public class AStrategy extends AcceptanceStrategy
                 		* 10 * (negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil() - negotiationSession.getOpponentBidHistory().getFirstBidDetails().getMyUndiscountedUtil()) * (1 - negTime);
                 c = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
                 		* 10 * (negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil() - negotiationSession.getOpponentBidHistory().getFirstBidDetails().getMyUndiscountedUtil()) * (1 - negTime);
-                
-                
+                                
         		b -= b * negotiationSession.getUtilitySpace().getUtility(negotiationSession.getUtilitySpace().getMinUtilityBid());
                 c -= c * negotiationSession.getUtilitySpace().getUtility(negotiationSession.getUtilitySpace().getMinUtilityBid());        	
                 
@@ -141,7 +135,7 @@ public class AStrategy extends AcceptanceStrategy
             
             double lastOpponentBidUtil = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil();            
             double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
-            double nextThres  = nextMyBidUtil * (1 - preassureThreshold) * Math.exp(1 - nextMyBidUtil); 
+            double nextThres  = nextMyBidUtil * (1 - pressure) * Math.exp(1 - nextMyBidUtil); 
             
             System.out.println("Next Threshold " + nextThres);
             //System.out.println("preassureThreshold " + preassureThreshold);

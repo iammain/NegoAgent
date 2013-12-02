@@ -5,6 +5,7 @@
 \usepackage{marginnote}
 \usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
+\usepackage{breqn}    % breaks equations in parts when needed
                            % The preamble begins here. 
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
 \author{Panagiotis Chatzichristodoulou, Kirill Tumanov} 
@@ -108,11 +109,11 @@ Here \texttt{pt} is used only for adjustment of the ft result based on the $P_{m
 			df(\sin(-n\cdot e^{t\cdot df})+(\frac{1}{df}-1))\cdot\log(t\cdot df+1) &\text{otherwise.}
 			\end{cases}
 \end{equation}
-where $df$ - a division factor in a range $\{0\dots1\}$, $n$ - number of issues negotiation about, $t$ - representation of time in a range $\{0\dots1\}$, $sum$ - a total sum of all opponent's bids at the moment of $t$ (afore-referred as a \texttt{bidsum}), $ubs$ - number of unique opponent's bids at the moment of $t$ (a size of an afore-referred list of \texttt{uniquebids}).
+where $df$ - a division factor in a range $\{0\dots1\}$, $n$ - number of issues a negotiation is about, $t$ - a normalized representation of time, $sum$ - a total sum of all opponent's bids at the moment of $t$ (afore-referred as a \texttt{bidsum}), $ubs$ - number of unique opponent's bids at the moment of $t$ (a size of an afore-referred list of \texttt{uniquebids}).
 
 The function $f(t)$ was designed so that it allows modification of bid offering dependent on the negotiation status. If opponent proposes more non-equal bids of a decent utility for an agent, then agents offers new bids more cautious - simulation of waiting for the best opponent's offer. On contrary, when opponent proposes a few non-equal bids, agent tries to provoke an opponent for cooperation, by offering more new bids. In addition, a fact of Nash equilibrium reach by an opponent is treated as a trigger to loose agent's own offering, and to start biding more actively. It is done in order to prevent an opponent from unnecessary utility losses, whilst it is likely that agent's own score is not going to be lowered. Finally, increase of $t$ during the negotiation process unveils more new bids to offer, and $n$ ensures that the offering will be domain-dependent.
 
-Referring back to the pseudo-code of \texttt{p(t)}, in case of a very limited utility space (\texttt{getNumberOfPossibleBids() $<$ bidsThreshold}) and negotiation time running out (\texttt{time > timeThreshold}), agent begins to concede by increasing the $f(t)$ value proportionally to the remaining time $(1-t)$. This allows to reach an agreement, instead of loosing all the utility. However, note that when opponent follows a non-cooperative strategy, this approach will not be of help.                
+Referring back to the pseudo-code of \texttt{p(t)}, in case of a very limited utility space (\texttt{getNumberOfPossibleBids()~$<$~bidsThreshold}) and negotiation time running out (\texttt{time > timeThreshold}), agent begins to concede by increasing the $f(t)$ value proportionally to the remaining time $(1-t)$. This allows to reach an agreement, instead of loosing all the utility. However, note that when opponent follows a non-cooperative strategy, this approach will not be of help.                
 
 \section{Acceptance Strategy}
               
@@ -132,10 +133,23 @@ To address the issue factor $\lambda$ is introduced. It is used to balance betwe
 \begin{equation} \label{3}
 	\lambda =	\begin{cases}
 	   		  	\lambda = \lambda_0 + (1-\lambda_0)^b &  \mbox{if } t==0,\\
-	       		 \lambda = \lambda + w(1-\lambda_0)\sigma^t & \mbox{if } 0<t\leq1.\\
+	       		 \lambda = \lambda + w(1-\lambda_0)\sigma^{tc} & \mbox{if } 0<t\leq1.\\
 				\end{cases}
 \end{equation}
-So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\ell$ is set to \( Utility^{max}\cdot discount^{time}  \). Graphical representation of the process is presented on Fig.~\ref{1}. Here notable is that values of $b$ and $c$ define the curvature of nonlinear piece, specifically they set a lower bound of an acceptance threshold. This fact is crucial for the strategy's implementation, as both $b$ and $c$ values should be domain-dependent in order to adequately reflect the setup features and prevent early acceptance of non-desirable offers from an opponent. Generally~$b>1$~and~$c>1$.
+So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\ell$ is set to \( Utility^{max}\cdot discount^{time}  \). Graphical representation of the process is presented on Fig.~\ref{1}. Here $a<1$ is a user specified constant value, and notable are values of $b$ and $c$ which define the curvature of nonlinear piece, specifically they set a lower bound of an acceptance threshold. This fact is crucial for the strategy's implementation, as both $b$ and $c$ values should be domain-dependent in order to adequately reflect the setup features and prevent early acceptance of non-desirable offers from an opponent. Generally~$b>1$~and~$c>1$. In this work they were defined as follows:
+\begin{dmath} \label{4}	
+	\begin{cases}
+		b = ol \cdot \theta_1\cdot (of - mf) \cdot (1 - t) \\
+		c = ol \cdot \theta_2\cdot (of - mf) \cdot (1 - t), \text{and}
+	\end{cases}
+\end{dmath}
+\begin{dmath} \label{5}	
+	\begin{cases}
+		b = b\cdot(1 - usmin) \\
+		c = c\cdot(1 - usmin),
+	\end{cases}
+\end{dmath}
+where $ol$ - an opponent's last bid utility, $of$ and $mf$ - opponent's and the agent's first bid utilities respectfully, and $\theta_{1,2}$ - coefficients with values $>1$. Formula~\ref{5} is used for $b$ and $c$ values normalization within a given domain. $usmin$ - is an agent's minimum possible utility in a given utility space.
 
 \begin{figure}[htbp]
 	\caption{Change of $\ell$ over time}
@@ -145,7 +159,6 @@ So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\
 \end{figure}
 
 An acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$. The agent will accept a proposal $\pi$ if it receives utility bigger than his current threshold, or his next-bid to propose utility. However this classic approach is not flexible enough when dealing with a strong opponent. An agent to be able to accept reasonable $\pi$ also need to be willing to concede more, then necessary. To do so agent needs to take into account it's opponent's behavior, namely, identify how actively is an opponent bidding in order to reach an agreement. For this purpose method \texttt{countUniqueBidsAtPeriod()} was introduced. It is to calculate a number of unique bids within a given time frame. The method's pseudo-code is shown below.
-
 \begin{verbatim}
 countUniqueBidsAtPeriod(double t1, double t2) {
     if (getOpponentBids().filterByTime(t1, t2).size() != 0) {
@@ -158,6 +171,32 @@ countUniqueBidsAtPeriod(double t1, double t2) {
     return 0;
 }
 \end{verbatim}
+A resulting number of bids is used as a definition of $\sigma^t$ in equation~\ref{3}.
+
+Finally define $\omega$ in equation~\ref{3}. It's purpose is in weighting the effect of $\sigma^t$ on $\lambda$, dependent on the behavior of the opponent. In this work $\omega$ was calculated as:
+\begin{dmath} \label{6}	
+	\omega = \frac{getUniqueBidsCount()}{getOpponentBidHistory().size()},
+\end{dmath}
+where divider is received from the Bidding Strategy class. Therefore $\omega$ controls a decrease of the $\lambda$ and of the acceptance threshold as a consequence.
+
+In addition to the described above threshold a \textit{"pressure"} threshold was defined. It was found as shown:
+\begin{dmath} \label{7}	
+	pressureThreshold = onbu\cdot(1 - p)\cdot e^{1 - onbu},
+\end{dmath}
+where $onbu$ - is an opponent next bid's utility received from the Opponent Model class, and $p$ - a user specified pressure constant in a range $(0\dots1)$.
+
+Lastly the agent's Acceptance Strategy is comprised of the following statement represented in pseudo-code below:
+\begin{verbatim}
+if(lastOpponentBidUtil <= weakThreshold * \delta) {
+    Reject();
+}
+if(lastOpponentBidUtil >= acceptanceThreshold
+    or lastOpponentBidUtil >= pressureThreshold) {
+    Accept();
+}
+Reject();
+\end{verbatim}
+Here \texttt{weakThreshold} is provided by the Opponent Model, which is described in the next section.
 
 \section{Opponent Model}  
 
@@ -214,6 +253,19 @@ The visualization of the DOUS distance would be:
     \includegraphics[width=0.5\textwidth]{dous}
     \label{3}
 \end{figure}
+
+The DOUS value is versatile, as it is not domain dependent.
+As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations.
+The threshold is outputted is weak threshold.
+That is, if the value is smaller than the threshold, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.
+This threshold ensures that the agents will reject points that are far from the Nash equilibrium.
+After some time in the negotiation, the threshold is set to zero, because the agent needs to be more concessive as the negotiation approaches the deadline. 
+
+\section{Opponent Model Strategy}  
+
+This module was adapted from a Best Bid Strategy, included in \textit{Genius}. The idea behind it is in keeping a small history of opponent's bids for determination of the best bid. An experimentation with a history size showed that keeping of the considerable amount of opponent's bids has a negative impact on the agent's performance, thus the history size was set to $10$ independent of the domain.
+
+The most basic OMS was selected to show the strengths and weaknesses of the NegoAgent in it's current state regardless or other variables introduced by more advanced models. However it is likely that a more tuned model is to increase the agent's performance, and thus this leaves a space for further investigation.
 
 \section{Binding the Modules}
 
@@ -274,7 +326,7 @@ CUHKA&NiceOrDie2&NiceOrDie1&3437&0.2990&0.2990&0.2243&0.2243&0.9986\\
 \end{table} 
 
 \section{Conclusion and further work}
-Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done , until we reach a universal strategy, or a strategy that works very well in all of the domains.
+Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done, until we reach a universal strategy, or a strategy that works very well in all of the domains.
 
 \begin{thebibliography}{}
 
