@@ -67,9 +67,6 @@ public class AStrategy extends AcceptanceStrategy
 			b = 15;
             c = 10;
 		}
-		
-        b -= b * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
-        c -= c * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());		
 	}
 	
 	@Override
@@ -107,8 +104,17 @@ public class AStrategy extends AcceptanceStrategy
                 double dt = 0.1; // Time difference determining a window size
                 double numbidInTime = countUniqueBidsAtPeriod(negTime - dt,  negTime); // Number of unique bids in a window
                 double discountFactor = negotiationSession.getDiscountFactor();    
-                UtilitySpace uS = negotiationSession.getUtilitySpace();
-                               
+//                UtilitySpace uS = negotiationSession.getUtilitySpace();                
+
+                b = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
+                		* 10 * (negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil() - negotiationSession.getOpponentBidHistory().getFirstBidDetails().getMyUndiscountedUtil()) * (1 - negTime);
+                c = negotiationSession.getOpponentBidHistory().getLastBidDetails().getMyUndiscountedUtil() 
+                		* 10 * (negotiationSession.getOwnBidHistory().getFirstBidDetails().getMyUndiscountedUtil() - negotiationSession.getOpponentBidHistory().getFirstBidDetails().getMyUndiscountedUtil()) * (1 - negTime);
+                
+                
+        		b -= b * negotiationSession.getUtilitySpace().getUtility(negotiationSession.getUtilitySpace().getMinUtilityBid());
+                c -= c * negotiationSession.getUtilitySpace().getUtility(negotiationSession.getUtilitySpace().getMinUtilityBid());        	
+                
                 if(lambda != 0)
                 {
                     double n1 = TDO.getUniqueBidsCount();
@@ -122,13 +128,12 @@ public class AStrategy extends AcceptanceStrategy
                 else
                 	lambda = initlambda + (1 - initlambda) * Math.pow(discountFactor, b);
                                             
+                double maxUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();//uS.getUtility(uS.getMaxUtilityBid());
+                
                 if(negTime < lambda)
-                {
-                    double maxUtility = uS.getUtility(uS.getMaxUtilityBid());
                     ACCEPTANCE_THRESHOLD = maxUtility * (1 - (1 -  Math.pow(discountFactor, 1 - lambda)) * Math.pow(negTime/lambda, a));
-                }
                 else
-                    ACCEPTANCE_THRESHOLD = uS.getUtility(uS.getMaxUtilityBid()) * Math.pow(discountFactor, 1 - negTime);
+                    ACCEPTANCE_THRESHOLD = maxUtility * Math.pow(discountFactor, 1 - negTime);
                 
                 System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
