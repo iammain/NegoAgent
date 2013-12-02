@@ -232,8 +232,7 @@ public class OpponentsModel
     	myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
     
     double dous              = myUtility - oponentFirstUtil; 
-    System.out.println(dous);
-    double NegotiatedTooLong = .40;
+    double NegotiatedTooLong = negotiationSession.getDiscountFactor();
     double threshold         = 1;    
     int horizon              = 20;    
 
@@ -257,8 +256,7 @@ public class OpponentsModel
         
         double time = negotiationSession.getTime();
         
-        threshold = mean + (dous) / 2;
-        System.out.println("before mod thresh " + threshold);
+        threshold = (mean +dous) / 2;
         if(time > .8)
         {
         	if(time > .9)
@@ -267,8 +265,7 @@ public class OpponentsModel
         		threshold -= (1 - (time - 0.8)) * variance;
         }
         else
-            threshold += 15*variance;
-        System.out.println("after modif thresh " + threshold);
+            threshold += variance;
         if(time > NegotiatedTooLong)
             return 0;
     }    
