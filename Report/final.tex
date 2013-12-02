@@ -19,10 +19,10 @@
 \section{Introduction}
 \subsection{Abstract}
 This paper addresses the implementation of an intelligent negotiation agent. Furthermore, it discusses and analyses the results obtained from the experiments that were performed. 
-Agent was developed based on the \textit{Genius} software platform, released by Delft University in 2009, in accordance with the \textit{ANAC'2013} guidelines and within the \textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework. are based on the negotiation platform \textit{Genius}~\cite{genius}. It introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
+The agent development was based on the \textit{Genius} software platform, released by Delft University in 2009. Genius introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. Furthermore, in accordance to the \textit{ANAC'2013} guidelines, the agent is based on the~\textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework~\cite{genius}. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
 
 \subsection{Framework}
-Agents in the Genius platform can either be standalone, or belonging to the BOA framework. A single-entity agent can include all the required modules in itself or use the BOA components instead. Some additional helper classes can exist outside of the main agent class. A BOA agent implements the four needed models independently, and that makes it agent more versatile and extendable, due to its modular architecture. The Fig.~\ref{ANAC BOA} depicts how the BOA components are integrated.
+Agents in the Genius platform can either be standalone, or belong to the BOA framework. A single-entity agent can include all the required modules in itself or use the BOA components instead. Some additional helper classes can exist outside of the main agent class. A BOA agent implements the four models needed independently, and its modular architecture makes the agent more versatile and extendable. The Fig.~\ref{ANAC BOA} depicts how the BOA components are integrated.
 \begin{figure}[htbp]
 	  \caption{Scheme of a BOA framework}
 	  \centering
@@ -78,7 +78,7 @@ countUniqueBids() {
     }
 }  
 \end{verbatim}
-This method is supposed to be called every time an opponent proposes a new bid. As a result a list of \texttt{uniquebids} representing agent's utility values, \texttt{bidsum} value of all bids and \texttt{count} are stored and used for further calculations.
+This method is called every time an opponent proposes a new bid. As a result a list of \texttt{uniquebids} representing agent's utility values, \texttt{bidsum} value of all bids and \texttt{count} are stored and used for further calculations.
 
 The main procedure of the agent's bidding strategy is \texttt{determineNextBid()} which relies on a time-dependent function \texttt{p(t)}. For this work we introduce a novel TD function, results of which are determined by the values received from the methods described above. The following is a pseudo-code of the \texttt{p(t)} implementation.
 \begin{verbatim}
@@ -196,9 +196,9 @@ Here \texttt{weakThreshold} is provided by the Opponent Model, which is describe
 
 \section{Opponent Model}  
 
-An opponent model is based on the Hard-Headed opponent Model of the Genius-BOA framework. The basic modification that was implemented in the update of the model is that the weights are updated only if the unique bids an opponent has made in the recent past, are above a certain number. That is, the model is updated only if the opponent has made a lot of different bids; this happens because if the weights were updated without taking into consideration the same bids, the model might become underfitting.
+The opponent model is based on the Hard-Headed Model of the~\texttt{Genius-BOA} framework. The basic modification that was implemented in the update of the model, is that the weights are updated only if the number of unique bids an opponent has made in the recent past are above a certain value. That is, the model is updated only if the opponent has made a lot of different bids; this happens because if the weights were updated without taking into consideration the same bids, the model might become underfitting.
 
-Besides from the basic model, there are two extra components .~\cite{anac2013}
+Besides from the basic model and its modifications, one extra component was implemented.~\cite{anac2013}
 
 \subsection{Distance of the opponent}
 
@@ -206,34 +206,27 @@ The opponent model also calculates a threshold that is based on the~\textit{Dist
 
 The basic algorithm of the distance of the opponent and threshold calculated is:
 
+
 \begin{verbatim}
-	BidHistory bH            = negotiationSession.getOpponentBidHistory();
-	double oponentFirstUtil  = bH.getLastBidDetails().getMyUndiscountedUtil();
-    myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
-	    
-	    double dous              = myUtility - oponentFirstUtil; 
-	    double NegotiatedTooLong = negotiationSession.getDiscountFactor();
-	    double threshold         = 1;    
-	    int horizon              = 20;    
-	     double mean = calculateMean(horizon);
-	     double variance  = calculateVariance(horizon,mean);
-	     double time = negotiationSession.getTime();
-	     threshold = (mean +dous) / 2;
-	     if(time > .8){
-	        	if(time > .9) threshold += (1 - (time - 0.9)) * variance;
-	        	else          threshold -= (1 - (time - 0.8)) * variance;
-	     }
-	     else
-	         threshold += variance;
-	     if(time > NegotiatedTooLong)
-	         return 0;
-	    return threshold;
+	oponentFirstUtil  = getOpponentLastBid().getMyUndiscountedUtil();
+	myUtility         = negotiationSession.getMyMaxUtil();
+	dous              = myUtility - oponentFirstUtil; 
+	NegotiatedTooLong = negotiationSession.getDiscountFactor();
+	int horizon       = setHorizon();
+	mean              = calculateMean(horizon);
+	variance          = calculateVariance(horizon,mean);
+	time              = negotiationSession.getTime();
+	threshold         = setWeakThreshold(mean, dous);
+	if(time > timeLimit) threshold += (1 - (time - 0.9))*variance;
+	else                 threshold += variance;
+	if(time > NegotiatedTooLong)    return 0;
+	return threshold;
 \end{verbatim}
 
-The \texttt{horizon} parameter, defines the number of past bids the agend takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent will be. Usually, a \texttt{horizon} set to 20 captures the fluctuations of the opponents bids efficiently.
- A parameter texttt{NegotiatedTooLong} is introduced, and is set equal to the discount factor. That means that whenever the discount is a small number, the threshold will be kept for a small amount of time, whereas if the discount is a big number, the threshold will be kept for a bigger amount of time.
+The \texttt{horizon} parameter, defines the number of past bids the agent takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent's threshold will be. If the horizon is given a big value, the fluctuations of the biding values will not be imprinted with the same precision to the output value, and this may result in a small threshold. Usually, a \texttt{horizon} between 10-100 captures the fluctuations of the opponents bids efficiently.
+ \\*A parameter~\texttt{NegotiatedTooLong} is introduced, and is set equal to the deappreciation factor. That means that whenever the deappreciation factor is a small number, and the utility gets high discount over time, the threshold will be kept for a small amount of time. On the other hand, if the deappreciation factor is a big number, the threshold will be kept for a bigger amount of time.
 \\* The DOUS value is versatile, as it is not domain dependent.
-As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent.The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
+As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent. The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
 \\*The amount of time this threshold holds,is dependent on the discount factor of the negotiation. This restriction is set because the agent needs to be more concessive as the negotiation approaches the deadline. If the discount factor is 1, and no depreciation exists, this threshold stands for the whole negotiation. 
 The visualization of the DOUS distance would be:
 
@@ -260,7 +253,7 @@ It is useful to have a single-entity agent instead of several BOA components. In
 	\item Opponent Model Strategy
 \end{itemize}
 
-In order to bind all the modules together, a class that extended the BOA agent and passes each of the modules with it's parameters as parts of the agent should be created. Then it is necessary to override an \texttt{agentSetup()} method of the class. The pseudo-code of the overriden class is:
+In order to bind all the modules together, a class that extended the BOA agent and passes each of the modules with its parameters as parts of the agent should be created. Then it is necessary to override an \texttt{agentSetup()} method of the class. The pseudo-code of the overriden class is:
 
 \begin{verbatim}
 NegoAgent extends BOAagent {    
@@ -319,15 +312,15 @@ Building a negotiating agent is a non-trivial matter, as the negotiation domains
 \begin{thebibliography}{}
 
 \bibitem{abines} 
-Hao J., Leung H.:
-ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items
+Hao J., Leung H., 2013:ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items Retrieval date:01.12.13
 
 \bibitem{genius}
 Genius platform at TU Delft,
 \texttt{http://www.mmi.tudelft.nl/genius/} Retrieval date: 01.12.13
 
 \bibitem{anac2013}
-Something
+Fourth Automated Negotiating Agent Competition, 2013, Retrieval date:01.12.13
+\texttt{http://www.itolab.nitech.ac.jp/ANAC2013/ANAC2013.pdf}
 
 \end{thebibliography}
 
