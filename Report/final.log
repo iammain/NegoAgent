@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  2 DEC 2013 21:48
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  2 DEC 2013 22:36
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
@@ -513,21 +513,8 @@ File: ell.png Graphic file (type png)
  <use ell.png>
 Package pdftex.def Info: ell.png used on input line 153.
 (pdftex.def)             Requested size: 172.5pt x 133.12021pt.
- [5 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/ell.png>] [6]
-
-LaTeX Warning: Command \textemdash invalid in math mode on input line 227.
-
-
-LaTeX Warning: Command \textemdash invalid in math mode on input line 227.
-
-
-Overfull \hbox (24.74858pt too wide) in paragraph at lines 226--232
-\OT1/cmr/m/n/10 A pa-ram-e-ter \OT1/cmtt/m/n/10 NegotiatedTooLong \OT1/cmr/m/n/
-10 is in-tro-duced, and is set equal to the de$\OMS/cmsy/m/n/10 j$\OT1/cmr/m/n/
-10 appreciation
- []
-
-[7] <dous.png, id=43, 261.97874pt x 199.49532pt>
+ [5 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/ell.png>] [6] [7]
+<dous.png, id=43, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
 Package pdftex.def Info: dous.png used on input line 236.
@@ -571,7 +558,7 @@ Overfull \hbox (82.72299pt too wide) in paragraph at lines 280--298
  []
 
 
-Overfull \hbox (14.02733pt too wide) in paragraph at lines 303--308
+Overfull \hbox (14.02733pt too wide) in paragraph at lines 303--309
 \OT1/cmr/m/n/10 In the first ne-go-ti-a-tion out-come, \OT1/cmtt/m/n/10 NegoAge
 nt \OT1/cmr/m/n/10 com-pletely dom-i-nates the \OT1/cmtt/m/n/10 SimpleAgent
  []
@@ -592,7 +579,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  7832 strings out of 493921
  128470 string characters out of 3147281
- 181064 words of memory out of 3000000
+ 181055 words of memory out of 3000000
  11029 multiletter control sequences out of 15000+200000
  9835 words of font info for 36 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -610,7 +597,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (13 pages, 233646 bytes).
+Output written on final.pdf (13 pages, 233476 bytes).
 PDF statistics:
  106 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
