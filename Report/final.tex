@@ -5,41 +5,35 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{marginnote}
-\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
+%\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
 \usepackage{breqn}    % breaks equations in parts when needed
                            % The preamble begins here. 
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
-\author{Panagiotis Chatzichristodoulou, Kirill Tumanov} 
+\author{Panagiotis Chatzichristodoulou and Kirill Tumanov} 
 %\date{November 29,2013}   % Deleting this command produces today's date.
 
 \begin{document}           % End of preamble and beginning of text.
 
 \maketitle                 % Produces the title.
 \section{Introduction}
-\subsection{Abstract+++}
+\subsection{Abstract}
 This paper addresses the implementation of an intelligent negotiation agent. Furthermore, it discusses and analyses the results obtained from the experiments that were performed. 
-\subsection{Project Analysis}
-The agents created are based on the negotiation platform \textit{Genius}~\cite{genius}, released by Delft University in 2009. It introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
+Agent was developed based on the \textit{Genius} software platform, released by Delft University in 2009, in accordance with the \textit{ANAC'2013} guidelines and within the \textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework. are based on the negotiation platform \textit{Genius}~\cite{genius}. It introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
 
-\subsection{Agent models}
-Each agent can consist of 4 different models:
-\begin{itemize}
-  \item Bidding Strategy
-  \item Acceptance Strategy
-  \item Opponent Model Strategy
-  \item Opponent Model   
-\end{itemize}
-The agents in the Genius platform can either be standalone, or belonging to the BOA framework. A standalone agent is usually a single Java file having all the models there. Some helper classes can exist outside of the main agent class. A BOA agent implements the four needed models independently , and that makes a BOA agent more versatile and easier to implement, due to the modularity of its architecture. In our implementation we chose a BOA agent and used the genius platform to create our final agent that consists of those four parts. The figure below depicts how the four different models cooperate to output a bid or an acceptance decision.
+\subsection{Framework}
+Agents in the Genius platform can either be standalone, or belonging to the BOA framework. A single-entity agent can include all the required modules in itself or use the BOA components instead. Some additional helper classes can exist outside of the main agent class. A BOA agent implements the four needed models independently, and that makes it agent more versatile and extendable, due to its modular architecture. The Fig.~\ref{ANAC BOA} depicts how the BOA components are integrated.
 \begin{figure}[htbp]
-	  \caption{Cooperation between four models,\newline \it{BOA framework}}
+	  \caption{Scheme of a BOA framework}
 	  \centering
 	    \includegraphics[width=1\textwidth]{fourmodels}
 	  \label{ANAC BOA}
 \end{figure}
 
-\subsection{Agent type}
-The agent that is implemented in this paper, is self interested . That is an agent that seeks to optimize its utility without taking into account the opponent's utility, or the social welfare. Furthermore, it takes into account the discount factor, and will not negotiate for too long. That way, it will receive as high utility as possible most of the time.
+\subsection{Agent summary}
+The agent described in this paper was named NegoAgent. It behaves as a self-interested negotiator, meaning that it seeks to maximize its utility without taking into account the opponent's score, or the social welfare. However, it takes into account the discount factor $\delta$, and keeps track of the negotiation time in order to receive the highest utility possible. The agent is not going to accept not reasonable offers - it believes that "no deal is better than a bad deal", but when possible it tries to achieve a "win-win" compromise with an opponent. Overall, the agent is not tied to any specific domain or opponent behavior type, on contrary it tries to be adaptive to these challenges to its benefit.
+
+A description of the BOA components used for agent development is given in subsequent sections, followed by modeling results and discussion.
 
 \section{Bids Offering Strategy}
 Agent's bid offering strategy was implemented as time-dependent (TD). The NegoAgent\_TDOffering.class requires two user parameters: $P_{min}$ and $P_{max}$ which specify the lower and upper bounds for the bids agent is to propose. In the current version of the agent these values were kept equal to $0$ and $0.99$ respectfully. No experimentation was done on changing these values, it may be the case that some alterations in specific negotiation domains are beneficial, however this topic is left for an additional research.
@@ -160,7 +154,7 @@ where $ol$ - an opponent's last bid utility, $of$ and $mf$ - opponent's and the 
 	\label{2}
 \end{figure}
 
-An acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$. The agent will accept a proposal $\pi$ if it receives utility bigger than his current threshold, or his next-bid to propose utility. However this classic approach is not flexible enough when dealing with a strong opponent. An agent to be able to accept reasonable $\pi$ also need to be willing to concede more, then necessary. To do so agent needs to take into account it's opponent's behavior, namely, identify how actively is an opponent bidding in order to reach an agreement. For this purpose method \texttt{countUniqueBidsAtPeriod()} was introduced. It is to calculate a number of unique bids within a given time frame. The method's pseudo-code is shown below.
+An acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$. The agent will accept a proposal $\pi$ if it receives utility bigger than his current threshold, or his next-bid to propose utility. However this classic approach is not flexible enough when dealing with a strong opponent. An agent to be able to accept reasonable $\pi$ also need to be willing to concede more, then necessary. To do so agent needs to take into account its opponent's behavior, namely, identify how actively is an opponent bidding in order to reach an agreement. For this purpose method \texttt{countUniqueBidsAtPeriod()} was introduced. It is to calculate a number of unique bids within a given time frame. The method's pseudo-code is shown below.
 \begin{verbatim}
 countUniqueBidsAtPeriod(double t1, double t2) {
     if (getOpponentBids().filterByTime(t1, t2).size() != 0) {
@@ -213,19 +207,27 @@ The opponent model also calculates a threshold that is based on the~\textit{Dist
 The basic algorithm of the distance of the opponent and threshold calculated is:
 
 \begin{verbatim}
-	oponentFirstUtil  = bidHistory.getOpponentLastBidDetails().getMyUndiscountedUtil();
-	myUtility = negotiationSession.getMyMaxUtil();
-	dous              = myUtility - oponentFirstUtil; 
-	NegotiatedTooLong = negotiationSession.getDiscountFactor();
-	int horizon              = setHorizon();
-	double mean = calculateMean(horizon);
-	double variance  = calculateVariance(horizon,mean);
-	double time = negotiationSession.getTime();
-	threshold = setUpWeakThreshold(mean, dous);
-	if(time > timeLimit) threshold += (1 - (time - 0.9)) * variance;
-	else                 threshold += variance;
-	if(time > NegotiatedTooLong)    return 0;
-	return threshold;
+	BidHistory bH            = negotiationSession.getOpponentBidHistory();
+	double oponentFirstUtil  = bH.getLastBidDetails().getMyUndiscountedUtil();
+    myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
+	    
+	    double dous              = myUtility - oponentFirstUtil; 
+	    double NegotiatedTooLong = negotiationSession.getDiscountFactor();
+	    double threshold         = 1;    
+	    int horizon              = 20;    
+	     double mean = calculateMean(horizon);
+	     double variance  = calculateVariance(horizon,mean);
+	     double time = negotiationSession.getTime();
+	     threshold = (mean +dous) / 2;
+	     if(time > .8){
+	        	if(time > .9) threshold += (1 - (time - 0.9)) * variance;
+	        	else          threshold -= (1 - (time - 0.8)) * variance;
+	     }
+	     else
+	         threshold += variance;
+	     if(time > NegotiatedTooLong)
+	         return 0;
+	    return threshold;
 \end{verbatim}
 
 The \texttt{horizon} parameter, defines the number of past bids the agend takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent will be. Usually, a \texttt{horizon} set to 20 captures the fluctuations of the opponents bids efficiently.
@@ -277,7 +279,7 @@ NegoAgent extends BOAagent {
 
 \section{Results}
 
-The agent implemented is a very-strong willed agent. It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to Nash equilibrium, and as time approaches 1, it accepts more reasonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
+The agent implemented is a very-strong willed agent. It accepts bids faster when the discount factor is big, otherwise it negotiates longer. An Acceptance Strategy with the weak threshold enables it to accept offers that are at least close to Nash equilibrium, when  $t\to1$, therefore it accepts more reasonable bids. Its TD offering makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
 \begin{table}[ht] 
 \centering % used for centering table 
