@@ -2,6 +2,8 @@
 \usepackage{graphicx}
 \usepackage{verbatim}
 \usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
 \usepackage{marginnote}
 \usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
@@ -200,48 +202,34 @@ Here \texttt{weakThreshold} is provided by the Opponent Model, which is describe
 
 \section{Opponent Model}  
 
-An opponent model is based on the Hard-Headed Opponent Model of the Genius-BOA framework.
+An opponent model is based on the Hard-Headed opponent Model of the Genius-BOA framework. The basic modification that was implemented in the update of the model is that the weights are updated only if the unique bids an opponent has made in the recent past, are above a certain number. That is, the model is updated only if the opponent has made a lot of different bids; this happens because if the weights were updated without taking into consideration the same bids, the model might become underfitting.
 
 Besides from the basic model, there are two extra components .~\cite{anac2013}
 
-\subsection{Simple Frequency}
-
-The Simple frequency model only updates weights when the bid change often.
-That means that the weights of the model are only changed when the opponents bids pass a certain numerical threshold.
-
 \subsection{Distance of the opponent}
 
-The opponent model also calculates a threshold that is used in the Acceptance Strategy and is based on the distance of the opponent.
+The opponent model also calculates a threshold that is based on the~\textit{Distance Of The Opponent in Our Utility Space}$-$~\texttt{DOUS}~\cite{anac2013} value. This value is used in the Acceptance Strategy and it provides the agent with a threshold that helps reject bids that are far from Nash, in high discount environments.
 
-\textbf{ The basic algorithm of the distance of the opponent is:}
+The basic algorithm of the distance of the opponent and threshold calculated is:
 
 \begin{verbatim}
-
-	BidHistory bH            = negotiationSession.getOpponentBidHistory();
-	double oponentFirstUtil  = bH.getLastBidDetails().getMyUndiscountedUtil();
-    myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
-	    
-	    double dous              = myUtility - oponentFirstUtil; 
-	    double NegotiatedTooLong = negotiationSession.getDiscountFactor();
-	    double threshold         = 1;    
-	    int horizon              = 20;    
-	     double mean = calculateMean(horizon);
-	     double variance  = calculateVariance(horizon,mean);
-	     double time = negotiationSession.getTime();
-	     threshold = (mean +dous) / 2;
-	     if(time > .8){
-	        	if(time > .9) threshold += (1 - (time - 0.9)) * variance;
-	        	else          threshold -= (1 - (time - 0.8)) * variance;
-	     }
-	     else
-	         threshold += variance;
-	     if(time > NegotiatedTooLong)
-	         return 0;
-	    return threshold;
+	oponentFirstUtil  = bidHistory.getOpponentLastBidDetails().getMyUndiscountedUtil();
+	myUtility = negotiationSession.getMyMaxUtil();
+	dous              = myUtility - oponentFirstUtil; 
+	NegotiatedTooLong = negotiationSession.getDiscountFactor();
+	int horizon              = setHorizon();
+	double mean = calculateMean(horizon);
+	double variance  = calculateVariance(horizon,mean);
+	double time = negotiationSession.getTime();
+	threshold = setUpWeakThreshold(mean, dous);
+	if(time > timeLimit) threshold += (1 - (time - 0.9)) * variance;
+	else                 threshold += variance;
+	if(time > NegotiatedTooLong)    return 0;
+	return threshold;
 \end{verbatim}
 
-The \texttt{horizon} parameter, defines the number of past bids the agend takes into account when calculating the DOUS distance. The smaller the horizon, the more short-sighted the agent will be. Usually, a \texttt{horizon} set to 20 captures the fluctuations of the opponents bids efficiently.
- A parameter \textbf{NegotiatedTooLong} is introduced, and is set equal to the discount factor. That means that whenever the discount is a small number, the threshold will be kept for a small amount of time, whereas if the discount is a big number, the threshold will be kept for a bigger amount of time.
+The \texttt{horizon} parameter, defines the number of past bids the agend takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent will be. Usually, a \texttt{horizon} set to 20 captures the fluctuations of the opponents bids efficiently.
+ A parameter texttt{NegotiatedTooLong} is introduced, and is set equal to the discount factor. That means that whenever the discount is a small number, the threshold will be kept for a small amount of time, whereas if the discount is a big number, the threshold will be kept for a bigger amount of time.
 \\* The DOUS value is versatile, as it is not domain dependent.
 As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent.The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
 \\*The amount of time this threshold holds,is dependent on the discount factor of the negotiation. This restriction is set because the agent needs to be more concessive as the negotiation approaches the deadline. If the discount factor is 1, and no depreciation exists, this threshold stands for the whole negotiation. 
@@ -292,31 +280,36 @@ NegoAgent extends BOAagent {
 The agent implemented is a very-strong willed agent. It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to Nash equilibrium, and as time approaches 1, it accepts more reasonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
 \begin{table}[ht] 
-
 \centering % used for centering table 
 \caption{Results of agent negotiations} % title of Table 
 \begin{tabular}{ccccccccc} % centered columns
-\hline\hline %inserts double horizontal lines 
+\toprule %inserts double horizontal lines 
  Opponent & A  &  B & Rounds & u A & u B & $\delta$u A & $\delta$u B & $t$\\ [0.5ex] % inserts table 
-\hline
 %heading 
-\hline % inserts single horizontal line 
-Meta&Cypress&Itex&6517&0.9268&0.3073&0.9268&0.3073&0.9822\\
-Meta&Itex&Cypress&7475&0&0&0&0&1\\
-Simple&Sam&Mary&41&1&0.4500&0.9755&0.4390&0.1148\\
-Simple&Mary&Sam&73&1&0.5250&0.9591&0.5035&0.1932\\ 
-TitforTat&CarA1&CarA2&1406&0.9641&0.8936&0.7269&0.6737&0.9818\\
-TitforTat&CarA2&CarA1&1536&0.9800&0.7642&0.7360&0.5739&0.9953\\
-Negotiator&SmartPhone1&SmartPhone2&1145&0.9585&0.6635&0.8466&0.5861&0.8911\\
-Negotiator&SmartPhone2&SmartPhone1&1061&0.9776&0.5540&0.8605&0.4877&0.9158\\
-CUHKA&NiceOrDie1&NiceOrDie2&3681&0.2990&0.2990&0.2243&0.2243&0.9990\\
-CUHKA&NiceOrDie2&NiceOrDie1&3437&0.2990&0.2990&0.2243&0.2243&0.9986\\
+\midrule % inserts single horizontal line 
+\multirow{2}{*}{Simple}&Sam&Mary&41&1&0.4500&0.9755&0.4390&0.1148\\
+&Mary&Sam&73&1&0.5250&0.9591&0.5035&0.1932\\ 
+\multirow{2}{*}{Meta}&Cypress&Itex&6517&0.9268&0.3073&0.9268&0.3073&0.9822\\
+&Itex&Cypress&7475&0&0&0&0&1\\
+\multirow{2}{*}{TitfotTat}&CarA1&CarA2&1406&0.9641&0.8936&0.7269&0.6737&0.9818\\
+&CarA2&CarA1&1536&0.9800&0.7642&0.7360&0.5739&0.9953\\
+\multirow{2}{*}{Negotiator}&SmartP1&SmartP2&1145&0.9585&0.6635&0.8466&0.5861&0.8911\\
+&SmartP2&SmartP1&1061&0.9776&0.5540&0.8605&0.4877&0.9158\\
+\multirow{2}{*}{CUHKA}&NiceOrDie1&NiceOrDie2&3681&0.2990&0.2990&0.2243&0.2243&0.9990\\
+&NiceOrDie2&NiceOrDie1&3437&0.2990&0.2990&0.2243&0.2243&0.9986\\
 [1ex] % [1ex] adds vertical
-\hline %inserts single line 
+\bottomrule %inserts single line 
 \end{tabular} 
 \caption{u X: utility of agent X , $\delta$u X:discounted utility of agent X} % title of Table 
 \label{table:NegoSimpleresults} % is used to refer this table in the text 
 \end{table} 
+
+\subsection{Result analysis}
+In the first negotiation outcome,~\texttt{NegoAgent} completely dominates the~\texttt{SimpleAgent}  in the domain Sam and Mary. An agreement is reached very fast, and the ~\texttt{NegoAgent} gathers the max amount of utility it can gather in this domain. 
+\\In the second session, ~\texttt{NegoAgent} negotiates in the ItexVsCypress domain against the ~\texttt{MetaAgent}. ~\texttt{MetaAgent} is not a normal agent; it contains an agent repository that consists of the agents that competed in the ANAC competition 2012, and uses machine learning to decide which agent fits best each negotiation domain. It competed on the ANAC 2013 competition and took the second place.~\texttt{MetaAgent} is completely dominated on the first session, whereas on the second, no agreement is reached.
+\\In the third session, ~\texttt{NegoAgent} is opposed by~\texttt{NiceTitForTat} agent in the car buyer-car seller domain.~\texttt{NiceTitForTat} loses, but manages to keep the utility it gains from the session relatively high. In contrast to the~\texttt{SimpleAgent}, the negotiation on both sessions took a lot of time and almost ended without reaching a settlement.
+\\In the fourth session, ~\texttt{NegoAgent} competes against ~\texttt{Negotiator} agent in the Smartphone buying domain.~\texttt{Negotiator} also looses against ~\texttt{NegoAgent} and, in contrast to the~\texttt{NiceTitForTat}, it does not manage to keep its utility high enough.
+\\In the final session, ~\texttt{NegoAgent} is opposed by~\texttt{CUHKA} agent in the NiceOrDie domain.~\texttt{CUHKA} agent is a very intelligent self-interested agent, and the agreement is reached on the nash point of this domain. It must be noted that this domain had only 3 possible bids that could be offered, and the agreement is accepted on the final offer of our agent.
 
 \section{Conclusion and further work}
 Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done, until we reach a universal strategy, or a strategy that works very well in all of the domains.
