@@ -74,7 +74,10 @@ public class BidStrategy extends OMStrategy
 	    	double bid = ((Double)localIterator.next()).doubleValue();
 	      
 	    	if (bid != opponentBestBid.getMyUndiscountedUtil()) 
+	    	{
 	    		allEqual = false;
+	    		break;
+	    	}
 	    }	    
 	    
 	    if (allEqual)
