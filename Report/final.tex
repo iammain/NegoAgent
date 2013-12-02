@@ -14,25 +14,23 @@
 \subsection{Abstract}
 This paper addresses the implementation of an intelligent negotiation agent. Furthermore, it discusses and analyses the results obtained from the experiments that were performed. 
 \subsection{Project Analysis}
-The agents created are based on the negotiation platform genius. ~\cite{genius} . The genius platform released it's first demo edition from Delft University on May 14th 2009. It introduces an environment where agents can negotiate over different domains,  discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multiagent Systems course at Maastricht University. 
+The agents created are based on the negotiation platform \textit{Genius}~\cite{genius}, released by Delft University in 2009. It introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
 
 \subsection{Agent models}
 Each agent can consist of 4 different models:
 \begin{itemize}
-  \item The bidding strategy
-  \item The acceptance strategy
-  \item The Opponent strategy
-  \item The Opponent model   
+  \item Bidding Strategy
+  \item Acceptance Strategy
+  \item Opponent Model Strategy
+  \item Opponent Model   
 \end{itemize}
-The agents in the genius platform can either be standalone agents , or agents that belong to the BOA framework. A standalone agent is usually a single java file having all the models there. Some helper classes can exist outside of the main agent class. A BOA agent implements the four needed models independently , and that makes a BOA agent more versatile and easier to implement, due to the modularity of its architecture. In our implementation we chose a BOA agent and used the genius platform to create our final agent that consists of those four parts. The figure below depicts how the four different models cooperate to output a bid or an acceptance decision.
+The agents in the Genius platform can either be standalone, or belonging to the BOA framework. A standalone agent is usually a single Java file having all the models there. Some helper classes can exist outside of the main agent class. A BOA agent implements the four needed models independently , and that makes a BOA agent more versatile and easier to implement, due to the modularity of its architecture. In our implementation we chose a BOA agent and used the genius platform to create our final agent that consists of those four parts. The figure below depicts how the four different models cooperate to output a bid or an acceptance decision.
 \begin{figure}[htbp]
 	  \caption{Cooperation between four models,\newline \it{BOA framework}}
 	  \centering
 	    \includegraphics[width=1\textwidth]{fourmodels}
-	  \label{1}
+	  \label{ANAC BOA}
 \end{figure}
-%\pagebreak
-
 
 \subsection{Agent type}
 The agent that is implemented in this paper, is self interested . That is an agent that seeks to optimize its utility without taking into account the opponent's utility, or the social welfare. Furthermore, it takes into account the discount factor, and will not negotiate for too long. That way, it will receive as high utility as possible most of the time.
@@ -113,13 +111,13 @@ The function $f(t)$ was designed so that it allows modification of bid offering 
 
 Referring back to the pseudo-code of \texttt{p(t)}, in case of a very limited utility space (\texttt{getNumberOfPossibleBids() $<$ bidsThreshold}) and negotiation time running out (\texttt{time > timeThreshold}), agent begins to concede by increasing the $f(t)$ value proportionally to the remaining time $(1-t)$. This allows to reach an agreement, instead of loosing all the utility. However, note that when opponent follows a non-cooperative strategy, this approach will not be of help.                
 
-\section{Acceptance Strategy}  
-\subsection{Summary}                        
+\section{Acceptance Strategy}
+              
 An acceptance strategy of the agent was based on the ABiNeS agent's ~\cite{abines} acceptance strategy. This module introduces an acceptance threshold $\ell$. The value of $\ell$ corresponds to the agents concession degree and is modified during the negotiation. This change is based on the previous results of the negotiation as well as on the domain.
 
-The agent is build as a self-interested agent and will be more concessive as the deadline of $t=1$ approaches. The acceptance threshold should always be higher than the utility agent can obtain at deadline. Therefore, the threshold should never be lower than the  \( Utility_{max} * discount_{time-1}  \) , where \( Utility_{max} \)  is the maximum utility the agent can receive without taking into account the discount factor. In contrast, if it takes the agent too long to reach an agreement, it may receive very low utility due to the influence of a discount factor even if the agreed outcome proposes a high utility. 
+The agent is build as a self-interested agent and will be more concessive as the deadline of $t=1$ approaches. The acceptance threshold should always be higher than the utility agent can obtain at deadline. Therefore, the threshold should never be lower than the \(Utility_{max}\cdot discount_{time-1}\), where \( Utility_{max}\) is the maximum utility the agent can receive without taking into account the discount factor. In contrast, if it takes the agent too long to reach an agreement, it may receive very low utility due to the influence of a discount factor even if the agreed outcome proposes a high utility. 
 
-To address the issue factor $\lambda$ is introduced. It is used to balance between exploring and exploiting the negotiating partner. More formally, when time is smaller than $\lambda$, it should be modified to gradually converge to \( Utility_{max} * discount_{time-1}  \). So the $\ell$ is defined as follows:
+To address the issue factor $\lambda$ is introduced. It is used to balance between exploring and exploiting the negotiating partner. More formally, when time is smaller than $\lambda$, it should be modified to gradually converge to \( Utility_{max}\cdot discount_{time-1}  \). So the $\ell$ is defined as follows:
 
 \begin{equation} \label{2}
 	\ell =	\begin{cases}
@@ -143,15 +141,24 @@ So as time increases, $\ell$ slowly decreases, and as time reaches $\lambda$, $\
 	\label{2}
 \end{figure}
 
-\subsection{Acceptance Model}
+An acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$. The agent will accept a proposal $\pi$ if it receives utility bigger than his current threshold, or his next-bid to propose utility. However this classic approach is not flexible enough when dealing with a strong opponent. An agent to be able to accept reasonable $\pi$ also need to be willing to concede more, then necessary. To do so agent needs to take into account it's opponent's behavior, namely, identify how actively is an opponent bidding in order to reach an agreement. For this purpose method \texttt{countUniqueBidsAtPeriod()} was introduced. It is to calculate a number of unique bids within a given time frame. The method's pseudo-code is shown below.
 
-Now that we have defined the environment, the acceptance condition is a function of the history of the previous negotiations, the current acceptance threshold, and the outcome of the negotiation at time $t$.
-
-The agent will accept a proposal $\pi$ if he receives utility bigger than his current threshold, or his next-bid to propose utility.
+\begin{verbatim}
+countUniqueBidsAtPeriod(double t1, double t2) {
+    if (getOpponentBids().filterByTime(t1, t2).size() != 0) {
+        for (bidInPeriod : bidsInPeriod) {
+            ub.add(bid);
+        }
+        ub.removeDuplicates();
+        return ub.size();
+    }
+    return 0;
+}
+\end{verbatim}
 
 \section{Opponent Model}  
 
-An opponent model is based on the Hard-Headed Opponent Model of the genius-BOA framework.
+An opponent model is based on the Hard-Headed Opponent Model of the Genius-BOA framework.
 
 Besides from the basic model, there are two extra components in the model.~\cite{anac2013}
 
@@ -180,7 +187,6 @@ The visualization of the DOUS distance would be:
     \includegraphics[width=0.5\textwidth]{dous}
     \label{3}
 \end{figure}
-
 
 The DOUS value is versatile, as it is not domain dependent.
 As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations.
@@ -218,7 +224,7 @@ NegoAgent extends BOAagent {
 
 \section{Results}
 
-The agent implemented is a very-strong willed agent (Our agent beats them all!!). It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to nash equilibrium, and as time approaches 1, it accepts more reasonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
+The agent implemented is a very-strong willed agent. It will accept bids faster when the discount factor is big, and will negotiate for a long time when the discount is small. Its acceptance strategy with the weak threshold enable it to accept offers that are at least close to Nash equilibrium, and as time approaches 1, it accepts more reasonable bids. Its bidding formula makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
 
 \section{Conclusion and further work}
@@ -230,6 +236,10 @@ Building a negotiating agent is a non-trivial matter, as the negotiation domains
 \bibitem{abines} 
 Hao J., Leung H.:
 ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items
+
+\bibitem{genius}
+Genius platform at TU Delft,
+\texttt{http://www.mmi.tudelft.nl/genius/} Retrieval date: 01.12.13
 
 \bibitem{anac2013} 
 Something

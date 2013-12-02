@@ -24,19 +24,18 @@ import negotiator.utility.UtilitySpace;
  * @author Kirill Tumanov, Panagiotis Chatzichristodoulou
  * @version 30.11.2013
  */
-public class AStrategy extends AcceptanceStrategy {
-    
+public class AStrategy extends AcceptanceStrategy
+{    
     private double ACCEPTANCE_THRESHOLD = 1;
-    private double lambda;
-    private double initlambda;
 	private double a;
 	private double b;
     private double c;
-    private double preassureThreshold;
+    private double lambda = 0;
+    private double initlambda = 0.000001;       
+    private double preassureThreshold = 0.05;
     public NegoAgent_TDOffering TDO;
     public BidStrategy omBidStrat;
-	
-
+    
 	/**
 	 * Empty constructor for the BOA framework.
 	 */
@@ -67,9 +66,6 @@ public class AStrategy extends AcceptanceStrategy {
 			a = .2;
 			b = 15;
             c = 10;
-            lambda = 0;
-            initlambda = 0.000001;            
-            preassureThreshold = .05;
 		}
 		
         b -= b * negoSession.getUtilitySpace().getUtility(negoSession.getUtilitySpace().getMinUtilityBid());
@@ -91,7 +87,6 @@ public class AStrategy extends AcceptanceStrategy {
 			for (int i = 0; i < negotiationSession.getOpponentBidHistory().filterBetweenTime(t1, t2).size(); i ++)
 				ub.add(negotiationSession.getOpponentBidHistory().filterBetweenTime(t1, t2).getHistory().get(i).getMyUndiscountedUtil());
 			
-			// Remove duplicate obstacles
 		  	Set<Double> s = new LinkedHashSet<Double>(ub);
 		  	ub.clear();
 		  	ub.addAll(s);
