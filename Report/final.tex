@@ -6,6 +6,8 @@
 \usepackage{multirow}
 \usepackage{marginnote}
 \usepackage{caption}
+\usepackage{color}
+
 %\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
 \usepackage{breqn}    % breaks equations in parts when needed
@@ -228,6 +230,7 @@ double getDousThreshold(horizon){
 }
 \end{verbatim}
 
+\textcolor{red}{Use spacing between paragraphs instead of $\backslash\backslash$. By the way here are lot of typos.}
 The \texttt{horizon} parameter, defines the number of past bids the agent takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent's threshold will be. If the horizon is given a big value, the fluctuations of the biding values will not be imprinted with the same precision to the output value, and this may result in a small threshold. Usually, a \texttt{horizon} between 10-100 captures the fluctuations of the opponents bids efficiently.
  \\*A parameter~\texttt{NegotiatedTooLong} is introduced, and is set equal to the deappreciation factor. That means that whenever the deappreciation factor is a small number, and the utility gets high discount over time, the threshold will be kept for a small amount of time. On the other hand, if the deappreciation factor is a big number, the threshold will be kept for a bigger amount of time.
 \\* The DOUS value is versatile, as it is not domain dependent.
@@ -250,13 +253,7 @@ The most basic OMS was selected to show the strengths and weaknesses of the Nego
 
 \section{Binding the Modules}
 
-It is useful to have a single-entity agent instead of several BOA components. In particular, \textit{Genius} allows single-entity agents run separate sessions against each other, and \textit{ANAC} competition uses this kind of agents in the tournament series. A single-entity agent may consist of numerous parts, however the one described in the paper is comprised of four main BOA components:
-\begin{itemize}
-	\item Bidding Strategy
-	\item Acceptance Strategy
-	\item Opponent Model
-	\item Opponent Model Strategy
-\end{itemize}
+It is useful to have a single-entity agent instead of several BOA components. In particular, \textit{Genius} allows single-entity agents run separate sessions against each other, and \textit{ANAC} competition uses this kind of agents in the tournament series. A single-entity agent may consist of numerous parts, however the one described in the paper is comprised of four main BOA components, described in the previous sections.
 
 In order to bind all the modules together, a class that extended the BOA agent and passes each of the modules with its parameters as parts of the agent should be created. Then it is necessary to override an \texttt{agentSetup()} method of the class. The pseudo-code of the overriden class is:
 
@@ -277,7 +274,9 @@ NegoAgent extends BOAagent {
 
 \section{Results}
 
-The agent implemented is a very-strong willed agent. It accepts bids faster when the discount factor is big, otherwise it negotiates longer. The Acceptance Strategy with the weak threshold enable it to accept offers that are at least close to Nash equilibrium, and as $t\to1$, therefore it accepts more reasonable bids. Its TD offering makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
+\textcolor{red}{This part is written not clearly.}
+
+The agent implemented is strong-willed - it accepts bids faster when the discount factor is big, otherwise it negotiates longer. The Acceptance Strategy with the weak threshold enables it to accept offers that are at least close to Nash equilibrium, and as $t\to1$, therefore it accepts more reasonable bids. Its TD offering makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. Table~\ref{table:NegoSimpleResults} shows the performance tests results of a proposed NegoAgent versus several existed agents ranging from most basic to the most advanced ones.
 
 \begin{table}[htbp] 
 	\centering % used for centering table 
@@ -308,28 +307,36 @@ The agent implemented is a very-strong willed agent. It accepts bids faster when
 	\label{table:NegoSimpleResults} % is used to refer this table in the text 
 \end{table} 
 
-\subsection{Result analysis}
-In the first negotiation outcome,~\texttt{NegoAgent} completely dominates the~\texttt{SimpleAgent}  in the domain Sam and Mary. An agreement is reached very fast, and the ~\texttt{NegoAgent} gathers the max amount of utility it can gather in this domain. 
-\\In the second session, ~\texttt{NegoAgent} negotiates in the ItexVsCypress domain against the ~\texttt{MetaAgent}.~\texttt{MetaAgent} is not a normal agent; it contains an agent repository that consists of the agents that competed in the ANAC competition 2012, and uses machine learning to decide which agent fits best each negotiation domain. It competed on the ANAC 2013 competition and took the second place.~\texttt{MetaAgent} is completely dominated on the first session, whereas on the second, no agreement is reached.
-\\In the third session, ~\texttt{NegoAgent} is opposed by~\texttt{NiceTitForTat} agent in the car buyer-car seller domain.~\texttt{NiceTitForTat} loses, but manages to keep the utility it gains from the session relatively high. In contrast to the~\texttt{SimpleAgent}, the negotiation on both sessions took a lot of time and almost ended without reaching a settlement.
-\\In the fourth session, ~\texttt{NegoAgent} competes against~\texttt{Negotiator} agent in the Smartphone buying domain.~\texttt{Negotiator} also looses against~\texttt{NegoAgent} and, in contrast to~\texttt{NiceTitForTat}, it does not manage to keep its utility high enough.
-\\In the final session, ~\texttt{NegoAgent} is opposed by~\texttt{CUHKA} agent in the NiceOrDie domain.~\texttt{CUHKA} agent is a very intelligent self-interested agent, and the agreement is reached on the nash point of this domain. It must be noted that this domain had only 3 possible bids that could be offered, and the agreement is accepted on the final offer of our agent.
-\\It can be induced that an agent 
-\section{Conclusion and further work}
-Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, so are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done, until we reach a universal strategy, or a strategy that works very well in all of the domains. Finally, the negotiating agent we provide is strong-willed, efficient and stable, as he can outperform top ranked agents, and behave reasonably well in difficult domains.
+\textcolor{red}{Here you played too much whith the \textasciitilde , I deleted some, but then I got bored...}
+
+In the first negotiation outcome, \texttt{NegoAgent} completely dominates over a \texttt{SimpleAgent}  in the domain Sam and Mary. An agreement is reached very fast, and the \texttt{NegoAgent} gathers the max amount of utility it can gather in this domain. 
+
+In the second session, \texttt{NegoAgent} negotiates in the ItexVsCypress domain against the \texttt{MetaAgent}. \texttt{MetaAgent} is not a normal agent; it contains an agent repository that consists of the agents that competed in the ANAC'2012, and uses machine learning to decide which agent fits best each negotiation domain. It competed in the ANAC'2013 and took the second place. \texttt{MetaAgent} is completely dominated on the first session, whereas on the second, no agreement is reached.
+
+In the third session, ~\texttt{NegoAgent} is opposed by~\texttt{NiceTitForTat} agent in the car buyer-car seller domain.~\texttt{NiceTitForTat} loses, but manages to keep the utility it gains from the session relatively high. In contrast to the~\texttt{SimpleAgent}, the negotiation on both sessions took a lot of time and almost ended without reaching a settlement.
+
+In the fourth session, ~\texttt{NegoAgent} competes against~\texttt{Negotiator} agent in the Smartphone buying domain.~\texttt{Negotiator} also looses against~\texttt{NegoAgent} and, in contrast to~\texttt{NiceTitForTat}, it does not manage to keep its utility high enough.
+
+In the final session, ~\texttt{NegoAgent} is opposed by~\texttt{CUHKA} agent in the NiceOrDie domain.~\texttt{CUHKA} agent is a very intelligent self-interested agent, and the agreement is reached on the nash point of this domain. It must be noted that this domain had only 3 possible bids that could be offered, and the agreement is accepted on the final offer of our agent.
+
+It can be induced that an agent \textcolor{red}{?????}
+\section{Conclusion}
+Building a negotiating agent is a non-trivial matter, as the negotiation domains and issue sets are practically infinite, so are the strategies that can be used. Negotiation agent design is an active research field that has been introduced recently, thus very limited practical experience is shared yet. The proposed NegoAgent tries to incorporate some of the Multi-Agent Systems concepts in it's negotiation behavior. Some domain/opponent specific cases might be treated separately, but it was decided to as general and versatile as possible. Overall results the NegoAgent shows against competitive opponents are promising, and the agent is believed to be a solid base for further research. 
 
 \begin{thebibliography}{}
 
 \bibitem{abines} 
-Hao J., Leung H., 2013:ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items Retrieval date:01.12.13
+Hao J., Leung H.:
+ABiNeS: An Adaptive Bilateral Negotiating Strategy over Multiple Items,
+\textcolor{red}{should be added info about the place of publication}, (2013)
 
 \bibitem{genius}
 Genius platform at TU Delft,
 \texttt{http://www.mmi.tudelft.nl/genius/} Retrieval date: 01.12.13
 
 \bibitem{anac2013}
-Fourth Automated Negotiating Agent Competition, 2013, Retrieval date:01.12.13
-\texttt{http://www.itolab.nitech.ac.jp/ANAC2013/ANAC2013.pdf}
+Fourth Automated Negotiating Agent Competition (2013).:
+\texttt{http://www.itolab.nitech.ac.jp/ANAC2013/} Retrieval date: 01.12.13
 
 \end{thebibliography}
 
