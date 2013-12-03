@@ -5,6 +5,7 @@
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{marginnote}
+\usepackage{caption}
 %\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
 \usepackage{breqn}    % breaks equations in parts when needed
@@ -278,29 +279,33 @@ NegoAgent extends BOAagent {
 
 The agent implemented is a very-strong willed agent. It accepts bids faster when the discount factor is big, otherwise it negotiates longer. The Acceptance Strategy with the weak threshold enable it to accept offers that are at least close to Nash equilibrium, and as $t\to1$, therefore it accepts more reasonable bids. Its TD offering makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
-\begin{table}[ht] 
-\centering % used for centering table 
-\caption{Results of agent negotiations} % title of Table 
-\begin{tabular}{ccccccccc} % centered columns
-\toprule %inserts double horizontal lines 
- Opponent & A  &  B & Rounds & u A & u B & $\delta$u A & $\delta$u B & $t$\\ [0.5ex] % inserts table 
-%heading 
-\midrule % inserts single horizontal line 
-\multirow{2}{*}{Simple}&Sam&Mary&41&1&0.4500&0.9755&0.4390&0.1148\\
-&Mary&Sam&73&1&0.5250&0.9591&0.5035&0.1932\\ 
-\multirow{2}{*}{Meta}&Cypress&Itex&6517&0.9268&0.3073&0.9268&0.3073&0.9822\\
-&Itex&Cypress&7475&0&0&0&0&1\\
-\multirow{2}{*}{TitfotTat}&CarA1&CarA2&1406&0.9641&0.8936&0.7269&0.6737&0.9818\\
-&CarA2&CarA1&1536&0.9800&0.7642&0.7360&0.5739&0.9953\\
-\multirow{2}{*}{Negotiator}&SmartP1&SmartP2&1145&0.9585&0.6635&0.8466&0.5861&0.8911\\
-&SmartP2&SmartP1&1061&0.9776&0.5540&0.8605&0.4877&0.9158\\
-\multirow{2}{*}{CUHKA}&NiceOrDie1&NiceOrDie2&3681&0.2990&0.2990&0.2243&0.2243&0.9990\\
-&NiceOrDie2&NiceOrDie1&3437&0.2990&0.2990&0.2243&0.2243&0.9986\\
-[1ex] % [1ex] adds vertical
-\bottomrule %inserts single line 
-\end{tabular} 
-\caption{u X: utility of agent X , $\delta$u X:discounted utility of agent X} % title of Table 
-\label{table:NegoSimpleresults} % is used to refer this table in the text 
+\begin{table}[htbp] 
+	\centering % used for centering table 
+	\caption{NegoAgent's negotiation results}
+	\setlength{\tabcolsep}{0.5em}
+	\begin{tabular}{llcccccc} % centered columns
+		\toprule[0.15em] 
+		 Opponent  &  Role (B) & Rounds & u, A & u, B & $\delta$u, A & $\delta$u, B & $t$\\ [0.5ex] % inserts table 
+		\midrule 
+		\multirow{2}{*}{Simple}&Mary&41&1&0.4500&0.9755&0.4390&0.1148\\
+		&Sam&73&1&0.5250&0.9591&0.5035&0.1932\\ 
+		\midrule
+		\multirow{2}{*}{Meta}&Itex&6517&0.9268&0.3073&0.9268&0.3073&0.9822\\
+		&Cypress&7475&0&0&0&0&1\\
+		\midrule
+		\multirow{2}{*}{TitfotTat}&CarA2&1406&0.9641&0.8936&0.7269&0.6737&0.9818\\
+		&CarA1&1536&0.9800&0.7642&0.7360&0.5739&0.9953\\
+		\midrule
+		\multirow{2}{*}{Negotiator}&SmartP2&1145&0.9585&0.6635&0.8466&0.5861&0.8911\\
+		&SmartP1&1061&0.9776&0.5540&0.8605&0.4877&0.9158\\
+		\midrule
+		\multirow{2}{*}{CUHKA}&NiceOrDie2&3681&0.2990&0.2990&0.2243&0.2243&0.9990\\
+		&NiceOrDie1&3437&0.2990&0.2990&0.2243&0.2243&0.9986\\
+		\bottomrule[0.15em] 
+	\end{tabular}
+	 
+	\caption*{u - utility of agent, $\delta$u - discounted utility. Opponents negotiated for role B} 
+	\label{table:NegoSimpleResults} % is used to refer this table in the text 
 \end{table} 
 
 \subsection{Result analysis}

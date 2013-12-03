@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  2 DEC 2013 23:15
-=======
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  3 DEC 2013 12:27
->>>>>>> 5ab830a0a896d28e6e3ee13326f900f4f3399e9d
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  3 DEC 2013 23:21
 entering extended mode
 **final.tex
 (C:\workspace\NegoAgent\Report\final.tex
@@ -119,6 +115,23 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 te.sty
 Package: marginnote 2012/03/29 v1.1i non floating margin notes for LaTeX
 \c@mn@abspage=\count94
+)
+(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.st
+y
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen126
+\captionmargin@=\dimen127
+\captionwidth=\dimen128
+\caption@tempdima=\dimen129
+\caption@indent=\dimen130
+\caption@parindent=\dimen131
+\caption@hangindent=\dimen132
+)
+\c@ContinuedFloat=\count95
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip45
@@ -130,46 +143,46 @@ Package: amstext 2000/06/29 v2.01
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks19
-\ex@=\dimen126
+\ex@=\dimen133
 ))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen127
+\pmbraise@=\dimen134
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count95
+\inf@bad=\count96
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count96
-\leftroot@=\count97
+\uproot@=\count97
+\leftroot@=\count98
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count98
-\DOTSCASE@=\count99
+\classnum@=\count99
+\DOTSCASE@=\count100
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
 \Mathstrutbox@=\box26
 \strutbox@=\box27
-\big@size=\dimen128
+\big@size=\dimen135
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count100
-\c@MaxMatrixCols=\count101
+\macc@depth=\count101
+\c@MaxMatrixCols=\count102
 \dotsspace@=\muskip10
-\c@parentequation=\count102
-\dspbrk@lvl=\count103
+\c@parentequation=\count103
+\dspbrk@lvl=\count104
 \tag@help=\toks20
-\row@=\count104
-\column@=\count105
-\maxfields@=\count106
+\row@=\count105
+\column@=\count106
+\maxfields@=\count107
 \andhelp@=\toks21
-\eqnshift@=\dimen129
-\alignsep@=\dimen130
-\tagshift@=\dimen131
-\tagwidth@=\dimen132
-\totwidth@=\dimen133
-\lineht@=\dimen134
+\eqnshift@=\dimen136
+\alignsep@=\dimen137
+\tagshift@=\dimen138
+\tagwidth@=\dimen139
+\totwidth@=\dimen140
+\lineht@=\dimen141
 \@envbody=\toks22
 \multlinegap=\skip46
 \multlinetaggap=\skip47
@@ -188,7 +201,7 @@ Package: l3bootstrap 2013/07/28 v4581 L3 Experimental bootstrap code
 Package: l3names 2012/12/07 v4346 L3 Namespace for primitives
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\misc\etex.sty"
 Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
-\et@xins=\count107
+\et@xins=\count108
 )
 Package: expl3 2013/10/13 v4597 L3 Experimental code bundle wrapper
 
@@ -208,11 +221,11 @@ Package: l3seq 2013/07/28 v4581 L3 Sequences and stacks
 ) (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3int.st
 y
 Package: l3int 2013/08/02 v4583 L3 Integers
-\c_max_int=\count108
-\l_tmpa_int=\count109
-\l_tmpb_int=\count110
-\g_tmpa_int=\count111
-\g_tmpb_int=\count112
+\c_max_int=\count109
+\l_tmpa_int=\count110
+\l_tmpb_int=\count111
+\g_tmpa_int=\count112
+\g_tmpb_int=\count113
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3quark.st
 y
@@ -220,7 +233,7 @@ Package: l3quark 2013/07/21 v4564 L3 Quarks
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3prg.sty
 Package: l3prg 2013/08/25 v4587 L3 Control structures
-\g__prg_map_int=\count113
+\g__prg_map_int=\count114
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3clist.st
 y
@@ -238,20 +251,20 @@ Package: l3msg 2013/07/28 v4581 L3 Messages
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3file.sty
 Package: l3file 2013/10/13 v4596 L3 File and I/O operations
-\l_iow_line_count_int=\count114
-\l__iow_target_count_int=\count115
-\l__iow_current_line_int=\count116
-\l__iow_current_word_int=\count117
-\l__iow_current_indentation_int=\count118
+\l_iow_line_count_int=\count115
+\l__iow_target_count_int=\count116
+\l__iow_current_line_int=\count117
+\l__iow_current_word_int=\count118
+\l__iow_current_indentation_int=\count119
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3skip.sty
 Package: l3skip 2013/07/28 v4581 L3 Dimensions and skips
-\c_zero_dim=\dimen135
-\c_max_dim=\dimen136
-\l_tmpa_dim=\dimen137
-\l_tmpb_dim=\dimen138
-\g_tmpa_dim=\dimen139
-\g_tmpb_dim=\dimen140
+\c_zero_dim=\dimen142
+\c_max_dim=\dimen143
+\l_tmpa_dim=\dimen144
+\l_tmpb_dim=\dimen145
+\g_tmpa_dim=\dimen146
+\g_tmpb_dim=\dimen147
 \c_zero_skip=\skip48
 \c_max_skip=\skip49
 \l_tmpa_skip=\skip50
@@ -267,19 +280,19 @@ Package: l3skip 2013/07/28 v4581 L3 Dimensions and skips
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3keys.sty
 Package: l3keys 2013/07/28 v4581 L3 Experimental key-value interfaces
-\g__keyval_level_int=\count119
-\l_keys_choice_int=\count120
+\g__keyval_level_int=\count120
+\l_keys_choice_int=\count121
 ) (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3fp.sty
 Package: l3fp 2013/07/09 v4521 L3 Floating points
-\c__fp_leading_shift_int=\count121
-\c__fp_middle_shift_int=\count122
-\c__fp_trailing_shift_int=\count123
-\c__fp_big_leading_shift_int=\count124
-\c__fp_big_middle_shift_int=\count125
-\c__fp_big_trailing_shift_int=\count126
-\c__fp_Bigg_leading_shift_int=\count127
-\c__fp_Bigg_middle_shift_int=\count128
-\c__fp_Bigg_trailing_shift_int=\count129
+\c__fp_leading_shift_int=\count122
+\c__fp_middle_shift_int=\count123
+\c__fp_trailing_shift_int=\count124
+\c__fp_big_leading_shift_int=\count125
+\c__fp_big_middle_shift_int=\count126
+\c__fp_big_trailing_shift_int=\count127
+\c__fp_Bigg_leading_shift_int=\count128
+\c__fp_Bigg_middle_shift_int=\count129
+\c__fp_Bigg_trailing_shift_int=\count130
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3box.sty
 Package: l3box 2013/07/28 v4581 L3 Experimental boxes
@@ -293,13 +306,13 @@ Package: l3box 2013/07/28 v4581 L3 Experimental boxes
 sty
 Package: l3coffins 2012/09/09 v4212 L3 Coffin code layer
 \l__coffin_internal_box=\box33
-\l__coffin_internal_dim=\dimen141
-\l__coffin_offset_x_dim=\dimen142
-\l__coffin_offset_y_dim=\dimen143
-\l__coffin_x_dim=\dimen144
-\l__coffin_y_dim=\dimen145
-\l__coffin_x_prime_dim=\dimen146
-\l__coffin_y_prime_dim=\dimen147
+\l__coffin_internal_dim=\dimen148
+\l__coffin_offset_x_dim=\dimen149
+\l__coffin_offset_y_dim=\dimen150
+\l__coffin_x_dim=\dimen151
+\l__coffin_y_dim=\dimen152
+\l__coffin_x_prime_dim=\dimen153
+\l__coffin_y_prime_dim=\dimen154
 \c_empty_coffin=\box34
 \l__coffin_aligned_coffin=\box35
 \l__coffin_aligned_internal_coffin=\box36
@@ -308,9 +321,9 @@ Package: l3coffins 2012/09/09 v4212 L3 Coffin code layer
 \l__coffin_display_coffin=\box39
 \l__coffin_display_coord_coffin=\box40
 \l__coffin_display_pole_coffin=\box41
-\l__coffin_display_offset_dim=\dimen148
-\l__coffin_display_x_dim=\dimen149
-\l__coffin_display_y_dim=\dimen150
+\l__coffin_display_offset_dim=\dimen155
+\l__coffin_display_x_dim=\dimen156
+\l__coffin_display_y_dim=\dimen157
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3color.st
 y
@@ -319,28 +332,28 @@ Package: l3color 2012/08/29 v4156 L3 Experimental color support
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3luatex.s
 ty
 Package: l3luatex 2013/07/28 v4581 L3 Experimental LuaTeX-specific functions
-\g__cctab_allocate_int=\count130
-\g__cctab_stack_int=\count131
+\g__cctab_allocate_int=\count131
+\g__cctab_stack_int=\count132
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3candidat
 es.sty
 Package: l3candidates 2013/07/24 v4576 L3 Experimental additions to l3kernel
-\l__box_top_dim=\dimen151
-\l__box_bottom_dim=\dimen152
-\l__box_left_dim=\dimen153
-\l__box_right_dim=\dimen154
-\l__box_top_new_dim=\dimen155
-\l__box_bottom_new_dim=\dimen156
-\l__box_left_new_dim=\dimen157
-\l__box_right_new_dim=\dimen158
+\l__box_top_dim=\dimen158
+\l__box_bottom_dim=\dimen159
+\l__box_left_dim=\dimen160
+\l__box_right_dim=\dimen161
+\l__box_top_new_dim=\dimen162
+\l__box_bottom_new_dim=\dimen163
+\l__box_left_new_dim=\dimen164
+\l__box_right_new_dim=\dimen165
 \l__box_internal_box=\box42
-\l__coffin_bounding_shift_dim=\dimen159
-\l__coffin_left_corner_dim=\dimen160
-\l__coffin_right_corner_dim=\dimen161
-\l__coffin_bottom_corner_dim=\dimen162
-\l__coffin_top_corner_dim=\dimen163
-\l__coffin_scaled_total_height_dim=\dimen164
-\l__coffin_scaled_width_dim=\dimen165
+\l__coffin_bounding_shift_dim=\dimen166
+\l__coffin_left_corner_dim=\dimen167
+\l__coffin_right_corner_dim=\dimen168
+\l__coffin_bottom_corner_dim=\dimen169
+\l__coffin_top_corner_dim=\dimen170
+\l__coffin_scaled_total_height_dim=\dimen171
+\l__coffin_scaled_width_dim=\dimen172
 ) ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
@@ -388,35 +401,35 @@ LaTeX Info: Redefining \genfrac on input line 121.
 ))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count132
-\calc@Bcount=\count133
-\calc@Adimen=\dimen166
-\calc@Bdimen=\dimen167
+\calc@Acount=\count133
+\calc@Bcount=\count134
+\calc@Adimen=\dimen173
+\calc@Bdimen=\dimen174
 \calc@Askip=\skip54
 \calc@Bskip=\skip55
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count134
+\calc@Ccount=\count135
 \calc@Cskip=\skip56
 )
-\inf@bad=\count135
-\maxint=\count136
-\listwidth=\dimen168
-\eqnumsep=\dimen169
-\eqmargin=\dimen170
+\inf@bad=\count136
+\maxint=\count137
+\listwidth=\dimen175
+\eqnumsep=\dimen176
+\eqmargin=\dimen177
 \eqlinespacing=\skip57
 \eqlineskip=\skip58
-\eqlineskiplimit=\dimen171
+\eqlineskiplimit=\dimen178
 \eqbinoffset=\muskip17
 \eqdelimoffset=\muskip18
-\eqindentstep=\dimen172
+\eqindentstep=\dimen179
 \eqstyle=\toks24
-\eqbreakdepth=\count137
-\eqinterlinepenalty=\count138
-\intereqpenalty=\count139
+\eqbreakdepth=\count138
+\eqinterlinepenalty=\count139
+\intereqpenalty=\count140
 \intereqskip=\skip59
-\prerelpenalty=\count140
-\prebinoppenalty=\count141
+\prerelpenalty=\count141
+\prebinoppenalty=\count142
 \Dmedmuskip=\muskip19
 \Dthickmuskip=\muskip20
 \eqleftskip=\skip60
@@ -426,39 +439,39 @@ LaTeX Info: Redefining \addtolength on input line 77.
 \EQ@box=\box43
 \EQ@copy=\box44
 \EQ@numbox=\box45
-\eq@wdNum=\dimen173
+\eq@wdNum=\dimen180
 \GRP@numbox=\box46
-\grp@wdNum=\dimen174
-\eq@lines=\count142
-\eq@curline=\count143
-\eq@badness=\count144
-\EQ@vims=\count145
-\eq@dp=\dimen175
-\eq@wdL=\dimen176
-\eq@wdT=\dimen177
-\eq@wdMin=\dimen178
-\grp@wdL=\dimen179
-\grp@wdR=\dimen180
-\grp@wdT=\dimen181
-\eq@wdRmax=\dimen182
-\eq@firstht=\dimen183
-\eq@wdCond=\dimen184
-\eq@indentstep=\dimen185
-\eq@linewidth=\dimen186
-\grp@linewidth=\dimen187
-\eq@hshift=\dimen188
-\eq@given@sidespace=\dimen189
-\mathindent=\dimen190
-\eq@final@linecount=\count146
-\eq@wdR=\dimen191
+\grp@wdNum=\dimen181
+\eq@lines=\count143
+\eq@curline=\count144
+\eq@badness=\count145
+\EQ@vims=\count146
+\eq@dp=\dimen182
+\eq@wdL=\dimen183
+\eq@wdT=\dimen184
+\eq@wdMin=\dimen185
+\grp@wdL=\dimen186
+\grp@wdR=\dimen187
+\grp@wdT=\dimen188
+\eq@wdRmax=\dimen189
+\eq@firstht=\dimen190
+\eq@wdCond=\dimen191
+\eq@indentstep=\dimen192
+\eq@linewidth=\dimen193
+\grp@linewidth=\dimen194
+\eq@hshift=\dimen195
+\eq@given@sidespace=\dimen196
+\mathindent=\dimen197
+\eq@final@linecount=\count147
+\eq@wdR=\dimen198
 \EQ@continue=\toks25
-\lr@level=\count147
+\lr@level=\count148
 \GRP@queue=\toks26
 \GRP@box=\box47
 \GRP@wholebox=\box48
 \darraycolsep=\skip63
-\cur@row=\count148
-\cur@col=\count149
+\cur@row=\count149
+\cur@col=\count150
 \conditionsep=\skip64
 )
 
@@ -473,120 +486,113 @@ LaTeX Warning: Label `2' multiply defined.
 LaTeX Warning: Label `3' multiply defined.
 
 )
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
 
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mki
 i
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count150
-\scratchdimen=\dimen192
+\scratchcounter=\count151
+\scratchdimen=\dimen199
 \scratchbox=\box49
-\nofMPsegments=\count151
-\nofMParguments=\count152
+\nofMPsegments=\count152
+\nofMParguments=\count153
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count153
-\MPscratchDim=\dimen193
-\MPnumerator=\count154
-\makeMPintoPDFobject=\count155
+\MPscratchCnt=\count154
+\MPscratchDim=\dimen200
+\MPnumerator=\count155
+\makeMPintoPDFobject=\count156
 \everyMPtoPDFconversion=\toks28
 )
 Package marginnote Info: \pdfoutput not 0 and \pdflastxpos available.
 (marginnote)             Extended position detection mode activated.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
  [1
 
 {C:/Users/Кирилл/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 <fourmodels.png, id=7, 749.04843pt x 182.18062pt>
 File: fourmodels.png Graphic file (type png)
  <use fourmodels.png>
-Package pdftex.def Info: fourmodels.png used on input line 29.
+Package pdftex.def Info: fourmodels.png used on input line 30.
 (pdftex.def)             Requested size: 345.0pt x 83.90973pt.
  [1 <C:/workspace/NegoAgent/Report/fourmodels.png>]
-Overfull \hbox (53.99652pt too wide) in paragraph at lines 48--48
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 49--49
 []        \OT1/cmtt/m/n/10 if (temp < nashsum && bid.getOppenentUtility() < bid
 .getMyUtility())[] 
  []
 
 [2]
-Overfull \hbox (27.9636pt too wide) detected at line 107
+Overfull \hbox (27.9636pt too wide) detected at line 108
 \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 ) = []
  []
 
 [3] [4] <ell.png, id=32, 303.38344pt x 234.1247pt>
 File: ell.png Graphic file (type png)
  <use ell.png>
-Package pdftex.def Info: ell.png used on input line 153.
+Package pdftex.def Info: ell.png used on input line 154.
 (pdftex.def)             Requested size: 172.5pt x 133.12021pt.
-<<<<<<< HEAD
  [5 <C:/workspace/NegoAgent/Report/ell.png>] [6] [7]
-=======
- [5 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/ell.png>] [6] [7]
->>>>>>> 5ab830a0a896d28e6e3ee13326f900f4f3399e9d
 <dous.png, id=43, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
-Package pdftex.def Info: dous.png used on input line 240.
+Package pdftex.def Info: dous.png used on input line 241.
 (pdftex.def)             Requested size: 172.5pt x 131.35985pt.
-<<<<<<< HEAD
  [8 <C:/workspace/NegoAgent/Report/dous.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 250.
-=======
- [8 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/dous.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 254.
->>>>>>> 5ab830a0a896d28e6e3ee13326f900f4f3399e9d
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 255.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 254.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 255.
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 266--266
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 267--267
 []        \OT1/cmtt/m/n/10 OpponentModel om = new OpponentsModel(negotiationSes
 sion);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 267--267
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 268--268
 []        \OT1/cmtt/m/n/10 OMStrategy oms = new BidStrategy(negotiationSession 
 , om);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 268--268
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 269--269
 []        \OT1/cmtt/m/n/10 OfferingStrategy offering = new NegoAgent_TDOffering
 (nego-[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 270--270
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 271--271
 []        \OT1/cmtt/m/n/10 AcceptanceStrategy ac =  new AStrategy(negotiationSe
 ssion,[] 
  []
 
 
-Overfull \hbox (82.72299pt too wide) in paragraph at lines 284--302
+Overfull \hbox (4.00072pt too wide) in paragraph at lines 286--306
  [][] 
  []
 
 [9]
-Overfull \hbox (14.02733pt too wide) in paragraph at lines 307--313
+Overfull \hbox (14.02733pt too wide) in paragraph at lines 312--318
 \OT1/cmr/m/n/10 In the first ne-go-ti-a-tion out-come, \OT1/cmtt/m/n/10 NegoAge
 nt \OT1/cmr/m/n/10 com-pletely dom-i-nates the \OT1/cmtt/m/n/10 SimpleAgent
  []
 
 [10] [11]
-Underfull \hbox (badness 3118) in paragraph at lines 326--328
+Underfull \hbox (badness 3118) in paragraph at lines 331--333
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion, 2013
 , Re-trieval
  []
@@ -599,18 +605,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 7832 strings out of 493921
-<<<<<<< HEAD
- 129660 string characters out of 3147260
- 181064 words of memory out of 3000000
-=======
- 128470 string characters out of 3147281
- 179064 words of memory out of 3000000
->>>>>>> 5ab830a0a896d28e6e3ee13326f900f4f3399e9d
- 11029 multiletter control sequences out of 15000+200000
+ 8873 strings out of 493921
+ 148669 string characters out of 3147260
+ 197361 words of memory out of 3000000
+ 12064 multiletter control sequences out of 15000+200000
  9835 words of font info for 36 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 37i,10n,35p,890b,307s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 37i,10n,38p,890b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
@@ -624,11 +625,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-<<<<<<< HEAD
-Output written on final.pdf (13 pages, 233463 bytes).
-=======
-Output written on final.pdf (13 pages, 233426 bytes).
->>>>>>> 5ab830a0a896d28e6e3ee13326f900f4f3399e9d
+Output written on final.pdf (13 pages, 233040 bytes).
 PDF statistics:
  106 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
