@@ -23,10 +23,14 @@ public class NegoAgent extends BOAagent {
     
     @Override
     public void agentSetup(){
+        System.out.println("Oppon");
         OpponentModel om = new OpponentsModel(negotiationSession);
+        System.out.println("BId strategy");
         OMStrategy oms = new BidStrategy(negotiationSession, om);
+        System.out.println("Ngo tdo");
         OfferingStrategy offering = new NegoAgent_TDOffering(negotiationSession, om, oms, .99D, 0D);
-        AcceptanceStrategy ac =  new AStrategy(negotiationSession, offering, om, .2D, .05D);
+        System.out.println("Acccept");
+        AcceptanceStrategy ac =  new AStrategy(negotiationSession, offering, om, .2D, .1D);
         setDecoupledComponents (ac , offering , om , oms );
     }
     @Override

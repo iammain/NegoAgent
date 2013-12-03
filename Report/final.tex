@@ -19,7 +19,7 @@
 \section{Introduction}
 \subsection{Abstract}
 This paper addresses the implementation of an intelligent negotiation agent. Furthermore, it discusses and analyses the results obtained from the experiments that were performed. 
-The agent development was based on the \textit{Genius} software platform, released by Delft University in 2009. Genius introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platform. Furthermore, in accordance to the \textit{ANAC'2013} guidelines, the agent is based on the~\textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework~\cite{genius}. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
+The agent development was based on the \textit{Genius} software platform, released by Delft University in 2009. Genius introduces an environment where agents can negotiate within different domains - discrete or continuous. Genius is the standard in the agent negotiation domain platforms. Furthermore, in accordance to the \textit{ANAC'2013} guidelines, the agent is based on the~\textit{BOA} (Bidding Strategy, Opponent Model, Acceptance Strategy) framework~\cite{genius}. The work was performed as a practical part of the Multi-agent Systems course at Maastricht University. 
 
 \subsection{Framework}
 Agents in the Genius platform can either be standalone, or belong to the BOA framework. A single-entity agent can include all the required modules in itself or use the BOA components instead. Some additional helper classes can exist outside of the main agent class. A BOA agent implements the four models needed independently, and its modular architecture makes the agent more versatile and extendable. The Fig.~\ref{ANAC BOA} depicts how the BOA components are integrated.
@@ -192,42 +192,46 @@ if(lastOpponentBidUtil >= acceptanceThreshold
 }
 Reject();
 \end{verbatim}
-Here \texttt{weakThreshold} is provided by the Opponent Model, which is described in the next section.
+Here \texttt{weakThreshold} is provided by the Opponent Model, which is described in the following section.
 
 \section{Opponent Model}  
 
-The opponent model is based on the Hard-Headed Model of the~\texttt{Genius-BOA} framework. The basic modification that was implemented in the update of the model, is that the weights are updated only if the number of unique bids an opponent has made in the recent past are above a certain value. That is, the model is updated only if the opponent has made a lot of different bids; this happens because if the weights were updated without taking into consideration the same bids, the model might become underfitting.
+The opponent model is based on the~\texttt{Hard-Headed Model} of the~\texttt{Genius-BOA} framework. The basic difference from the~\texttt{Hard-Headed Model} lies in the way the weights are modified. The weights are updated only if the number of unique bids an opponent has made in the recent past is above a certain value. That is, the model is updated only if the opponent has made a lot of different bids; this happens because if the weights were updated taking into consideration the number same bids, the model will converge to wrong weights.
 
-Besides from the basic model and its modifications, one extra component was implemented.~\cite{anac2013}
+Besides from the basic model and its basic modification, one extra component was implemented.~\cite{anac2013}
 
 \subsection{Distance of the opponent}
 
-The opponent model also calculates a threshold that is based on the~\textit{Distance Of The Opponent in Our Utility Space}$-$~\texttt{DOUS}~\cite{anac2013} value. This value is used in the Acceptance Strategy and it provides the agent with a threshold that helps reject bids that are far from Nash, in high discount environments.
+The opponent model also calculates a threshold that is based on the~\textit{Distance Of The Opponent in Our Utility Space}$-$\texttt{DOUS}~\cite{anac2013} value. This value is used in the Acceptance Strategy and it provides the agent with a threshold that helps reject bids that are far from Nash, in high discount environments.
 
-The basic algorithm of the distance of the opponent and threshold calculated is:
+The basic algorithm of the DOUS value and its threshold calculation is:
 
 
 \begin{verbatim}
-	oponentFirstUtil  = getOpponentLastBid().getMyUndiscountedUtil();
-	myUtility         = negotiationSession.getMyMaxUtil();
-	dous              = myUtility - oponentFirstUtil; 
-	NegotiatedTooLong = negotiationSession.getDiscountFactor();
-	int horizon       = setHorizon();
-	mean              = calculateMean(horizon);
-	variance          = calculateVariance(horizon,mean);
-	time              = negotiationSession.getTime();
-	threshold         = setWeakThreshold(mean, dous);
-	if(time > timeLimit) threshold += (1 - (time - 0.9))*variance;
-	else                 threshold += variance;
-	if(time > NegotiatedTooLong)    return 0;
-	return threshold;
+double getDousThreshold(horizon){
+    myUtility = negotiationSession.getMyMaxUtil();
+    dous      = myUtility - getOpponentLastBid().getMyUtil();
+    mean      = getOpponentBidsMean(horizon);
+    variance  = getOpponentBidVar(horizon,mean);
+    time      = getTime();
+    threshold = (mean+dous)/2;
+    if(time > timeLimit){
+        threshold+=(1-(time-0.9))*variance;
+    }else{
+        threshold += variance;
+    }
+    if(time > delta){
+        return 0;
+    }    
+    return threshold;
+}
 \end{verbatim}
 
 The \texttt{horizon} parameter, defines the number of past bids the agent takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent's threshold will be. If the horizon is given a big value, the fluctuations of the biding values will not be imprinted with the same precision to the output value, and this may result in a small threshold. Usually, a \texttt{horizon} between 10-100 captures the fluctuations of the opponents bids efficiently.
  \\*A parameter~\texttt{NegotiatedTooLong} is introduced, and is set equal to the deappreciation factor. That means that whenever the deappreciation factor is a small number, and the utility gets high discount over time, the threshold will be kept for a small amount of time. On the other hand, if the deappreciation factor is a big number, the threshold will be kept for a bigger amount of time.
 \\* The DOUS value is versatile, as it is not domain dependent.
-As it is presented here, it can be implemented only on negotiations of two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent. The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the normal threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
-\\*The amount of time this threshold holds,is dependent on the discount factor of the negotiation. This restriction is set because the agent needs to be more concessive as the negotiation approaches the deadline. If the discount factor is 1, and no depreciation exists, this threshold stands for the whole negotiation. 
+As it is presented here, it can be implemented only on negotiations between two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent. The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the strong threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
+\\*The amount of time this threshold holds is dependent on the discount factor of the negotiation. This restriction is set because the agent needs to be more concessive as the negotiation approaches the deadline. If the discount factor is 1, and no depreciation exists, this threshold stands for the whole negotiation. 
 The visualization of the DOUS distance would be:
 
 \begin{figure}[htbp]
@@ -272,7 +276,7 @@ NegoAgent extends BOAagent {
 
 \section{Results}
 
-The agent implemented is a very-strong willed agent. It accepts bids faster when the discount factor is big, otherwise it negotiates longer. An Acceptance Strategy with the weak threshold enables it to accept offers that are at least close to Nash equilibrium, when  $t\to1$, therefore it accepts more reasonable bids. Its TD offering makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
+The agent implemented is a very-strong willed agent. It accepts bids faster when the discount factor is big, otherwise it negotiates longer. The Acceptance Strategy with the weak threshold enable it to accept offers that are at least close to Nash equilibrium, and as $t\to1$, therefore it accepts more reasonable bids. Its TD offering makes the agent extremely efficient at obtaining the best utility possible from strong willed opponents. The figures below show the results against a very good 2013 agent.
 
 \begin{table}[ht] 
 \centering % used for centering table 
@@ -301,13 +305,13 @@ The agent implemented is a very-strong willed agent. It accepts bids faster when
 
 \subsection{Result analysis}
 In the first negotiation outcome,~\texttt{NegoAgent} completely dominates the~\texttt{SimpleAgent}  in the domain Sam and Mary. An agreement is reached very fast, and the ~\texttt{NegoAgent} gathers the max amount of utility it can gather in this domain. 
-\\In the second session, ~\texttt{NegoAgent} negotiates in the ItexVsCypress domain against the ~\texttt{MetaAgent}. ~\texttt{MetaAgent} is not a normal agent; it contains an agent repository that consists of the agents that competed in the ANAC competition 2012, and uses machine learning to decide which agent fits best each negotiation domain. It competed on the ANAC 2013 competition and took the second place.~\texttt{MetaAgent} is completely dominated on the first session, whereas on the second, no agreement is reached.
+\\In the second session, ~\texttt{NegoAgent} negotiates in the ItexVsCypress domain against the ~\texttt{MetaAgent}.~\texttt{MetaAgent} is not a normal agent; it contains an agent repository that consists of the agents that competed in the ANAC competition 2012, and uses machine learning to decide which agent fits best each negotiation domain. It competed on the ANAC 2013 competition and took the second place.~\texttt{MetaAgent} is completely dominated on the first session, whereas on the second, no agreement is reached.
 \\In the third session, ~\texttt{NegoAgent} is opposed by~\texttt{NiceTitForTat} agent in the car buyer-car seller domain.~\texttt{NiceTitForTat} loses, but manages to keep the utility it gains from the session relatively high. In contrast to the~\texttt{SimpleAgent}, the negotiation on both sessions took a lot of time and almost ended without reaching a settlement.
-\\In the fourth session, ~\texttt{NegoAgent} competes against ~\texttt{Negotiator} agent in the Smartphone buying domain.~\texttt{Negotiator} also looses against ~\texttt{NegoAgent} and, in contrast to the~\texttt{NiceTitForTat}, it does not manage to keep its utility high enough.
+\\In the fourth session, ~\texttt{NegoAgent} competes against~\texttt{Negotiator} agent in the Smartphone buying domain.~\texttt{Negotiator} also looses against~\texttt{NegoAgent} and, in contrast to~\texttt{NiceTitForTat}, it does not manage to keep its utility high enough.
 \\In the final session, ~\texttt{NegoAgent} is opposed by~\texttt{CUHKA} agent in the NiceOrDie domain.~\texttt{CUHKA} agent is a very intelligent self-interested agent, and the agreement is reached on the nash point of this domain. It must be noted that this domain had only 3 possible bids that could be offered, and the agreement is accepted on the final offer of our agent.
-
+\\It can be induced that an agent 
 \section{Conclusion and further work}
-Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, as are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done, until we reach a universal strategy, or a strategy that works very well in all of the domains.
+Building a negotiating agent is a non-trivial matter, as the negotiation domains are practically infinite, so are the strategies that can be used. As the agent negotiation is a research field that has only been introduced recently, and as there are strategies that behave well given different domains there is a lot of research to be done, until we reach a universal strategy, or a strategy that works very well in all of the domains. Finally, the negotiating agent we provide is strong-willed, efficient and stable, as he can outperform top ranked agents, and behave reasonably well in difficult domains.
 
 \begin{thebibliography}{}
 
