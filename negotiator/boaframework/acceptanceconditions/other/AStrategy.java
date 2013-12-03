@@ -48,7 +48,8 @@ public class AStrategy extends AcceptanceStrategy
 		this.omBidStrat = new BidStrategy(negoSession, opponentModel);
 		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, .99, 0);
 		
-		this.a =  alpha;
+		this.a = alpha;
+		this.pressure = pressure;
 	}
 
     public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
