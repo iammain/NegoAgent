@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  2 DEC 2013 22:36
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  3 DEC 2013 12:27
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
@@ -517,54 +517,54 @@ Package pdftex.def Info: ell.png used on input line 153.
 <dous.png, id=43, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
-Package pdftex.def Info: dous.png used on input line 236.
+Package pdftex.def Info: dous.png used on input line 240.
 (pdftex.def)             Requested size: 172.5pt x 131.35985pt.
  [8 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/dous.png>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 250.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 254.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 250.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 254.
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 262--262
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 266--266
 []        \OT1/cmtt/m/n/10 OpponentModel om = new OpponentsModel(negotiationSes
 sion);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 263--263
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 267--267
 []        \OT1/cmtt/m/n/10 OMStrategy oms = new BidStrategy(negotiationSession 
 , om);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 264--264
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 268--268
 []        \OT1/cmtt/m/n/10 OfferingStrategy offering = new NegoAgent_TDOffering
 (nego-[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 266--266
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 270--270
 []        \OT1/cmtt/m/n/10 AcceptanceStrategy ac =  new AStrategy(negotiationSe
 ssion,[] 
  []
 
 
-Overfull \hbox (82.72299pt too wide) in paragraph at lines 280--298
+Overfull \hbox (82.72299pt too wide) in paragraph at lines 284--302
  [][] 
  []
 
-
-Overfull \hbox (14.02733pt too wide) in paragraph at lines 303--309
+[9]
+Overfull \hbox (14.02733pt too wide) in paragraph at lines 307--313
 \OT1/cmr/m/n/10 In the first ne-go-ti-a-tion out-come, \OT1/cmtt/m/n/10 NegoAge
 nt \OT1/cmr/m/n/10 com-pletely dom-i-nates the \OT1/cmtt/m/n/10 SimpleAgent
  []
 
-[9] [10] [11]
-Underfull \hbox (badness 3118) in paragraph at lines 322--324
+[10] [11]
+Underfull \hbox (badness 3118) in paragraph at lines 326--328
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion, 2013
 , Re-trieval
  []
@@ -579,7 +579,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  7832 strings out of 493921
  128470 string characters out of 3147281
- 181055 words of memory out of 3000000
+ 179064 words of memory out of 3000000
  11029 multiletter control sequences out of 15000+200000
  9835 words of font info for 36 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -597,7 +597,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (13 pages, 233476 bytes).
+Output written on final.pdf (13 pages, 233426 bytes).
 PDF statistics:
  106 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

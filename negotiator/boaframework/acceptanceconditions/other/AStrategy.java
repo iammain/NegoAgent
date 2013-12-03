@@ -43,12 +43,13 @@ public class AStrategy extends AcceptanceStrategy
 	
 	public AStrategy(NegotiationSession negoSession, OfferingStrategy strat, OpponentModel opponentModel, double alpha, double pressure)
 	{
+            
 		this.negotiationSession = negoSession;
 		this.offeringStrategy = strat;		
 		this.omBidStrat = new BidStrategy(negoSession, opponentModel);
 		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, .99, 0);
-		
 		this.a =  alpha;
+                this.pressure = pressure;
 	}
 
     public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
@@ -144,11 +145,12 @@ public class AStrategy extends AcceptanceStrategy
             double weakThreshold = oM.getOpponentThreshold();
 //            System.out.println("Weak discounted thresh "  + weakThreshold * negotiationSession.getDiscountFactor());
             
-            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
-                return Actions.Reject;
-//            System.out.println("Passed weak threshold");
+//            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
+//                return Actions.Reject;
+            System.out.println("ACCEPTANCE_THRESHOLD" + ACCEPTANCE_THRESHOLD);
+            System.out.println("nextThres"  + nextThres);
             
-            if(lastOpponentBidUtil >= ACCEPTANCE_THRESHOLD || lastOpponentBidUtil >= nextThres)
+            if(lastOpponentBidUtil >= (ACCEPTANCE_THRESHOLD-.08) || lastOpponentBidUtil >= (nextThres-.08))
                     return Actions.Accept;
             
             return Actions.Reject;

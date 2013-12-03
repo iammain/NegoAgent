@@ -208,19 +208,23 @@ The basic algorithm of the DOUS value and its threshold calculation is:
 
 
 \begin{verbatim}
-	oponentFirstUtil  = getOpponentLastBid().getMyUndiscountedUtil();
-	myUtility         = negotiationSession.getMyMaxUtil();
-	dous              = myUtility - oponentFirstUtil; 
-	NegotiatedTooLong = negotiationSession.getDiscountFactor();
-	int horizon       = setHorizon();
-	mean              = calculateMean(horizon);
-	variance          = calculateVariance(horizon,mean);
-	time              = negotiationSession.getTime();
-	threshold         = (mean+dous)/2;
-	if(time > timeLimit) threshold += (1 - (time - 0.9))*variance;
-	else                 threshold += variance;
-	if(time > NegotiatedTooLong)    return 0;
-	return threshold;
+double getDousThreshold(horizon){
+    myUtility = negotiationSession.getMyMaxUtil();
+    dous      = myUtility - getOpponentLastBid().getMyUtil();
+    mean      = getOpponentBidsMean(horizon);
+    variance  = getOpponentBidVar(horizon,mean);
+    time      = getTime();
+    threshold = (mean+dous)/2;
+    if(time > timeLimit){
+        threshold+=(1-(time-0.9))*variance;
+    }else{
+        threshold += variance;
+    }
+    if(time > delta){
+        return 0;
+    }    
+    return threshold;
+}
 \end{verbatim}
 
 The \texttt{horizon} parameter, defines the number of past bids the agent takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent's threshold will be. If the horizon is given a big value, the fluctuations of the biding values will not be imprinted with the same precision to the output value, and this may result in a small threshold. Usually, a \texttt{horizon} between 10-100 captures the fluctuations of the opponents bids efficiently.
