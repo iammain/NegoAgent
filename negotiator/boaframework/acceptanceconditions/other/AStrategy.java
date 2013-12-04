@@ -139,17 +139,16 @@ public class AStrategy extends AcceptanceStrategy
             double nextThres  = nextMyBidUtil * (1 - pressure) * Math.exp(1 - nextMyBidUtil); 
             
             System.out.println("Next Threshold " + nextThres);
-            //System.out.println("preassureThreshold " + preassureThreshold);
             
             OpponentsModel oM = new OpponentsModel(negotiationSession);            
             double weakThreshold = oM.getOpponentThreshold();
-//            System.out.println("Weak discounted thresh "  + weakThreshold * negotiationSession.getDiscountFactor());
             
-//            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
-//                return Actions.Reject;
+            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
+                return Actions.Reject;
             System.out.println("ACCEPTANCE_THRESHOLD" + ACCEPTANCE_THRESHOLD);
             System.out.println("nextThres"  + nextThres);
-            
+            System.out.println("lastOpponentBidUtil"  + lastOpponentBidUtil);
+            System.out.println("thisOpponentBid"  + nextThres);
             if(lastOpponentBidUtil >= (ACCEPTANCE_THRESHOLD-.08) || lastOpponentBidUtil >= (nextThres-.08))
                     return Actions.Accept;
             

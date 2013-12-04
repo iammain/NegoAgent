@@ -232,7 +232,7 @@ public class OpponentsModel
     	myUtility = negotiationSession.getOwnBidHistory().getLastBidDetails().getMyUndiscountedUtil();
     
     double dous              = myUtility - oponentFirstUtil; 
-    double NegotiatedTooLong = .45;
+    double NegotiatedTooLong = negotiationSession.getDiscountFactor();
     double threshold         = 1;    
     int horizon              = 20;    
 
