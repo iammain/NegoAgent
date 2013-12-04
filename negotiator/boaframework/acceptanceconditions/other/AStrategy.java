@@ -48,8 +48,8 @@ public class AStrategy extends AcceptanceStrategy
 		this.offeringStrategy = strat;		
 		this.omBidStrat = new BidStrategy(negoSession, opponentModel);
 		this.TDO = new NegoAgent_TDOffering(negotiationSession, opponentModel, omBidStrat, .99, 0);
-		this.a =  alpha;
-                this.pressure = pressure;
+		this.a = alpha;
+		this.pressure = pressure;
 	}
 
     public void init(NegotiationSession negoSession, HashMap<String, Double> parameters) throws Exception 
@@ -147,9 +147,8 @@ public class AStrategy extends AcceptanceStrategy
                 return Actions.Reject;
             System.out.println("ACCEPTANCE_THRESHOLD" + ACCEPTANCE_THRESHOLD);
             System.out.println("nextThres"  + nextThres);
-            System.out.println("lastOpponentBidUtil"  + lastOpponentBidUtil);
-            System.out.println("thisOpponentBid"  + nextThres);
-            if(lastOpponentBidUtil >= (ACCEPTANCE_THRESHOLD-.08) || lastOpponentBidUtil >= (nextThres-.08))
+            
+            if(lastOpponentBidUtil >= ACCEPTANCE_THRESHOLD || lastOpponentBidUtil >= nextThres)
                     return Actions.Accept;
             
             return Actions.Reject;
