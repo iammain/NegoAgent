@@ -11,7 +11,7 @@
 %\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
 \usepackage{breqn}    % breaks equations in parts when needed
-                           % The preamble begins here. 
+
 \title{Multi-Agent Systems Project}  % Declares the document's title. 
 \author{Panagiotis Chatzichristodoulou and Kirill Tumanov} 
 %\date{November 29,2013}   % Deleting this command produces today's date.
@@ -197,53 +197,51 @@ boolean isLeapBigEnough(double bidUtil,double prevBidUtil,
     return difference*getTimeMultiplier()>threshold;
 }
 \end{verbatim}
-The function returns the difference of the two latest bids of the opponent multiplied by the~\texttt{TimeMultiplier}. The~\texttt{TimeMultiplier} is the value of time passed in the sigmoid domain. That means that the value of the multiplier will increase fast until approximately the middle of the negotiation, and the difference value will not be discounted as much after that. If the opponent leaps enough towards the agent trying to reach an agreement, the~\texttt{getleapthreshold} function will exploit the intention of the opponent. The threshold is based on the function: 
+
+The function returns the difference of the two latest bids of the opponent multiplied by the~\texttt{TimeMultiplier}, which represent time passed in the sigmoid domain. That means that the value of the multiplier will increase fast until approximately the middle of the negotiation, and the difference value will not be discounted as much after that. If the opponent leaps enough towards the agent trying to reach an agreement, the~\texttt{getleapthreshold} function will exploit this intention of the opponent. The threshold is based on the function: 
 
 \begin{equation} \label{10}
 	\tau =	\begin{cases}
 	    	\xi & \mbox{if } $t$ < 2, \\
-	   		\xi\cdot~\frac{1}{\sqrt[3]{(1+e^{(-x)})}} & \mbox{if }  2 < $t$ \leq 3.5\\
-    	   	\xi\cdot~\frac{1}{\sqrt[3]{(1+e^{(x)})}}+ \alpha & \mbox{if }  $t$ > 3.5	   		
+	   		\xi\cdot~\frac{1}{\sqrt[3]{(1+e^{(-x)})}} & \mbox{if }  2 < $t$ \leq 3.5,\\
+    	   	\xi\cdot~\frac{1}{\sqrt[3]{(1+e^{(x)})}}+ \alpha & \mbox{otherwise.}
 			\end{cases}
 \end{equation}
-The time is passed to the sigmoid domain and ranges between \textbf{$\{-5\dots5\}$} whilst $\xi$ and $\alpha$ are constants that modify the speed by which threshold decreases over time. As are defined here, the graphical representation of the threshold multiplier is shown in Fig.~\ref{sigmoid}
+The time passed in the sigmoid domain belongs to a range \textbf{$\{-5\dots5\}$}, whilst $\xi$ and $\alpha$ are constants that modify the speed by which threshold decreases over time. As are defined here, the graphical representation of the threshold multiplier is shown in Fig.~\ref{sigmoid}.
+
 \begin{figure}[htbp]
   \caption{Sigmoid threshold over time}
   \centering
     \includegraphics[width=0.8\textwidth]{sigmoidfigure}
     \label{sigmoid}
 \end{figure}
-The threshold multiplier is taken from piecewise of the lower parts of the two functions, and it modifies $\xi$ according to its value. \\Although having this threshold makes the agent agree on bids that it would not just with the acceptance threshold , experiments have shown that taking opponent jumps into account increase the average utility the agent receives by 5-10$\%$ on average.
+The threshold multiplier is taken piece-wisely from the lower parts of the two functions, and it modifies $\xi$ according to its value. Although having this threshold makes the agent agree on bids that it would not accept, having just the acceptance threshold discussed in the previous subsection, modeling showed that taking opponent leaps into account increases the utility the agent receives by $5\dots10\%$ on average.
 
-\subsection{Acceptance formula}
+\subsection{Deciding on Acceptance}
 Finally the agent's Acceptance Strategy is comprised of the following statement represented in pseudo-code below:
 \begin{verbatim}
-if(lastOpponentBidUtil <= weakThreshold * delta) {
-    Reject();
-}
-if(isLeapBigEnough() && lastOpponentBidUtil > getLeapTheshold()){
-    Accept();
-}
-if(lastOpponentBidUtil >= acceptanceThreshold
-    or lastOpponentBidUtil >= pressureThreshold) {
-    Accept();
-}
-Reject();
+AcceptanceAction() {
+   if(lastOpponentBidUtil <= weakThreshold * delta) {
+       Reject();
+   }
+   if(isLeapBigEnough() && lastOpponentBidUtil > getLeapTheshold()){
+       Accept();
+   }
+   if(lastOpponentBidUtil >= acceptanceThreshold 
+      or lastOpponentBidUtil >= pressureThreshold) {
+       Accept();
+   }
+   Reject();
 \end{verbatim}
 Here \texttt{weakThreshold} is provided by the Opponent Model, which is described in the following section.
 
 \section{Opponent Model}  
 
-The opponent model is based on the~\texttt{Hard-Headed Model} of the~\texttt{Genius-BOA} framework. The basic difference from the~\texttt{Hard-Headed Model} lies in the way the weights are modified. The weights are updated only if the number of unique bids an opponent has made in the recent past is above a certain value. That is, the model is updated only if the opponent has made a lot of different bids; this happens because if the weights were updated taking into consideration the number same bids, the model will converge to wrong weights.
+The Opponent Model is based on the~\texttt{Hard-Headed Model} of the~\texttt{Genius-BOA} framework. The basic difference from the~\texttt{Hard-Headed Model} lies in the way the weights are modified. The weights are updated only if the number of unique bids an opponent has made in the recent past is above a certain value. This is done to prevent fast convergence to suboptimal weights and thus wrong representation of the opponents behavior.
 
-Besides from the basic model and its basic modification, one extra component was implemented.~\cite{anac2013}
-
-\subsection{Distance of the opponent}
-
-The opponent model also calculates a threshold that is based on the~\textit{Distance Of The Opponent in Our Utility Space}$-$\texttt{DOUS}~\cite{anac2013} value. This value is used in the Acceptance Strategy and it provides the agent with a threshold that helps reject bids that are far from Nash, in high discount environments.
+Classic Opponent Model  in the NegoAgent was also enhanced with the module, which calculates a threshold that is based on the~\textit{Distance Of The Opponent in Our Utility Space}$-$\texttt{DOUS} value~\cite{anac2013}. This value is used in the Acceptance Strategy and provides the agent with a threshold that helps reject bids that are far from Nash, in high discount environments.
 
 The basic algorithm of the DOUS value and its threshold calculation is:
-
 
 \begin{verbatim}
 double getDousThreshold(horizon){
@@ -253,19 +251,19 @@ double getDousThreshold(horizon){
     variance  = getOpponentBidVar(horizon,mean);
     time      = getTime();
     threshold = (mean+dous)/2;
-    if(time > timeLimit){
-        threshold+=(1-(time-0.9))*variance;
-    }else{
+    if(time > timeLimit) {
+        threshold += (1-(time-0.9))*variance;
+    }else {
         threshold += variance;
     }
-    if(time > delta){
+    if(time > delta) {
         return 0;
     }    
     return threshold;
 }
 \end{verbatim}
 
-The \texttt{horizon} parameter, defines the number of past bids the agent takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent's threshold will be. If the horizon is given a big value, the fluctuations of the biding values will not be imprinted with the same precision to the output value, and this may result in a small threshold. Usually, a \texttt{horizon} between 10-100 captures the fluctuations of the opponents bids efficiently.
+The \texttt{horizon} parameter, defines the number of past bids the agent takes into account when calculating the ~\texttt{DOUS}~\cite{anac2013} distance. The smaller the horizon, the more short-sighted the agent's threshold will be. If the horizon is given a big value, the fluctuations of the biding values will not be imprinted with the same precision to the output value, and this may result in a small threshold. Usually, a \texttt{horizon} between $10$ and $100$ captures the fluctuations of the opponents bids efficiently.
 A parameter~\texttt{NegotiatedTooLong} is introduced, and is set equal to the discount factor. That means that whenever the discount factor is a small number, and the utility gets high discount over time, the threshold will be kept for a small amount of time. On the other hand, if the discount factor is a big number, the threshold will be kept for a bigger amount of time.
 The DOUS value is versatile, as it is not domain dependent.
 As it is presented here, it can be implemented only on negotiations between two agents, but it can be expanded to multiple agent negotiations creating a DOUS distance for every opposing agent. The threshold that is outputted is a \texttt{weakThreshold}. That is, if the value of a bid an agent offers to the Nego Agent is smaller than the \texttt{weakThreshold}, the bid is rejected. If the value is higher, we compare it with the strong threshold computed in the Acceptance Strategy.This ensures that the agents will reject points that are far from the Nash equilibrium.
