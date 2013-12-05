@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 01:57
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 12:54
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
@@ -570,13 +570,13 @@ Overfull \hbox (1.49698pt too wide) in paragraph at lines 300--300
 (nego-[] 
  []
 
-
+[10 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/dous.png>]
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 302--302
 []        \OT1/cmtt/m/n/10 AcceptanceStrategy ac =  new AStrategy(negotiationSe
 ssion,[] 
  []
 
-[10 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/dous.png>]
+
 Overfull \hbox (4.00072pt too wide) in paragraph at lines 317--337
  [][] 
  []
@@ -595,10 +595,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8906 strings out of 493921
- 147900 string characters out of 3147281
+ 8905 strings out of 493921
+ 147882 string characters out of 3147281
  196229 words of memory out of 3000000
- 12094 multiletter control sequences out of 15000+200000
+ 12093 multiletter control sequences out of 15000+200000
  10143 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  37i,13n,38p,890b,308s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -615,7 +615,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (14 pages, 243416 bytes).
+Output written on final.pdf (14 pages, 242865 bytes).
 PDF statistics:
  111 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
