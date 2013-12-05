@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  5 DEC 2013 20:49
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  5 DEC 2013 22:00
 entering extended mode
 **final.tex
 (C:\workspace\NegoAgent\Report\final.tex
@@ -495,9 +495,6 @@ LaTeX Warning: Unused global option(s):
 
 LaTeX Warning: Label `2' multiply defined.
 
-
-LaTeX Warning: Label `3' multiply defined.
-
 )
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
@@ -537,117 +534,106 @@ Package caption Info: End \AtBeginDocument code.
 <fourmodels.png, id=7, 749.04843pt x 182.18062pt>
 File: fourmodels.png Graphic file (type png)
  <use fourmodels.png>
-Package pdftex.def Info: fourmodels.png used on input line 33.
+Package pdftex.def Info: fourmodels.png used on input line 32.
 (pdftex.def)             Requested size: 345.0pt x 83.90973pt.
- [1 <C:/workspace/NegoAgent/Report/fourmodels.png>]
-Overfull \hbox (53.99652pt too wide) in paragraph at lines 52--52
-[]        \OT1/cmtt/m/n/10 if (temp < nashsum && bid.getOppenentUtility() < bid
-.getMyUtility())[] 
- []
-
-[2]
-Overfull \hbox (27.9636pt too wide) detected at line 111
+ [1 <C:/workspace/NegoAgent/Report/fourmodels.png>] [2]
+Overfull \hbox (27.9636pt too wide) detected at line 112
 \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 ) = []
  []
 
 [3] [4] <ell.png, id=32, 303.38344pt x 234.1247pt>
 File: ell.png Graphic file (type png)
  <use ell.png>
-Package pdftex.def Info: ell.png used on input line 160.
+Package pdftex.def Info: ell.png used on input line 161.
 (pdftex.def)             Requested size: 172.5pt x 133.12021pt.
  [5] [6 <C:/workspace/NegoAgent/Report/ell.png>]
 <sigmoidfigure.png, id=40, 421.575pt x 316.18124pt>
 File: sigmoidfigure.png Graphic file (type png)
  <use sigmoidfigure.png>
-Package pdftex.def Info: sigmoidfigure.png used on input line 216.
+Package pdftex.def Info: sigmoidfigure.png used on input line 215.
 (pdftex.def)             Requested size: 276.00105pt x 207.00615pt.
 
-[7 <C:/workspace/NegoAgent/Report/sigmoidfigure.png>]
-Overfull \hbox (11.99689pt too wide) in paragraph at lines 228--228
-[]   \OT1/cmtt/m/n/10 if(isLeapBigEnough() && lastOpponentBidUtil > getLeapThes
-hold()){[] 
- []
-
-[8] <dous.png, id=49, 261.97874pt x 199.49532pt>
+[7 <C:/workspace/NegoAgent/Report/sigmoidfigure.png>] [8]
+<dous.png, id=49, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
-Package pdftex.def Info: dous.png used on input line 277.
+Package pdftex.def Info: dous.png used on input line 278.
 (pdftex.def)             Requested size: 172.5pt x 131.35985pt.
  [9]
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 297--297
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 298--298
 []        \OT1/cmtt/m/n/10 OpponentModel om = new OpponentsModel(negotiationSes
 sion);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 298--298
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 299--299
 []        \OT1/cmtt/m/n/10 OMStrategy oms = new BidStrategy(negotiationSession 
 , om);[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 299--299
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 300--300
 []        \OT1/cmtt/m/n/10 OfferingStrategy offering = new NegoAgent_TDOffering
 (nego-[] 
  []
 
 
-Overfull \hbox (1.49698pt too wide) in paragraph at lines 301--301
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 302--302
 []        \OT1/cmtt/m/n/10 AcceptanceStrategy ac =  new AStrategy(negotiationSe
 ssion,[] 
  []
 
 [10 <C:/workspace/NegoAgent/Report/dous.png>]
-Overfull \hbox (4.00072pt too wide) in paragraph at lines 316--336
+Overfull \hbox (4.00072pt too wide) in paragraph at lines 317--337
  [][] 
  []
 
 [11] <1.jpg, id=60, 245.91875pt x 245.91875pt>
 File: 1.jpg Graphic file (type jpg)
  <use 1.jpg>
-Package pdftex.def Info: 1.jpg used on input line 357.
+Package pdftex.def Info: 1.jpg used on input line 358.
 (pdftex.def)             Requested size: 93.15031pt x 93.14989pt.
 
 <2.jpg, id=61, 245.91875pt x 245.91875pt>
 File: 2.jpg Graphic file (type jpg)
  <use 2.jpg>
-Package pdftex.def Info: 2.jpg used on input line 362.
+Package pdftex.def Info: 2.jpg used on input line 363.
 (pdftex.def)             Requested size: 93.15031pt x 93.14989pt.
 
 <3.jpg, id=62, 245.91875pt x 245.91875pt>
 File: 3.jpg Graphic file (type jpg)
  <use 3.jpg>
-Package pdftex.def Info: 3.jpg used on input line 367.
+Package pdftex.def Info: 3.jpg used on input line 368.
 (pdftex.def)             Requested size: 93.15031pt x 93.14989pt.
 
 <4.jpg, id=63, 245.91875pt x 245.91875pt>
 File: 4.jpg Graphic file (type jpg)
  <use 4.jpg>
-Package pdftex.def Info: 4.jpg used on input line 372.
+Package pdftex.def Info: 4.jpg used on input line 373.
 (pdftex.def)             Requested size: 93.15031pt x 93.14989pt.
 
 <5.jpg, id=64, 245.91875pt x 245.91875pt>
 File: 5.jpg Graphic file (type jpg)
  <use 5.jpg>
-Package pdftex.def Info: 5.jpg used on input line 377.
+Package pdftex.def Info: 5.jpg used on input line 378.
 (pdftex.def)             Requested size: 93.15031pt x 93.14989pt.
 
 <6.jpg, id=65, 250.9375pt x 250.9375pt>
 File: 6.jpg Graphic file (type jpg)
  <use 6.jpg>
-Package pdftex.def Info: 6.jpg used on input line 382.
+Package pdftex.def Info: 6.jpg used on input line 383.
 (pdftex.def)             Requested size: 93.15031pt x 93.15173pt.
 
 <7.jpg, id=66, 250.9375pt x 250.9375pt>
 File: 7.jpg Graphic file (type jpg)
  <use 7.jpg>
-Package pdftex.def Info: 7.jpg used on input line 387.
+Package pdftex.def Info: 7.jpg used on input line 388.
 (pdftex.def)             Requested size: 93.15031pt x 93.15173pt.
 
 <8.jpg, id=67, 250.9375pt x 250.9375pt>
 File: 8.jpg Graphic file (type jpg)
  <use 8.jpg>
-Package pdftex.def Info: 8.jpg used on input line 392.
+Package pdftex.def Info: 8.jpg used on input line 393.
 (pdftex.def)             Requested size: 93.15031pt x 93.15173pt.
  [12] [13 <C:/workspace/NegoAgent/Report/1.jpg> <C:/workspace/NegoAgent/Report/
 2.jpg> <C:/workspace/NegoAgent/Report/3.jpg> <C:/workspace/NegoAgent/Report/4.j
@@ -666,13 +652,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8995 strings out of 493921
- 150341 string characters out of 3147260
- 197163 words of memory out of 3000000
- 12172 multiletter control sequences out of 15000+200000
+ 8996 strings out of 493921
+ 150347 string characters out of 3147260
+ 197171 words of memory out of 3000000
+ 12173 multiletter control sequences out of 15000+200000
  10143 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 37i,13n,38p,890b,392s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 37i,13n,38p,890b,393s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
@@ -686,7 +672,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (15 pages, 611341 bytes).
+Output written on final.pdf (15 pages, 612006 bytes).
 PDF statistics:
  122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
