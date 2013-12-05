@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 16:00
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  5 DEC 2013 16:01
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
@@ -638,32 +638,10 @@ File: 8.jpg Graphic file (type jpg)
  <use 8.jpg>
 Package pdftex.def Info: 8.jpg used on input line 391.
 (pdftex.def)             Requested size: 93.15031pt x 93.15173pt.
-
-
-LaTeX Warning: Reference `fig:2' on page 12 undefined on input line 398.
-
-
-LaTeX Warning: Reference `fig:7' on page 12 undefined on input line 398.
-
-
-LaTeX Warning: Reference `fig:6' on page 12 undefined on input line 398.
-
-
-LaTeX Warning: Reference `fig:8' on page 12 undefined on input line 398.
-
-
-LaTeX Warning: Reference `fig:4' on page 12 undefined on input line 398.
-
-
-LaTeX Warning: Reference `fig:5' on page 12 undefined on input line 398.
-
-[12] [13 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/1.jpg> <C:/Use
-rs/Panos/Desktop/website/github/NegoAgent/Report/2.jpg> <C:/Users/Panos/Desktop
-/website/github/NegoAgent/Report/3.jpg> <C:/Users/Panos/Desktop/website/github/
-NegoAgent/Report/4.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Report
-/5.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/6.jpg> <C:/User
-s/Panos/Desktop/website/github/NegoAgent/Report/7.jpg> <C:/Users/Panos/Desktop/
-website/github/NegoAgent/Report/8.jpg>]
+ [12] [13 <C:/workspace/NegoAgent/Report/1.jpg> <C:/workspace/NegoAgent/Report/
+2.jpg> <C:/workspace/NegoAgent/Report/3.jpg> <C:/workspace/NegoAgent/Report/4.j
+pg> <C:/workspace/NegoAgent/Report/5.jpg> <C:/workspace/NegoAgent/Report/6.jpg>
+ <C:/workspace/NegoAgent/Report/7.jpg> <C:/workspace/NegoAgent/Report/8.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 416--418
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion (2013
 ).:
@@ -673,37 +651,33 @@ Underfull \hbox (badness 10000) in paragraph at lines 416--418
 
 ] (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.aux)
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 9001 strings out of 493921
- 149046 string characters out of 3147281
+ 8995 strings out of 493921
+ 150341 string characters out of 3147260
  197163 words of memory out of 3000000
- 12178 multiletter control sequences out of 15000+200000
+ 12172 multiletter control sequences out of 15000+200000
  10143 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  37i,13n,38p,890b,374s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (15 pages, 689220 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on final.pdf (15 pages, 679891 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
+ 122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  61 words of extra memory for PDF output out of 10000 (max. 10000000)
 
