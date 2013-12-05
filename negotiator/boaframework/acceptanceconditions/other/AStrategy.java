@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
+import negotiator.BidHistory;
+import negotiator.bidding.BidDetails;
 
 import negotiator.boaframework.AcceptanceStrategy;
 import negotiator.boaframework.Actions;
@@ -93,7 +96,7 @@ public class AStrategy extends AcceptanceStrategy
 	@Override
 	public Actions determineAcceptability() 
 	{
-            System.out.println("-------------------------- ");
+            //System.out.println("-------------------------- ");
             
             try {
                 double negTime = negotiationSession.getTime();
@@ -118,7 +121,7 @@ public class AStrategy extends AcceptanceStrategy
                     numbidInTime = numbidInTime * dt;
                     
                     lambda +=  (n1/n2) * (1 - lambda) * Math.pow(numbidInTime, c);
-                    System.out.println("lamda modified " + lambda);
+                    //System.out.println("lamda modified " + lambda);
                 }         
                 else
                 	lambda = initlambda + (1 - initlambda) * Math.pow(discountFactor, b);
@@ -130,7 +133,7 @@ public class AStrategy extends AcceptanceStrategy
                 else
                     ACCEPTANCE_THRESHOLD = maxUtility * Math.pow(discountFactor, 1 - negTime);
                 
-                System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
+                //System.out.println("acceptance threshold " + ACCEPTANCE_THRESHOLD);
                 
             } catch (Exception ex) { Logger.getLogger(AStrategy.class.getName()).log(Level.SEVERE, null, ex); }
             
@@ -138,19 +141,67 @@ public class AStrategy extends AcceptanceStrategy
             double nextMyBidUtil = offeringStrategy.getNextBid().getMyUndiscountedUtil();
             double nextThres  = nextMyBidUtil * (1 - pressure) * Math.exp(1 - nextMyBidUtil); 
             
-            System.out.println("Next Threshold " + nextThres);
+            //System.out.println("Next Threshold " + nextThres);
             
             OpponentsModel oM = new OpponentsModel(negotiationSession);            
             double weakThreshold = oM.getOpponentThreshold();
             
-            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
-                return Actions.Reject;
-            System.out.println("ACCEPTANCE_THRESHOLD" + ACCEPTANCE_THRESHOLD);
-            System.out.println("nextThres"  + nextThres);
+//            if(lastOpponentBidUtil <= weakThreshold * negotiationSession.getDiscountFactor())
+//                return Actions.Reject;
             
-            if(lastOpponentBidUtil >= ACCEPTANCE_THRESHOLD || lastOpponentBidUtil >= nextThres)
+            List<BidDetails> bH = negotiationSession.getOpponentBidHistory().getHistory();
+            if(bH.size()>1){
+                BidDetails oppBid = (BidDetails)bH.get(this.negotiationSession.getOpponentBidHistory().size() - 1);
+                BidDetails prevOppBid = (BidDetails)bH.get(this.negotiationSession.getOpponentBidHistory().size() - 2);
+                oppBid.getMyUndiscountedUtil();
+                prevOppBid.getMyUndiscountedUtil();
+                if(isLeapOfFaith(oppBid.getMyUndiscountedUtil(), prevOppBid.getMyUndiscountedUtil())){
+                    System.out.println("LeapDetected");
+                    double util = oppBid.getMyUndiscountedUtil();
+                    double threshold = getLeapThreshold();
+                    System.out.println(util);
+                    System.out.println(threshold);
+                    if(util >=threshold){
+                        System.out.println("accepted");
+                        return Actions.Accept;
+                    }
+                }
+            }
+            if(lastOpponentBidUtil >= ACCEPTANCE_THRESHOLD || lastOpponentBidUtil >= nextThres){
+                System.out.println("lastOpponentBidUtil  ACCEPTANCE_THRESHOLD next thres" + " "
+                        + "" + lastOpponentBidUtil+ " " +ACCEPTANCE_THRESHOLD  + " "+ nextThres);
                     return Actions.Accept;
-            
+            }
             return Actions.Reject;
 	}
+        
+        public boolean isLeapOfFaith(double bidUtil , double prevBidUtil){
+            double difference = bidUtil-prevBidUtil;
+            return difference*getTimeMultiplier()>.10;
+        }
+        public double getSigmoidTime(){
+            return negotiationSession.getTime()*10-5;
+        }
+        public double getTimeMultiplier(){
+            double power = 1.0/3.33;
+            return 1/(Math.pow( 1+ Math.exp(-getSigmoidTime()) , power));
+        }
+        public double getFinishTimeMultiplier(){
+            double power = 1.0/3.33;
+            return 1/(Math.pow( 1+ Math.exp(getSigmoidTime()) , power))+.66;
+        }
+        public double getLeapThreshold(){
+            //plot 1/(1+e^(-x)) ^(1/3)   ,1/(1+e^x)^(1/3)+.66 from x=-5to5
+            double timeInSigmDomain = getSigmoidTime();
+            double thresh;
+            if(timeInSigmDomain<2){
+                thresh = .925;
+            }else if(timeInSigmDomain>=2 && timeInSigmDomain<3.5){
+                thresh = (.925)*getTimeMultiplier();
+            }else{
+                thresh = (.925)*getFinishTimeMultiplier();
+            }
+            return thresh;
+        
+        }
 }

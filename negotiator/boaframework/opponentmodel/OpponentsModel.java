@@ -257,13 +257,10 @@ public class OpponentsModel
         double time = negotiationSession.getTime();
         
         threshold = (mean +dous) / 2;
-        if(time > .8)
-        {
-        	if(time > .9)
-        		threshold += (1 - (time - 0.9)) * variance;
-        	else
-        		threshold -= (1 - (time - 0.8)) * variance;
-        }
+        if(time>.6 && time<=.8)
+            threshold -=5*variance;
+        else if(time > .8)
+        	threshold -= 10*variance;
         else
             threshold += variance;
         if(time > NegotiatedTooLong)
