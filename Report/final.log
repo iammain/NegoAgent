@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  5 DEC 2013 15:28
 =======
 This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 15:03
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 15:33
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 entering extended mode
 **final.tex
 (C:\workspace\NegoAgent\Report\final.tex
@@ -244,8 +248,12 @@ Package: l3int 2013/08/02 v4583 L3 Integers
 \g_tmpa_int=\count114
 \g_tmpb_int=\count115
 )
+<<<<<<< HEAD
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3quark.st
 y
+=======
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3quark.sty"
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 Package: l3quark 2013/07/21 v4564 L3 Quarks
 )
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3prg.sty
@@ -298,10 +306,13 @@ Package: l3skip 2013/07/28 v4581 L3 Dimensions and skips
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3keys.sty
 Package: l3keys 2013/07/28 v4581 L3 Experimental key-value interfaces
 <<<<<<< HEAD
+<<<<<<< HEAD
 \g__keyval_level_int=\count120
 \l_keys_choice_int=\count121
 ) (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3fp.sty
 =======
+=======
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 \g__keyval_level_int=\count122
 \l_keys_choice_int=\count123
 )
@@ -318,7 +329,11 @@ Package: l3fp 2013/07/09 v4521 L3 Floating points
 \c__fp_Bigg_middle_shift_int=\count131
 \c__fp_Bigg_trailing_shift_int=\count132
 )
+<<<<<<< HEAD
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3box.sty
+=======
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3box.sty"
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 Package: l3box 2013/07/28 v4581 L3 Experimental boxes
 \c_empty_box=\box28
 \l_tmpa_box=\box29
@@ -511,6 +526,7 @@ LaTeX Warning: Label `3' multiply defined.
 
 )
 <<<<<<< HEAD
+<<<<<<< HEAD
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
@@ -527,6 +543,8 @@ LaTeX Font Info:    ... okay on input line 19.
 (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mki
 i
 =======
+=======
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
@@ -567,12 +585,17 @@ File: fourmodels.png Graphic file (type png)
 Package pdftex.def Info: fourmodels.png used on input line 33.
 (pdftex.def)             Requested size: 345.0pt x 83.90973pt.
 <<<<<<< HEAD
+<<<<<<< HEAD
  [1 <C:/workspace/NegoAgent/Report/fourmodels.png>]
 Overfull \hbox (53.99652pt too wide) in paragraph at lines 51--51
 =======
  [1 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/fourmodels.png>]
 Overfull \hbox (53.99652pt too wide) in paragraph at lines 52--52
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+ [1 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/fourmodels.png>]
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 52--52
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 []        \OT1/cmtt/m/n/10 if (temp < nashsum && bid.getOppenentUtility() < bid
 .getMyUtility())[] 
  []
@@ -592,10 +615,14 @@ Package pdftex.def Info: ell.png used on input line 160.
 File: sigmoidfigure.png Graphic file (type png)
  <use sigmoidfigure.png>
 <<<<<<< HEAD
+<<<<<<< HEAD
 Package pdftex.def Info: sigmoidfigure.png used on input line 215.
 =======
 Package pdftex.def Info: sigmoidfigure.png used on input line 214.
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+Package pdftex.def Info: sigmoidfigure.png used on input line 214.
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 (pdftex.def)             Requested size: 276.00105pt x 207.00615pt.
 
 [7 <C:/workspace/NegoAgent/Report/sigmoidfigure.png>]
@@ -608,6 +635,7 @@ hold()){[]
 File: dous.png Graphic file (type png)
  <use dous.png>
 <<<<<<< HEAD
+<<<<<<< HEAD
 Package pdftex.def Info: dous.png used on input line 276.
 (pdftex.def)             Requested size: 172.5pt x 131.35985pt.
  [9]
@@ -618,26 +646,40 @@ Package pdftex.def Info: dous.png used on input line 279.
  [9]
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 299--299
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+Package pdftex.def Info: dous.png used on input line 279.
+(pdftex.def)             Requested size: 172.5pt x 131.35985pt.
+ [9]
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 299--299
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 []        \OT1/cmtt/m/n/10 OpponentModel om = new OpponentsModel(negotiationSes
 sion);[] 
  []
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 297--297
 =======
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 300--300
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 300--300
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 []        \OT1/cmtt/m/n/10 OMStrategy oms = new BidStrategy(negotiationSession 
 , om);[] 
  []
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 298--298
 =======
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 301--301
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 301--301
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 []        \OT1/cmtt/m/n/10 OfferingStrategy offering = new NegoAgent_TDOffering
 (nego-[] 
  []
@@ -648,11 +690,15 @@ Overfull \hbox (1.49698pt too wide) in paragraph at lines 300--300
 =======
 [10 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/dous.png>]
 Overfull \hbox (1.49698pt too wide) in paragraph at lines 303--303
+<<<<<<< HEAD
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 []        \OT1/cmtt/m/n/10 AcceptanceStrategy ac =  new AStrategy(negotiationSe
 ssion,[] 
  []
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 [10 <C:/workspace/NegoAgent/Report/dous.png>]
 Overfull \hbox (4.00072pt too wide) in paragraph at lines 315--335
@@ -667,6 +713,13 @@ Overfull \hbox (4.00072pt too wide) in paragraph at lines 318--338
  [][] 
  []
 
+=======
+
+Overfull \hbox (4.00072pt too wide) in paragraph at lines 318--338
+ [][] 
+ []
+
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 [11] <1.jpg, id=60, 250.9375pt x 250.9375pt>
 File: 1.jpg Graphic file (type jpg)
  <use 1.jpg>
@@ -721,8 +774,12 @@ p/website/github/NegoAgent/Report/3.jpg> <C:/Users/Panos/Desktop/website/github
 t/5.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/6.jpg> <C:/Use
 rs/Panos/Desktop/website/github/NegoAgent/Report/7.jpg> <C:/Users/Panos/Desktop
 /website/github/NegoAgent/Report/8.jpg>]
+<<<<<<< HEAD
 Underfull \hbox (badness 10000) in paragraph at lines 425--427
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+Underfull \hbox (badness 10000) in paragraph at lines 426--428
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion (2013
 ).:
  []
@@ -736,16 +793,22 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
 <<<<<<< HEAD
+<<<<<<< HEAD
  8905 strings out of 493921
  149177 string characters out of 3147260
  196229 words of memory out of 3000000
  12093 multiletter control sequences out of 15000+200000
 =======
+=======
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
  9003 strings out of 493921
  149060 string characters out of 3147281
  197239 words of memory out of 3000000
  12180 multiletter control sequences out of 15000+200000
+<<<<<<< HEAD
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
  10143 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  37i,13n,38p,890b,386s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -763,10 +826,14 @@ s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
 <<<<<<< HEAD
+<<<<<<< HEAD
 Output written on final.pdf (14 pages, 242651 bytes).
 =======
 Output written on final.pdf (15 pages, 677700 bytes).
 >>>>>>> b35dbc6afdd5ecc3b11c667360da6e51c00693b8
+=======
+Output written on final.pdf (15 pages, 678293 bytes).
+>>>>>>> 67186fac0092e9208737c928ccce2185105d9f51
 PDF statistics:
  122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
