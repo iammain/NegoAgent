@@ -188,7 +188,7 @@ In addition to the described above threshold a \textit{"pressure"} threshold was
 where $onbu$ - is an opponent next bid's utility received from the Opponent Model class, and $p$ - a user specified pressure constant in a range $(0\dots1)$.
 
 \subsection{Sigmoid Function}
-The acceptance threshold is implemented so as to make the agent as hard-headed as possible. This makes the agent behave non optimally against opponents with the same strategy as his. For this reason, a sigmoid function\\
+The acceptance threshold is implemented so as to make the agent a hard-headed one. This makes the agent behave non optimally against opponents with the same strategy as his. For this reason, a sigmoid function\\
 \texttt{isLeapBigEnough()} is introduced. The pseudo code of the function is the following:
 \begin{verbatim}
 boolean isLeapBigEnough(double bidUtil,double prevBidUtil,
@@ -208,12 +208,12 @@ The function returns the difference of the two latest bids of the opponent multi
 \end{equation}
 The time is passed to the sigmoid domain and ranges between \textbf{$\{-5\dots5\}$} whilst $\xi$ and $\alpha$ are constants that modify the speed by which threshold decreases over time. As are defined here, the graphical representation of the threshold multiplier is shown in Fig.~\ref{sigmoid}
 \begin{figure}[htbp]
-  \caption{The distance between the initial utilities of the agents}
+  \caption{Sigmoid threshold over time}
   \centering
     \includegraphics[width=0.8\textwidth]{sigmoidfigure}
     \label{sigmoid}
 \end{figure}
-The threshold multiplier is taken from piecewise of the lower parts of the two functions, and it modifies $\xi$ according to its value. \\Although having this threshold makes the agent agree on bids that it would not just with the acceptance threshold , having this threshold increases the average utility the agent receives by 5-10$\%$.
+The threshold multiplier is taken from piecewise of the lower parts of the two functions, and it modifies $\xi$ according to its value. \\Although having this threshold makes the agent agree on bids that it would not just with the acceptance threshold , experiments have shown that taking opponent jumps into account increase the average utility the agent receives by 5-10$\%$ on average.
 
 \subsection{Acceptance formula}
 Finally the agent's Acceptance Strategy is comprised of the following statement represented in pseudo-code below:
@@ -221,7 +221,7 @@ Finally the agent's Acceptance Strategy is comprised of the following statement 
 if(lastOpponentBidUtil <= weakThreshold * delta) {
     Reject();
 }
-if(isLeapBigEnough() && lastOpponentBidUtil > getTau()){
+if(isLeapBigEnough() && lastOpponentBidUtil > getLeapTheshold()){
     Accept();
 }
 if(lastOpponentBidUtil >= acceptanceThreshold
@@ -339,8 +339,6 @@ The agent implemented is a strong willed agent. It will accept bids fast when th
 	\label{table:NegoSimpleResults} % is used to refer this table in the text 
 \end{table} 
 
-\textcolor{red}{Here you played too much whith the \textasciitilde , I deleted some, but then I got bored...}
-
 In the first negotiation outcome, \texttt{NegoAgent} completely dominates over a \texttt{SimpleAgent}  in the domain Sam and Mary. An agreement is reached very fast, and the \texttt{NegoAgent} gathers the max amount of utility it can gather in this domain. 
 
 In the second session, \texttt{NegoAgent} negotiates in the ItexVsCypress domain against the \texttt{MetaAgent}. \texttt{MetaAgent} is not a normal agent; it contains an agent repository that consists of the agents that competed in the ANAC'2012, and uses machine learning to decide which agent fits best each negotiation domain. It competed in the ANAC'2013 and took the second place. \texttt{MetaAgent} is completely dominated on the first session, whereas on the second, no agreement is reached.
@@ -350,6 +348,8 @@ In the third session, ~\texttt{NegoAgent} is opposed by~\texttt{NiceTitForTat} a
 In the fourth session, ~\texttt{NegoAgent} competes against~\texttt{Negotiator} agent in the Smartphone buying domain.~\texttt{Negotiator} also looses against~\texttt{NegoAgent} and, in contrast to~\texttt{NiceTitForTat}, it does not manage to keep its utility high enough.
 
 In the final session, ~\texttt{NegoAgent} is opposed by~\texttt{CUHKA} agent in the NiceOrDie domain.~\texttt{CUHKA} agent is a very intelligent self-interested agent, and the agreement is reached on the nash point of this domain. It must be noted that this domain had only 3 possible bids that could be offered, and the agreement is accepted on the final offer of our agent.
+
+Finally, 
 
 \section{Conclusion}
 Building a negotiating agent is a non-trivial matter, as the negotiation domains and issue sets are practically infinite, so are the strategies that can be used. Negotiation agent design is an active research field that has been introduced recently, thus very limited practical experience is shared yet. The proposed NegoAgent tries to incorporate some of the Multi-Agent Systems concepts in it's negotiation behavior. Some domain/opponent specific cases might be treated separately, but it was decided to as general and versatile as possible. Overall results the NegoAgent shows against competitive opponents are promising, and the agent is believed to be a solid base for further research. 

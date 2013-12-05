@@ -195,7 +195,7 @@ public class AStrategy extends AcceptanceStrategy
             double timeInSigmDomain = getSigmoidTime();
             double thresh;
             if(timeInSigmDomain<2){
-                thresh = .925;
+                thresh = .95;
             }else if(timeInSigmDomain>=2 && timeInSigmDomain<3.5){
                 thresh = (.925)*getTimeMultiplier();
             }else{
