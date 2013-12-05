@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 15:03
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 15:33
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
@@ -640,7 +640,7 @@ p/website/github/NegoAgent/Report/3.jpg> <C:/Users/Panos/Desktop/website/github
 t/5.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/6.jpg> <C:/Use
 rs/Panos/Desktop/website/github/NegoAgent/Report/7.jpg> <C:/Users/Panos/Desktop
 /website/github/NegoAgent/Report/8.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 425--427
+Underfull \hbox (badness 10000) in paragraph at lines 426--428
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion (2013
 ).:
  []
@@ -673,7 +673,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (15 pages, 677700 bytes).
+Output written on final.pdf (15 pages, 678293 bytes).
 PDF statistics:
  122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
