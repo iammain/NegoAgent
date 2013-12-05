@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  5 DEC 2013 16:01
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  5 DEC 2013 17:11
 entering extended mode
 **final.tex
 (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
@@ -638,10 +638,13 @@ File: 8.jpg Graphic file (type jpg)
  <use 8.jpg>
 Package pdftex.def Info: 8.jpg used on input line 391.
 (pdftex.def)             Requested size: 93.15031pt x 93.15173pt.
- [12] [13 <C:/workspace/NegoAgent/Report/1.jpg> <C:/workspace/NegoAgent/Report/
-2.jpg> <C:/workspace/NegoAgent/Report/3.jpg> <C:/workspace/NegoAgent/Report/4.j
-pg> <C:/workspace/NegoAgent/Report/5.jpg> <C:/workspace/NegoAgent/Report/6.jpg>
- <C:/workspace/NegoAgent/Report/7.jpg> <C:/workspace/NegoAgent/Report/8.jpg>]
+ [12] [13 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/1.jpg> <C:/Us
+ers/Panos/Desktop/website/github/NegoAgent/Report/2.jpg> <C:/Users/Panos/Deskto
+p/website/github/NegoAgent/Report/3.jpg> <C:/Users/Panos/Desktop/website/github
+/NegoAgent/Report/4.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Repor
+t/5.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/6.jpg> <C:/Use
+rs/Panos/Desktop/website/github/NegoAgent/Report/7.jpg> <C:/Users/Panos/Desktop
+/website/github/NegoAgent/Report/8.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 416--418
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion (2013
 ).:
@@ -656,7 +659,7 @@ LaTeX Warning: There were multiply-defined labels.
  ) 
 Here is how much of TeX's memory you used:
  8995 strings out of 493921
- 150341 string characters out of 3147260
+ 149004 string characters out of 3147281
  197163 words of memory out of 3000000
  12172 multiletter control sequences out of 15000+200000
  10143 words of font info for 37 fonts, out of 3000000 for 9000
@@ -675,7 +678,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (15 pages, 679891 bytes).
+Output written on final.pdf (15 pages, 690665 bytes).
 PDF statistics:
  122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
