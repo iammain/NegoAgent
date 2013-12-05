@@ -7,6 +7,7 @@
 \usepackage{marginnote}
 \usepackage{caption}
 \usepackage{color}
+\usepackage{subcaption}
 
 %\usepackage[top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm, heightrounded, marginparwidth=2.5cm, marginparsep=2cm]{geometry}
 \usepackage{amsmath}  % allows to use some of math functions
@@ -347,7 +348,62 @@ In the fourth session, ~\texttt{NegoAgent} competes against~\texttt{Negotiator} 
 
 In the final session, ~\texttt{NegoAgent} is opposed by~\texttt{CUHKA} agent in the NiceOrDie domain.~\texttt{CUHKA} agent is a very intelligent self-interested agent, and the agreement is reached on the nash point of this domain. It must be noted that this domain had only 3 possible bids that could be offered, and the agreement is accepted on the final offer of our agent.
 
-Finally, 
+Finally,  the figures taken from the genius platform, show the results of the biding strategies of~\texttt{NegoAgent} against different opponents on Fig.~\ref{sessionGraphs} 
+\begin{figure}
+\centering
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{1}
+  \captionof{figure}{Meta Agent}
+  \label{fig:1}
+\end{minipage}%
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{2}
+  \captionof{figure}{Meta Agent}
+  \label{fig:2}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{3}
+  \captionof{figure}{Meta Agent}
+  \label{fig:3}
+\end{minipage} \\
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{4}
+  \captionof{figure}{SlavaAgent}
+  \label{fig:4}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{5}
+  \captionof{figure}{AgentKF}
+  \label{fig:5}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{6}
+  \captionof{figure}{CUHKA}
+  \label{fig:6}
+\end{minipage}\\
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{7}
+  \captionof{figure}{Agent$\_$K}
+  \label{fig:7}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+  \centering
+  \includegraphics[width=.9\linewidth]{8}
+  \captionof{figure}{CUHKA}
+  \label{fig:8}
+\end{minipage}
+\caption{Nego Agent sessions}
+\label{sessionGraphs}
+\end{figure}
+
+
 
 \section{Conclusion}
 Building a negotiating agent is a non-trivial matter, as the negotiation domains and issue sets are practically infinite, so are the strategies that can be used. Negotiation agent design is an active research field that has been introduced recently, thus very limited practical experience is shared yet. The proposed NegoAgent tries to incorporate some of the Multi-Agent Systems concepts in it's negotiation behavior. Some domain/opponent specific cases might be treated separately, but it was decided to as general and versatile as possible. Overall results the NegoAgent shows against competitive opponents are promising, and the agent is believed to be a solid base for further research. 
