@@ -257,7 +257,7 @@ public class OpponentsModel
         
         threshold = (mean + dous) / 2;
         
-        if(time>.6)
+        if(time > .6)
             threshold -= 5 * variance;
         
         if (time > .8)
