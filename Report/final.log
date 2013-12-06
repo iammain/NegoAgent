@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.10.23)  5 DEC 2013 22:00
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.11.28)  6 DEC 2013 01:19
 entering extended mode
 **final.tex
-(C:\workspace\NegoAgent\Report\final.tex
+(C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -88,8 +88,7 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \TX@cols=\count89
 \TX@ftn=\toks18
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\booktabs\booktabs.s
-ty
+("C:\Program Files\MiKTeX 2.9\tex\latex\booktabs\booktabs.sty"
 Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \heavyrulewidth=\dimen112
 \lightrulewidth=\dimen113
@@ -108,19 +107,18 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@thisruleclass=\count92
 \@lastruleclass=\count93
 \@thisrulewidth=\dimen124
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\multirow\multirow.sty"
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\multirow\multirow.sty"
 \bigstrutjot=\dimen125
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\marginnote\marginno
-te.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\marginnote\marginnote.sty"
 Package: marginnote 2012/03/29 v1.1i non floating margin notes for LaTeX
 \c@mn@abspage=\count94
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption.sty"
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.st
-y
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption3.sty"
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen126
@@ -132,7 +130,8 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 \caption@hangindent=\dimen132
 )
 \c@ContinuedFloat=\count95
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
@@ -140,12 +139,12 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\subcaption.
-sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\caption\subcaption.sty"
 Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 \c@subfigure=\count96
 \c@subtable=\count97
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip45
 
@@ -203,36 +202,33 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\mh\breqn.sty
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\expl3.sty
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3names.st
-y
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3bootstra
-p.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\mh\breqn.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\expl3.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3names.sty"
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3bootstrap.sty"
 Package: l3bootstrap 2013/07/28 v4581 L3 Experimental bootstrap code
 )
 Package: l3names 2012/12/07 v4346 L3 Namespace for primitives
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\misc\etex.sty"
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\misc\etex.sty"
 Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
 \et@xins=\count110
 )
 Package: expl3 2013/10/13 v4597 L3 Experimental code bundle wrapper
 
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3basics.s
-ty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3basics.sty"
 Package: l3basics 2013/07/28 v4581 L3 Basic definitions
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3expan.st
-y
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3expan.sty"
 Package: l3expan 2013/08/17 v4584 L3 Argument expansion
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3tl.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3tl.sty"
 Package: l3tl 2013/09/16 v4592 L3 Token lists
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3seq.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3seq.sty"
 Package: l3seq 2013/07/28 v4581 L3 Sequences and stacks
-) (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3int.st
-y
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3int.sty"
 Package: l3int 2013/08/02 v4583 L3 Integers
 \c_max_int=\count111
 \l_tmpa_int=\count112
@@ -240,29 +236,26 @@ Package: l3int 2013/08/02 v4583 L3 Integers
 \g_tmpa_int=\count114
 \g_tmpb_int=\count115
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3quark.st
-y
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3quark.sty"
 Package: l3quark 2013/07/21 v4564 L3 Quarks
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3prg.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3prg.sty"
 Package: l3prg 2013/08/25 v4587 L3 Control structures
 \g__prg_map_int=\count116
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3clist.st
-y
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3clist.sty"
 Package: l3clist 2013/07/28 v4581 L3 Comma separated lists
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3token.st
-y
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3token.sty"
 Package: l3token 2013/08/25 v4587 L3 Experimental token manipulation
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3prop.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3prop.sty"
 Package: l3prop 2013/07/28 v4581 L3 Property lists
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3msg.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3msg.sty"
 Package: l3msg 2013/07/28 v4581 L3 Messages
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3file.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3file.sty"
 Package: l3file 2013/10/13 v4596 L3 File and I/O operations
 \l_iow_line_count_int=\count117
 \l__iow_target_count_int=\count118
@@ -270,7 +263,7 @@ Package: l3file 2013/10/13 v4596 L3 File and I/O operations
 \l__iow_current_word_int=\count120
 \l__iow_current_indentation_int=\count121
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3skip.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3skip.sty"
 Package: l3skip 2013/07/28 v4581 L3 Dimensions and skips
 \c_zero_dim=\dimen142
 \c_max_dim=\dimen143
@@ -291,11 +284,12 @@ Package: l3skip 2013/07/28 v4581 L3 Dimensions and skips
 \g_tmpa_muskip=\muskip15
 \g_tmpb_muskip=\muskip16
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3keys.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3keys.sty"
 Package: l3keys 2013/07/28 v4581 L3 Experimental key-value interfaces
 \g__keyval_level_int=\count122
 \l_keys_choice_int=\count123
-) (C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3fp.sty
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3fp.sty"
 Package: l3fp 2013/07/09 v4521 L3 Floating points
 \c__fp_leading_shift_int=\count124
 \c__fp_middle_shift_int=\count125
@@ -307,7 +301,7 @@ Package: l3fp 2013/07/09 v4521 L3 Floating points
 \c__fp_Bigg_middle_shift_int=\count131
 \c__fp_Bigg_trailing_shift_int=\count132
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3box.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3box.sty"
 Package: l3box 2013/07/28 v4581 L3 Experimental boxes
 \c_empty_box=\box28
 \l_tmpa_box=\box29
@@ -315,8 +309,7 @@ Package: l3box 2013/07/28 v4581 L3 Experimental boxes
 \g_tmpa_box=\box31
 \g_tmpb_box=\box32
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3coffins.
-sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3coffins.sty"
 Package: l3coffins 2012/09/09 v4212 L3 Coffin code layer
 \l__coffin_internal_box=\box33
 \l__coffin_internal_dim=\dimen148
@@ -338,18 +331,15 @@ Package: l3coffins 2012/09/09 v4212 L3 Coffin code layer
 \l__coffin_display_x_dim=\dimen156
 \l__coffin_display_y_dim=\dimen157
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3color.st
-y
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3color.sty"
 Package: l3color 2012/08/29 v4156 L3 Experimental color support
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3luatex.s
-ty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3luatex.sty"
 Package: l3luatex 2013/07/28 v4581 L3 Experimental LuaTeX-specific functions
 \g__cctab_allocate_int=\count133
 \g__cctab_stack_int=\count134
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\l3kernel\l3candidat
-es.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\l3kernel\l3candidates.sty"
 Package: l3candidates 2013/07/24 v4576 L3 Experimental additions to l3kernel
 \l__box_top_dim=\dimen158
 \l__box_bottom_dim=\dimen159
@@ -367,18 +357,19 @@ Package: l3candidates 2013/07/24 v4576 L3 Experimental additions to l3kernel
 \l__coffin_top_corner_dim=\dimen170
 \l__coffin_scaled_total_height_dim=\dimen171
 \l__coffin_scaled_width_dim=\dimen172
-) ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 ))
 Package: breqn 2012/05/10 v0.98b Breaking equations
 
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\mh\flexisym.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\mh\flexisym.sty"
 Package: flexisym 2013/03/16 v0.97c Make math characters macros
 LaTeX Info: Redefining \textprime on input line 296.
 LaTeX Info: Redefining \not on input line 354.
 
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\mh\cmbase.sym
+("C:\Program Files\MiKTeX 2.9\tex\latex\mh\cmbase.sym"
 File: cmbase.sym 2007/12/19 v0.92
 LaTeX Info: Redefining \hbar on input line 323.
 LaTeX Info: Redefining \surd on input line 325.
@@ -404,7 +395,7 @@ LaTeX Info: Redefining \cdots on input line 356.
 LaTeX Info: Redefining \vdots on input line 359.
 LaTeX Info: Redefining \ddots on input line 364.
 )
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\latex\mh\mathstyle.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\mh\mathstyle.sty"
 Package: mathstyle 2011/08/03 v0.90 Tracking mathstyle implicitly
 LaTeX Info: Redefining \displaystyle on input line 81.
 LaTeX Info: Redefining \textstyle on input line 83.
@@ -491,7 +482,7 @@ LaTeX Info: Redefining \addtolength on input line 77.
 LaTeX Warning: Unused global option(s):
     [html].
 
-(C:\workspace\NegoAgent\Report\final.aux
+(C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.aux
 
 LaTeX Warning: Label `2' multiply defined.
 
@@ -508,9 +499,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
-
-(C:\Users\Кирилл\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mki
-i
+ ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count153
 \scratchdimen=\dimen199
@@ -530,13 +519,14 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
  [1
 
-{C:/Users/Кирилл/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 <fourmodels.png, id=7, 749.04843pt x 182.18062pt>
 File: fourmodels.png Graphic file (type png)
  <use fourmodels.png>
 Package pdftex.def Info: fourmodels.png used on input line 32.
 (pdftex.def)             Requested size: 345.0pt x 83.90973pt.
- [1 <C:/workspace/NegoAgent/Report/fourmodels.png>] [2]
+ [1 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/fourmodels.png>] [2
+]
 Overfull \hbox (27.9636pt too wide) detected at line 112
 \OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 ) = []
  []
@@ -546,15 +536,15 @@ File: ell.png Graphic file (type png)
  <use ell.png>
 Package pdftex.def Info: ell.png used on input line 161.
 (pdftex.def)             Requested size: 172.5pt x 133.12021pt.
- [5] [6 <C:/workspace/NegoAgent/Report/ell.png>]
+ [5] [6 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/ell.png>]
 <sigmoidfigure.png, id=40, 421.575pt x 316.18124pt>
 File: sigmoidfigure.png Graphic file (type png)
  <use sigmoidfigure.png>
 Package pdftex.def Info: sigmoidfigure.png used on input line 215.
 (pdftex.def)             Requested size: 276.00105pt x 207.00615pt.
 
-[7 <C:/workspace/NegoAgent/Report/sigmoidfigure.png>] [8]
-<dous.png, id=49, 261.97874pt x 199.49532pt>
+[7 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/sigmoidfigure.png>]
+[8] <dous.png, id=49, 261.97874pt x 199.49532pt>
 File: dous.png Graphic file (type png)
  <use dous.png>
 Package pdftex.def Info: dous.png used on input line 278.
@@ -583,7 +573,7 @@ Overfull \hbox (1.49698pt too wide) in paragraph at lines 302--302
 ssion,[] 
  []
 
-[10 <C:/workspace/NegoAgent/Report/dous.png>]
+[10 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/dous.png>]
 Overfull \hbox (4.00072pt too wide) in paragraph at lines 317--337
  [][] 
  []
@@ -635,10 +625,13 @@ File: 8.jpg Graphic file (type jpg)
  <use 8.jpg>
 Package pdftex.def Info: 8.jpg used on input line 393.
 (pdftex.def)             Requested size: 93.15031pt x 93.15173pt.
- [12] [13 <C:/workspace/NegoAgent/Report/1.jpg> <C:/workspace/NegoAgent/Report/
-2.jpg> <C:/workspace/NegoAgent/Report/3.jpg> <C:/workspace/NegoAgent/Report/4.j
-pg> <C:/workspace/NegoAgent/Report/5.jpg> <C:/workspace/NegoAgent/Report/6.jpg>
- <C:/workspace/NegoAgent/Report/7.jpg> <C:/workspace/NegoAgent/Report/8.jpg>]
+ [12] [13 <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/1.jpg> <C:/Us
+ers/Panos/Desktop/website/github/NegoAgent/Report/2.jpg> <C:/Users/Panos/Deskto
+p/website/github/NegoAgent/Report/3.jpg> <C:/Users/Panos/Desktop/website/github
+/NegoAgent/Report/4.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Repor
+t/5.jpg> <C:/Users/Panos/Desktop/website/github/NegoAgent/Report/6.jpg> <C:/Use
+rs/Panos/Desktop/website/github/NegoAgent/Report/7.jpg> <C:/Users/Panos/Desktop
+/website/github/NegoAgent/Report/8.jpg>]
 Underfull \hbox (badness 10000) in paragraph at lines 417--419
 []\OT1/cmr/m/n/10 Fourth Au-to-mated Ne-go-ti-at-ing Agent Com-pe-ti-tion (2013
 ).:
@@ -646,14 +639,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 417--419
 
 [14
 
-] (C:\workspace\NegoAgent\Report\final.aux)
+] (C:\Users\Panos\Desktop\website\github\NegoAgent\Report\final.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
  8996 strings out of 493921
- 150347 string characters out of 3147260
+ 149010 string characters out of 3147281
  197171 words of memory out of 3000000
  12173 multiletter control sequences out of 15000+200000
  10143 words of font info for 37 fonts, out of 3000000 for 9000
@@ -672,7 +665,7 @@ ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on final.pdf (15 pages, 612006 bytes).
+Output written on final.pdf (15 pages, 611969 bytes).
 PDF statistics:
  122 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
